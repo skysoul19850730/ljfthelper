@@ -31,7 +31,7 @@ class GWorldRoomFind : IRoomFind() {
             while (finding){
                 log("clcik")
                 if(clicking) {
-                    MPoint(750, 480).clickPc()
+                    MPoint(765, 480).clickPc()
                 }else{
                     delay(200)
                 }

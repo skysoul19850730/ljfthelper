@@ -8,8 +8,7 @@ import getImage
 import getImageFromFile
 import getImageFromRes
 import getSubImage
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.*
 import log
 import logOnly
 import saveTo
@@ -93,7 +92,7 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
 //            var resultImg = BufferedImage(testImg.width, testImg.height, TYPE_INT_RGB)
 //            resultImg.graphics.drawImage(testImg, 0, 0, testImg.width, testImg.height, null)
             for (y in mRect.top..mRect.bottom) {
-                if (colorCompare(Color(testImg.getRGB(mRect.clickPoint.x, y)), Config.Color_ChuangZhang, 30)
+                if (colorCompare(Color(testImg.getRGB(mRect.clickPoint.x, y)), Config.Color_ChuangZhang, 10)
                 ) {
                     simCount++
 //                    resultImg.setRGB(mRect.clickPoint.x,y,Color.RED.rgb)
@@ -154,7 +153,7 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
 
             var rate = (okCount * 1f) / totalCount
 
-            logOnly("rectSize:${mRect.width}X${mRect.height} ${mRect.width * mRect.height} totalCount $totalCount       okCount:$okCount   rate:$rate")
+            log("rectSize:${mRect.width}X${mRect.height} ${mRect.width * mRect.height} totalCount $totalCount       okCount:$okCount   rate:$rate")
 
             return rate
         }
@@ -258,6 +257,24 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
         return checkHasChanged
     }
 
+    /**
+     * 此方法是全部检测一遍星级，用于打败降星的boss后，检测一遍，不同于@see checkStars 是用完光之后check，遇到一个星级改变就结束了
+     */
+    suspend fun reCheckStars() {
+        var s = ""
+        heroList.forEachIndexed { index, heroBean ->
+            if (heroBean != null) {
+                s += "${heroBean.heroName}:位置${index}  "
+            }
+        }
+        log(s)
+        heroList.filter { it != null }.forEach {
+            val hero = it!!
+            hero.checkStarLevelUseCard(this)
+            log("${hero.heroName} level is ${hero.currentLevel}")
+        }
+    }
+
     suspend fun checkStars() {
         var checkHasChanged = false
 
@@ -325,7 +342,7 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
                         add(CarPosition(carps.size, MRect.createPointR(MPoint(101, 286), r), MPoint(100, 313)))
                     }
 
-                    add(CarPosition(carps.size, MRect.createPointR(Config.point7p_houche,r), MPoint(118, 236)))
+                    add(CarPosition(carps.size, MRect.createPointR(Config.point7p_houche, r), MPoint(118, 236)))
                 }
             } else {
                 carps.apply {
@@ -346,7 +363,7 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
                         add(CarPosition(carps.size, MRect.createPointR(MPoint(226, 286), r), MPoint(226, 313)))
                     }
 
-                    add(CarPosition(carps.size, MRect.createPointR(Config.point7p_qianche,r), MPoint(216, 236)))
+                    add(CarPosition(carps.size, MRect.createPointR(Config.point7p_qianche, r), MPoint(216, 236)))
                 }
             }
         }
@@ -383,7 +400,7 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
                 }
             }
 
-        }else if(heroBean.isGongCheng){
+        } else if (heroBean.isGongCheng) {
             heroBean.position = 6
             heroBean.currentLevel++
             heroList.set(6, heroBean)
@@ -399,32 +416,27 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
         }
     }
 
+    var downing = false
     suspend fun downHero(heroBean: HeroBean) {
-
-//        if (!heroBean.isGongCheng) {
         if (heroBean.isInCar()) {
-            delay(50)
-            carps.get(heroBean.position).click()
-            while (!Recognize.saleRect.isFit()) {
+//            delay(50)
+            withContext(MRobot.DispatchersClick) {
+                logOnly("下卡开始 ${heroBean.heroName}")
+                downing = true
+                carps.get(heroBean.position).click()
+                withTimeoutOrNull(2000) {//下卡时 被结束的弹窗挡住，这里一直不fit（挡住了就检测不到出售按钮）。然后也不会执行 结束的按钮点击。所以这里加个超时
+                    while (!Recognize.saleRect.isFit()) {
+                        delay(10)//妈的，这里不加delay就检测不会timeout，fuck
+                    }
+                }
 
+                MRobot.singleClick(salePoint)
+                heroList.set(heroBean.position, null)
+                heroBean.reset()
+                log("下卡完成：${heroBean.heroName} position:${heroBean.position}")
+                downing = false
             }
-            MRobot.singleClick(salePoint)
-            heroList.set(heroBean.position, null)
-            log("下卡：${heroBean.heroName} position:${heroBean.position}")
-            heroBean.reset()
         }
-//        } else {
-//            if (heroBean.currentLevel > 0) {
-//                var point = if (chePosition == 0) Config.point7p_qianche else Config.point7p_houche
-//                delay(50)
-//                point.clickPc()
-//                while (!Recognize.saleRect.isFit()) {
-//                }
-//                MRobot.singleClick(salePoint)
-//                log("下卡：${heroBean.heroName} position:${heroBean.position}")
-//                heroBean.reset()
-//            }
-//        }
     }
 
 
@@ -463,30 +475,37 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
                 && abs(c1.blue - c2.blue) <= sim)
     }
 
-    fun getChuanZhangMax(imgTest: BufferedImage? = null): Int {
+    fun getChuanZhangMax(imgTest: BufferedImage? = null): Pair<Int,Float>? {
         var startTime = System.currentTimeMillis()
         val img = imgTest ?: getImage(App.rectWindow)
         var maxIndex = -1
         var maxRate = 0f
+        var allNull = heroList.all {
+            it==null
+        }
         carps.forEachIndexed { index, carPosition ->
-            logOnly("车$chePosition 车位$index ")
-            var rate = carPosition.rateSelectByChuanZhang(img)
-            logOnly("车$chePosition 车位$index 识别率：$rate")
-            if (rate > maxRate) {
-                maxRate = rate
-                maxIndex = index
+            if(heroList.get(index)!=null || allNull) {//allNull是判断副车，不涉及下卡，所以每个位置都检测。如果是主车，null的位置就不检测，比如没有工程位，或者下掉的位置没补上
+                logOnly("车$chePosition 车位$index ")
+                var rate = carPosition.rateSelectByChuanZhang(img)
+                logOnly("车$chePosition 车位$index 识别率：$rate")
+                if (rate > maxRate) {
+                    maxRate = rate
+                    maxIndex = index
+                }
             }
         }
         var coast = System.currentTimeMillis() - startTime
-        if (maxRate > 0.2) {
+        if (maxRate > 0.1) {
             log("最符合的车位是$maxIndex 其比例为:$maxRate  coast:$coast")
-//            img.saveTo(File(App.caijiPath, "${System.currentTimeMillis()}.png"))
             log(img)
-            return maxIndex
+        }
+        if (maxRate > 0.2) {
+            img.saveTo(File(App.caijiPath, "${System.currentTimeMillis()}.png"))
+            return Pair(maxIndex,maxRate)
         }
 //        log(img)
         logOnly("未识别到合适的车位  coast:$coast")
-        return -1
+        return null
     }
 
 //    fun testStarAndChuanzhang(img: BufferedImage) {

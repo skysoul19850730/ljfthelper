@@ -36,6 +36,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import tasks.*
+import tasks.hanbing.mengyan.ChuanZhangTest
 import tasks.hezuo.zhannvsha.ZhanNvGameLaunch
 import utils.LogUtil
 import utils.MRobot
@@ -113,7 +114,16 @@ fun App() {
                             if (item is String) {
                                 Text(item, Modifier.padding(0.dp, 10.dp, 0.dp, 0.dp))
                             } else if (item is BufferedImage) {
-                                Image(item.toPainter(), null, Modifier.width(500.dp).height(500.dp))
+                                var ww = item.width
+                                var hh = item.height
+                                if(item.width>item.height && item.width>400){
+                                    ww = 400
+                                    hh = ((item.height*1f*ww)/item.width).toInt()
+                                }else if(item.height>item.width && item.height>400){
+                                    hh = 400
+                                    ww = ((item.width*1f/item.height)*hh).toInt()
+                                }
+                                Image(item.toPainter(), null, Modifier.width(ww.dp).height(hh.dp))
                             }
                         }
                     }
@@ -160,7 +170,14 @@ fun App() {
                     if (HuodongUtil.state.value) {
                         HuodongUtil.stop()
                     } else {
-                        HuodongUtil.start()
+                        HuodongUtil.start(1)
+                    }
+                }
+                button("天空") {
+                    if (HuodongUtil.state.value) {
+                        HuodongUtil.stop()
+                    } else {
+                        HuodongUtil.start(2)
                     }
                 }
                 button("测试") {
@@ -752,45 +769,45 @@ fun autoMoveMouse() {
     GlobalScope.launch {
         while (testing) {
             MRobot.robot.mouseMove(1100, 800)
-            delay(10000)
+            delay(150000)
             MRobot.robot.mouseMove(1200, 850)
-            delay(10000)
+            delay(150000)
         }
     }
 }
 
-fun testKaiJi() {
-    GlobalScope.launch {
-        delay(3000)
-        MRobot.singleClickPc(MPoint(1000, 620), null)
-        delay(1000)
-        MRobot.singleClickPc(MPoint(1000, 620), null)
-        delay(300)
-        MRobot.singleClickPc(MPoint(1000, 620), null)
-        delay(300)
-        MRobot.singleClickPc(MPoint(1000, 620), null)
-        delay(300)
-        MRobot.singleClickPc(MPoint(1000, 620), null)
-        delay(300)
-        MRobot.singleClickPc(MPoint(1000, 620), null)
-        delay(300)
-        MRobot.singleClickPc(MPoint(1000, 620), null)
-        delay(300)
-        MRobot.inputOneKey(KeyEvent.VK_NUMPAD8)
-        MRobot.inputOneKey(KeyEvent.VK_5)
-        MRobot.inputOneKey(KeyEvent.VK_0)
-        MRobot.inputOneKey(KeyEvent.VK_7)
-        MRobot.inputOneKey(KeyEvent.VK_3)
-        MRobot.inputOneKey(KeyEvent.VK_0)
-        MRobot.inputKeys(KeyEvent.VK_SHIFT, KeyEvent.VK_MINUS)
-        MRobot.inputOneKey(KeyEvent.VK_S)
-        MRobot.inputOneKey(KeyEvent.VK_H)
-        MRobot.inputOneKey(KeyEvent.VK_E)
-        MRobot.inputOneKey(KeyEvent.VK_N)
-        MRobot.singleClickPc(MPoint(1100, 620), null)
-    }
-
-}
+//fun testKaiJi() {
+//    GlobalScope.launch {
+//        delay(3000)
+//        MRobot.singleClickPc(MPoint(1000, 620), null)
+//        delay(1000)
+//        MRobot.singleClickPc(MPoint(1000, 620), null)
+//        delay(300)
+//        MRobot.singleClickPc(MPoint(1000, 620), null)
+//        delay(300)
+//        MRobot.singleClickPc(MPoint(1000, 620), null)
+//        delay(300)
+//        MRobot.singleClickPc(MPoint(1000, 620), null)
+//        delay(300)
+//        MRobot.singleClickPc(MPoint(1000, 620), null)
+//        delay(300)
+//        MRobot.singleClickPc(MPoint(1000, 620), null)
+//        delay(300)
+//        MRobot.inputOneKey(KeyEvent.VK_NUMPAD8)
+//        MRobot.inputOneKey(KeyEvent.VK_5)
+//        MRobot.inputOneKey(KeyEvent.VK_0)
+//        MRobot.inputOneKey(KeyEvent.VK_7)
+//        MRobot.inputOneKey(KeyEvent.VK_3)
+//        MRobot.inputOneKey(KeyEvent.VK_0)
+//        MRobot.inputKeys(KeyEvent.VK_SHIFT, KeyEvent.VK_MINUS)
+//        MRobot.inputOneKey(KeyEvent.VK_S)
+//        MRobot.inputOneKey(KeyEvent.VK_H)
+//        MRobot.inputOneKey(KeyEvent.VK_E)
+//        MRobot.inputOneKey(KeyEvent.VK_N)
+//        MRobot.singleClickPc(MPoint(1100, 620), null)
+//    }
+//
+//}
 
 fun testSim() {
     val zhanjiang = HeroBean("zhanjiang", 100)
@@ -983,24 +1000,24 @@ fun tttt(fw: FrameWindowScope) {
 //    }
 //}
 
-private suspend fun inputRoom(text: String) {
-//    while (!Recognize.Duizhan.isFit()) {//等回到“对战” 首页
-//        delay(Config.delayNor)
-//    }
-    Config.hezuo_startPoint.click()
-    delay(Config.delayNor)
-//        Config.hezuo_friend.click()
-//        delay(Config.delayNor)
-//        Config.hezuo_Join.click()
-//        delay(Config.delayNor)
-    Config.hezuo_room_input_game.click()
-    delay(Config.delayNor)
-
-//        Config.hezuo_room_input_wx.click()
-//    MRobot.niantie(text)
-    MRobot.adbInput(text)
-    delay(Config.delayNor)
-//        Config.hezuo_room_input_wx_over.click()
-//        delay(Config.delayNor)
-    Config.hezuo_Join_Sure.click()
-}
+//private suspend fun inputRoom(text: String) {
+////    while (!Recognize.Duizhan.isFit()) {//等回到“对战” 首页
+////        delay(Config.delayNor)
+////    }
+//    Config.hezuo_startPoint.click()
+//    delay(Config.delayNor)
+////        Config.hezuo_friend.click()
+////        delay(Config.delayNor)
+////        Config.hezuo_Join.click()
+////        delay(Config.delayNor)
+//    Config.hezuo_room_input_game.click()
+//    delay(Config.delayNor)
+//
+////        Config.hezuo_room_input_wx.click()
+////    MRobot.niantie(text)
+////    MRobot.adbInput(text)
+//    delay(Config.delayNor)
+////        Config.hezuo_room_input_wx_over.click()
+////        delay(Config.delayNor)
+//    Config.hezuo_Join_Sure.click()
+//}

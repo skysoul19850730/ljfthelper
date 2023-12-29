@@ -75,16 +75,20 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
         var hs: List<HeroBean?>? = null
         while (hs == null && running) {
             logOnly("未识别到英雄")
-            if(Recognize.saleRect.isFit()) {//识别不到 识别看看是不是英雄弹窗挡住了
-                CarDoing.cardClosePoint.click()
-            }
+//            if(Recognize.saleRect.isFit()) {//识别不到 识别看看是不是英雄弹窗挡住了//如果上卡和下卡一起操作，这里会导致下卡失败
+//                CarDoing.cardClosePoint.click()
+//            }
             if (needShuaxin) {
+                while(!Config.rect4ShuakaColor.hasWhiteColor()){//有白色（钱够）再点击刷新
+                    delay(50)
+                }
                 MRobot.singleClick(Config.zhandou_shuaxinPoint)
             }
-            delay(delayNor)
+            delay(100)
             hs = getPreHeros(if (needShuaxin) delayLong else 10000)
         }
         log("识别到英雄 ${hs?.getOrNull(0)?.heroName}  ${hs?.getOrNull(1)?.heroName}  ${hs?.getOrNull(2)?.heroName}")
+        log(getImage(MRect.create4P(Config.zhandou_hero1CheckRect.left,Config.zhandou_hero1CheckRect.top,Config.zhandou_hero3CheckRect.right,Config.zhandou_hero1CheckRect.bottom)))
         return hs!!
     }
 
@@ -105,6 +109,10 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
 //        MRobot.singleClick(rect.clickPoint)//点击卡片 //这里点击卡片可能刚好点中end得确定按钮，导致检测不到结束
         MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
         delay(Config.delayNor)
+        //如果正在下卡，弹窗会挡住，识别不到英雄，就等于认为已经上卡了
+        while(carDoing.downing){
+            delay(50)
+        }
         var hs = doGetPreHeros()
 
         if (hs == null) {//上车了(点击后再检验，目标区域不含英雄了）
@@ -113,25 +121,47 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
             afterHeroClick(heroBean)
         } else {//上不去，没格子了(如何是换卡，在这之前已经下了卡了，下了卡就能上去，所以这里只会因为没有格子而上不去，所以点扩建再尝试上卡
             logOnly("英雄未上阵")
-            if (!hasKuoJianClicked) {//有钱扩建就先不替换
+            if(Config.rect4KuojianColor.hasWhiteColor()){
                 logOnly("尝试点击一次扩建")
                 MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
                 delay(Config.delayNor)
                 doUpHero(heroBean, position, true)
-            } else {
+            }else{
                 var changeOne = changeHeroWhenNoSpace(heroBean)
                 if (changeOne != null) {
-                    logOnly("没钱扩建，试试要不要替换英雄")
+                    logOnly("没钱扩建，替换英雄")
                     carDoing.downHero(changeOne)
                     delay(delayNor)
                     doUpHero(heroBean, position)
                 } else {
                     logOnly("再次尝试点击扩建")
+                    while(!Config.rect4KuojianColor.hasWhiteColor()){
+                        delay(50)
+                    }
                     MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
                     delay(Config.delayNor)
                     doUpHero(heroBean, position, true)
                 }
             }
+//            if (!hasKuoJianClicked) {//有钱扩建就先不替换
+//                logOnly("尝试点击一次扩建")
+//                MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
+//                delay(Config.delayNor)
+//                doUpHero(heroBean, position, true)
+//            } else {
+//                var changeOne = changeHeroWhenNoSpace(heroBean)
+//                if (changeOne != null) {
+//                    logOnly("没钱扩建，试试要不要替换英雄")
+//                    carDoing.downHero(changeOne)
+//                    delay(delayNor)
+//                    doUpHero(heroBean, position)
+//                } else {
+//                    logOnly("再次尝试点击扩建")
+//                    MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
+//                    delay(Config.delayNor)
+//                    doUpHero(heroBean, position, true)
+//                }
+//            }
         }
 
     }

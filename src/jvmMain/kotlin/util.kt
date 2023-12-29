@@ -23,6 +23,16 @@ fun getImage(rect: MRect,window: WinDef.HWND? = App.tfWindow!!): BufferedImage {
     return img2
 }
 
+fun BufferedImage.foreach(back:(Int,Int)->Boolean){
+    for(x in 0 until width){
+        for(y in 0 until height){
+            if(back.invoke(x,y)){
+                return
+            }
+        }
+    }
+}
+
 fun BufferedImage.getSubImage(rect: MRect): BufferedImage {
     if(rect.width >= width || rect.height>=height){
         return this

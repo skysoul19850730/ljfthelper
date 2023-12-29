@@ -9,7 +9,7 @@ class WXRoomFind:IRoomFind() {
         WxUtil.findWindowAndMove()
 //        WxUtil.sendImg("hezuogonglue.jpg")
 //        delay(200)
-        WxUtil.sendText("发送 a0000(四位房号)a,副卡先上猴子，牛头，工匠，恶匪，小野，死神。 卡满级猴子换女王挂机,带寒冰车")
+        WxUtil.sendText("发送 a0000(四位房号)a,副卡先上猴子，牛头，工匠，恶匪，小野，死神。 等主卡满级猴子换女王挂机(着急也可以不等)")
     }
 
     override suspend fun getText(): String {

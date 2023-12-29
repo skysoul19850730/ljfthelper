@@ -98,8 +98,17 @@ object ImgUtil {
             }
         }
     }
+    inline fun MRect.forEach4Result(callback: (Int, Int) -> Boolean) {
+        for (x in left..right) {
+            for (y in top..bottom) {
+                if(callback.invoke(x, y)){
+                    return
+                }
+            }
+        }
+    }
 
-    private fun colorCompare(color1: Int, color2: Int): Boolean {
+     fun colorCompare(color1: Int, color2: Int): Boolean {
         if (sim == 0) {
             return color1 == color2
         }

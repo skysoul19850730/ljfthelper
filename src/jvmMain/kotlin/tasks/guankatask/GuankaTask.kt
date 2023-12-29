@@ -53,6 +53,8 @@ class GuankaTask {
                             log("当前关卡：${currentGuanIndex+1}")
                             has = true
                             changeListener?.onGuanChange(currentGuanIndex+1)
+                            //识别到管卡变化，就延迟多点再循环
+//                            delay(2000)
                             break
                         }
                     }
@@ -62,7 +64,7 @@ class GuankaTask {
 //                    log(curImg)
                 }
 
-                delay(1000)
+                delay(50)
             }
         }
     }

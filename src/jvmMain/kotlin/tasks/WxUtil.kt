@@ -26,7 +26,7 @@ object WxUtil {
     val openSend = true
 
     fun findWindowAndMove() {
-        var name = if (ZhanNvGameLaunch.parterner == 0) "中國同盟会" else "文件传输助手"
+        var name = if (ZhanNvGameLaunch.parterner == 0) "中國同盟会" else "承澄"
         wxWindow = Window.findWindowWithName(name)
         if (wxWindow != null) {
             var rect = WinDef.RECT()

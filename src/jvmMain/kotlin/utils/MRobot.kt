@@ -19,6 +19,7 @@ import data.MRect
 import getImageFromRes
 import kotlinx.coroutines.*
 import log
+import logOnly
 import saveTo
 import tasks.WxUtil
 import java.awt.Color
@@ -40,29 +41,29 @@ import javax.imageio.ImageIO
 import kotlin.math.abs
 
 object MRobot {
+
+    val DispatchersClick = newFixedThreadPoolContext(1,"mclick")
+
     val robot = Robot()
 
     val houtai = true
 
-    @Synchronized
-    fun quickClick() {
-        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK)
-        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
-    }
-
-    fun norClick(point: MPoint) {
-        if (houtai) {
-            GlobalScope.launch {
-                App.tfWindow?.clickPoint(point)
-            }
-            return
-        }
-        robot.mouseMove(point.x, point.y)
-        robot.delay(30)
-        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK)
-        robot.delay(15)
-        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
-    }
+//    /**
+//     * 仅关闭
+//     */
+//    fun norClick(point: MPoint) {
+//        if (houtai) {
+//            GlobalScope.launch {
+//                App.tfWindow?.clickPoint(point)
+//            }
+//            return
+//        }
+//        robot.mouseMove(point.x, point.y)
+//        robot.delay(30)
+//        robot.mousePress(InputEvent.BUTTON1_DOWN_MASK)
+//        robot.delay(15)
+//        robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
+//    }
 
     private suspend fun singleClick() {
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK)
@@ -72,20 +73,26 @@ object MRobot {
 
     suspend fun singleClickPc(point: MPoint, window: WinDef.HWND? = App.tfWindow!!) {
         if (houtai && window != null && window != WxUtil.wxWindow) {
+            logOnly("click point start ${point.x}  ${point.y}")
             window?.clickPoint(point)
+            logOnly("click point end ${point.x}  ${point.y}")
             return
         }
         var x = point.x
         var y = point.y
-        if(window==WxUtil.wxWindow){
+        if (window == WxUtil.wxWindow) {
             var rect = WinDef.RECT()
             User32.INSTANCE.GetWindowRect(WxUtil.wxWindow, rect)
-            x+=rect.left
-            y+=rect.top
+            x += rect.left
+            y += rect.top
         }
-        robot.mouseMove(x, y)
-        delay(30)
-        singleClick()
+        withContext(DispatchersClick) {
+            logOnly("click point start ${x}  ${y}")
+            robot.mouseMove(x, y)
+            delay(30)
+            singleClick()
+            logOnly("click point end ${x}  ${y}")
+        }
 
     }
 
@@ -100,21 +107,21 @@ object MRobot {
 //        }
     }
 
-    suspend fun inputOneKey(code:Int){
-        robot.keyPress(code)
-        delay(100)
-        robot.keyRelease(code)
-        delay(100)
-    }
-    suspend fun inputKeys(vararg codes:Int){
-        codes.forEach {
-            robot.keyPress(it)
-        }
-        delay(100)
-        codes.forEach {
-            robot.keyRelease(it)
-        }
-    }
+//    suspend fun inputOneKey(code:Int){
+//        robot.keyPress(code)
+//        delay(100)
+//        robot.keyRelease(code)
+//        delay(100)
+//    }
+//    suspend fun inputKeys(vararg codes:Int){
+//        codes.forEach {
+//            robot.keyPress(it)
+//        }
+//        delay(100)
+//        codes.forEach {
+//            robot.keyRelease(it)
+//        }
+//    }
 
     suspend fun niantie(text: String?, window: WinDef.HWND? = App.tfWindow!!) {
         log("输入房间号$text")
@@ -143,9 +150,9 @@ object MRobot {
         robot.keyRelease(KeyEvent.VK_V)
     }
 
-    fun adbInput(text: String) {
-        ADBUtil.inputText(text)
-    }
+//    fun adbInput(text: String) {
+//        ADBUtil.inputText(text)
+//    }
 
     fun copyText(text: String) {
         val clipboard = Toolkit.getDefaultToolkit().systemClipboard
@@ -255,10 +262,12 @@ object MRobot {
 
 
     suspend fun WinDef.HWND.clickPoint(point: MPoint) {
-        var value: Long = ((point.y shl 16) or point.x).toLong()
-        User32.INSTANCE.SendMessage(this, 0x0201, WinDef.WPARAM(0x0001), WinDef.LPARAM(value.toLong()))
-        delay(30)
-        User32.INSTANCE.SendMessage(this, 0x0202, WinDef.WPARAM(0x0001), WinDef.LPARAM(value.toLong()))
+        withContext(DispatchersClick) {
+            var value: Long = ((point.y shl 16) or point.x).toLong()
+            User32.INSTANCE.SendMessage(this@clickPoint, 0x0201, WinDef.WPARAM(0x0001), WinDef.LPARAM(value.toLong()))
+            delay(30)
+            User32.INSTANCE.SendMessage(this@clickPoint, 0x0202, WinDef.WPARAM(0x0001), WinDef.LPARAM(value.toLong()))
+        }
     }
 
     suspend fun WinDef.HWND.niantie(text: String) {

@@ -2,7 +2,12 @@
 
 package data
 
+import getImage
 import sun.awt.Win32GraphicsDevice
+import utils.ImgUtil.colorCompare
+import utils.ImgUtil.forEach
+import utils.MRobot
+import java.awt.Color
 import java.awt.GraphicsEnvironment
 import java.awt.Point
 
@@ -32,6 +37,17 @@ class MRect {
 //        var ge = GraphicsEnvironment.getLocalGraphicsEnvironment()
 //      return  (ge.defaultScreenDevice.defaultConfiguration.device as Win32GraphicsDevice).defaultScaleX
 //    }
+
+    fun hasWhiteColor():Boolean{
+        var img = getImage(this)
+        forEach { i, i2 ->
+            val color = img.getRGB(i-left,i2-top)
+            if(colorCompare( color ,Color.WHITE.rgb)){
+                return true
+            }
+        }
+        return false
+    }
 
     constructor()
 

@@ -240,7 +240,6 @@ object App {
             User32.INSTANCE.RegisterHotKey(null, VK_NUMPAD7, 0, VK_NUMPAD7)
             User32.INSTANCE.RegisterHotKey(null, VK_NUMPAD8, 0, VK_NUMPAD8)
             User32.INSTANCE.RegisterHotKey(null, VK_NUMPAD9, 0, VK_NUMPAD9)
-            User32.INSTANCE.RegisterHotKey(null, VK_1, 0, VK_1)
 
 
             log("addKeyLister result $result")
@@ -319,15 +318,15 @@ object App {
                         }
 
                         VK_NUMPAD4 -> {
-                            MRobot.norClick(Config.zhandou_hero1CheckRect.clickPoint)
+                            MRobot.singleClickPc(Config.zhandou_hero1CheckRect.clickPoint)
                         }
 
                         VK_NUMPAD5 -> {
-                            MRobot.norClick(Config.zhandou_hero2CheckRect.clickPoint)
+                            MRobot.singleClickPc(Config.zhandou_hero2CheckRect.clickPoint)
                         }
 
                         VK_NUMPAD6 -> {
-                            MRobot.norClick(Config.zhandou_hero3CheckRect.clickPoint)
+                            MRobot.singleClickPc(Config.zhandou_hero3CheckRect.clickPoint)
                         }
 
                         else -> {
@@ -361,10 +360,10 @@ object App {
         log("removeKey")
         stop()
         doRemoveKey()
-//        GlobalScope.launch {
-//            MRobot.singleClickPc(pointClose)
-//        }
-        MRobot.norClick(pointClose)
+        GlobalScope.launch {
+            MRobot.singleClickPc(pointClose)
+        }
+//        MRobot.norClick(pointClose)
 
         timeJob?.cancel()
         if (windowClose.value == 2) {//=2 时 是自动关闭

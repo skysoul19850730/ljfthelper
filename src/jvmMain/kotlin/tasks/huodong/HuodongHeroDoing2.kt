@@ -11,39 +11,32 @@ import tasks.HeroDoing
 import kotlin.coroutines.resume
 import log
 import tasks.CarDoing
+import tasks.Zhuangbei
 import tasks.gameUtils.GameUtil
 import tasks.hezuo.zhannvsha.ZhanNvHeroDoing
 import utils.MRobot
 import java.awt.event.KeyEvent
 
-class HuodongHeroDoing : HeroDoing(0), App.KeyListener {
+class HuodongHeroDoing2 : HeroDoing(0), App.KeyListener {
 
-    var guanka = 0
-    var waiting = false
-
-    lateinit var muqiu: HeroBean
-    lateinit var hunqiu: HeroBean
-
-    init {
-        hunqiu = HeroBean("hunqiu", 70, needCar = false)
-        muqiu = HeroBean("muqiu", 60, needCar = false)
-        App.keyListeners.add(this)
-    }
-
+    var needChangeZhuangbei = false
 
     override fun initHeroes() {
         heros = arrayListOf<HeroBean>().apply {
-            add(HeroBean("dianfa"))
-            add(HeroBean("xiaoye"))
+            add(HeroBean("tieqi"))
+            add(HeroBean("jianke", weightModel = 0))
+
+            add(HeroBean("bingnv", weightModel = 0))
+            add(HeroBean("saman"))
+            add(HeroBean("kuangjiang"))
+            add(HeroBean("daoke"))
+
+            add(HeroBean("guangqiu", needCar = false))
+
+            add(HeroBean("huanqiu", needCar = false))
 
             add(HeroBean("sishen"))
-            add(HeroBean("hugong"))
-            add(HeroBean("gugu"))
             add(HeroBean("xiaochou"))
-            add(HeroBean("shexian", needCar = false, isGongCheng = true))
-            add(HeroBean("guangqiu", needCar = false))
-            add(muqiu)
-            add(hunqiu)
         }
     }
 
@@ -55,6 +48,8 @@ class HuodongHeroDoing : HeroDoing(0), App.KeyListener {
 
     var mChePos = -1
     var kuojianguo = false
+
+    var curZhuangBei: Int = 0
 
     override suspend fun afterHeroClick(heroBean: HeroBean) {
         if (mChePos == -1 && heroBean.needCar) {//未识别车时,并且 这个hero是上阵得英雄
@@ -95,60 +90,82 @@ class HuodongHeroDoing : HeroDoing(0), App.KeyListener {
             }
         }
 
-        if (!waiting && isGuanKaOver()) {
-            waiting = true
-        }
+        if (heroBean.heroName == "huanqiu") {
+            //扔幻时 记录当前  发生改变后就可以结束（因为主卡幻一定成功）否则这里逻辑就不可以了
 
-
-
-
-        while (waiting) {
-            delay(100)
-        }
-    }
-
-    fun isGuanKaOver(): Boolean {
-        return when (guanka) {
-            0 -> {
-                heros.filter {
-                    it.needCar || it.isGongCheng
-                }.all {
-                    it.isFull()
+            var newZB = withTimeoutOrNull(2000) {
+                while (Zhuangbei.getZhuangBei() == curZhuangBei && Zhuangbei.getZhuangBei() != 0) {
+                    delay(Config.delayNor)
                 }
+                Zhuangbei.getZhuangBei()
+            } ?: 0
+            if (newZB != curZhuangBei) {
+                needChangeZhuangbei = false
+                curZhuangBei = newZB
             }
 
-            else -> false
         }
     }
 
 
     override suspend fun dealHero(heros: List<HeroBean?>): Int {
-        while (waiting) {
-            delay(100)
+
+        var index = defaultDealHero2(heros, this.heros.take(6))
+        if (index > -1) {
+            return index
         }
-        if(guanka==0){
-            return defaultDealHero(heros,this.heros)
-        }else if(guanka==1){
-            //第二阶段不用光球了，来了就补，不来就补血
-            return defaultDealHero(heros,this.heros.filter {
-                it.heroName != "guangqiu"
-            })
+        index = heros.indexOf(this.heros.get(6))
+        if (index > -1 && !this.heros.take(6).all {//光
+                it.isFull()
+            }) {
+            return index
         }
+
+        index = heros.indexOf(this.heros.get(7))//幻
+        if (index > -1 && needChangeZhuangbei) {
+            return index
+        }
+
         return -1
     }
 
+    suspend fun defaultDealHero2(heros: List<HeroBean?>, heroSorted: List<HeroBean>): Int {
+        var pre = -1
+        heroSorted.forEach {
+            var index = heros.indexOf(it)
+            if (index > -1) {
+                if (it.weightModel == 1 || !it.isInCar()) {
+                    return index
+                } else {
+                    if (pre < 0) {//先预备的优先级高，不被后来的覆盖
+                        pre = index
+                    }
+                }
+            }
+        }
+        return pre
+    }
+
     override fun changeHeroWhenNoSpace(heroBean: HeroBean): HeroBean? {
+
+        var toIndex = this.heros.indexOf(heroBean)
+
+        var downHero = this.heros.filter {
+            it.isInCar()
+        }.maxByOrNull {
+            this.heros.indexOf(it)
+        }
+        if (downHero != null && toIndex < this.heros.indexOf(downHero)) {//to 更考前
+            return downHero
+        }
+
         return null
     }
 
     override fun onStart() {
         super.onStart()
-        GlobalScope.launch {
-            delay(56*1000)
-            guanka = 1
-            waiting = false
-        }
     }
+
     override fun onStop() {
         super.onStop()
     }
@@ -156,8 +173,7 @@ class HuodongHeroDoing : HeroDoing(0), App.KeyListener {
     suspend fun doOnKeyDown(code: Int): Boolean {
         var handle = true
         if (code == KeyEvent.VK_NUMPAD1) {
-            guanka = 1
-            waiting = false
+            needChangeZhuangbei = true
         } else {
             handle = false
         }

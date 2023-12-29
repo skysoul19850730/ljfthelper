@@ -1,15 +1,16 @@
 package tasks.huodong
 
 import androidx.compose.runtime.mutableStateOf
+import tasks.HeroDoing
 
 object HuodongUtil {
     var state = mutableStateOf(false)
-    var shuamoHeroDoing :HuodongHeroDoing?=null
+    var shuamoHeroDoing :HeroDoing?=null
 
-    fun start() {
+    fun start(model:Int) {
         state.value = true
         shuamoHeroDoing?.stop()
-        shuamoHeroDoing = HuodongHeroDoing()
+        shuamoHeroDoing =if(model==1) HuodongHeroDoing() else HuodongHeroDoing2()
         shuamoHeroDoing?.init()
         shuamoHeroDoing?.start()
     }

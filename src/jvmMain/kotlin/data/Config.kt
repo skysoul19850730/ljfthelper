@@ -15,7 +15,7 @@ object Config {
     val platform_qq = 2
 
 
-    var isHome4Setting = mutableStateOf(true)
+    var isHome4Setting = mutableStateOf(false)
     var platform = mutableStateOf(platform_wx)
     val platName: String
         get() = if (isHome) "moniqi" else "xiaochengxu"
@@ -116,4 +116,8 @@ object Config {
 
     val hbMSCloud = MPoint(610,180,Color(238,234,125))
     val hbFSCloud = MPoint(610,180,Color(150,156,204))
+
+
+    val rect4ShuakaColor = MRect.createWH(693,574,20,15)
+    val rect4KuojianColor = MRect.createWH(288,574,25,15)
 }

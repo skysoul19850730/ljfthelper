@@ -36,7 +36,7 @@ class MengyanHeroDoing : HeroDoing(0), App.KeyListener {//默认赋值0，左边
     val xiaoye = HeroBean("xiaoye")
     val sishen = HeroBean("sishen")
     val huanqiu = HeroBean("huanqiu", needCar = false)
-    val shengqi = HeroBean("xie")
+    val shengqi = HeroBean("shengqi")
 
     var waiting = false
     var hasWuDi = true
@@ -119,7 +119,7 @@ class MengyanHeroDoing : HeroDoing(0), App.KeyListener {//默认赋值0，左边
             //这里试试不用点了，直接等108，109关自动触发有没有问题吧
             guanka = 9
             waiting = false
-        } else if (code == KeyEvent.VK_NUMPAD6 || code == KeyEvent.VK_1) {//下海妖上圣骑
+        } else if (code == KeyEvent.VK_NUMPAD6) {//下海妖上圣骑
             waiting = false
         } else if (code == KeyEvent.VK_NUMPAD2) {
             carDoing.downPosition(0)
@@ -163,9 +163,9 @@ class MengyanHeroDoing : HeroDoing(0), App.KeyListener {//默认赋值0，左边
 //                guanka = 8//幻龙心
 //                waiting = false
 //            }
-            if(time2==0L){
+            if (time2 == 0L) {
                 time2 = System.currentTimeMillis()
-            }else if(time3==0L){
+            } else if (time3 == 0L) {
                 time3 = System.currentTimeMillis()
             }
             waiting = !waiting
@@ -188,21 +188,23 @@ class MengyanHeroDoing : HeroDoing(0), App.KeyListener {//默认赋值0，左边
             while (chuanZhangObeserver) {
                 var img = getImage(App.rectWindow)
                 var index = carDoing.getChuanZhangMax(img)
-                var index2 = CarDoing((carDoing.chePosition+1)%2, CarDoing.CheType_YangChe).run {
+                var index2 = CarDoing((carDoing.chePosition + 1) % 2, CarDoing.CheType_YangChe).run {
                     initPositions()
                     getChuanZhangMax(img)
                 }
-                if (index >= 0 || index2>0) {
-                    if(index>=0) {
-                        var hero = carDoing.heroList.get(index)!!
-                        log("检测到被标记  位置：$index  英雄：${hero.heroName}")
-
+                if (index != null || index2 != null) {
+                    //如果本车识别到  并且  另一个车没识别到（以本车为主）或者另一个车识别到了，但结果小于本车，才认为是点的本车
+                    if (index !=null &&(index2==null || index.second>index2.second)) {
+                        var hero = carDoing.heroList.get(index.first)
+                        log("检测到被标记  位置：$index  英雄：${hero?.heroName}")
 //                        if (hasWuDi && hero == mengyan) {//点梦魇，有无敌，不下
 //                            hasWuDi = false
 //                        } else {
+                        if(hero!=null) {
                             carDoing.downHero(hero)
                             guanka = 5
                             waiting = false
+                        }
 //                        }
                     }
                     chuanzhangDownCount++
@@ -210,7 +212,7 @@ class MengyanHeroDoing : HeroDoing(0), App.KeyListener {//默认赋值0，左边
                     if (!isSencodDianming) {//第一次点卡后等3秒再开始识别
                         delay(3000)
                     } else {//第二次点卡后 刷6秒补卡然后停止（这个时间慢慢校验)要撞船了
-                        if(chuanZhangObeserver) {
+                        if (chuanZhangObeserver) {
                             time1 = System.currentTimeMillis()
 //                            delay(10000)
                             delay(7500)
@@ -234,7 +236,7 @@ class MengyanHeroDoing : HeroDoing(0), App.KeyListener {//默认赋值0，左边
         chuanZhangObeserver = false
         guankaTask.stop()
         App.keyListeners.remove(this)
-        log("time1 :$time1  time2:$time2  time3:$time3  下卡到停止刷新:${(time2-time1)/1000f},停止刷新到 开启刷新：${(time3-time2)/1000f}")
+        log("time1 :$time1  time2:$time2  time3:$time3  下卡到停止刷新:${(time2 - time1) / 1000f},停止刷新到 开启刷新：${(time3 - time2) / 1000f}")
     }
 
     var shengqiUped = false
