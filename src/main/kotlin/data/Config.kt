@@ -15,7 +15,7 @@ object Config {
     val platform_qq = 2
 
 
-    var isHome4Setting = mutableStateOf(false)
+    var isHome4Setting = mutableStateOf(true)
     var platform = mutableStateOf(platform_wx)
     val platName: String
         get() = if (isHome) "moniqi" else "xiaochengxu"

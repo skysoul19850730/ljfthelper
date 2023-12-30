@@ -420,11 +420,11 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
     suspend fun downHero(heroBean: HeroBean) {
         if (heroBean.isInCar()) {
 //            delay(50)
-            withContext(MRobot.DispatchersClick) {
+            withContext(Dispatchers.Main) {
                 logOnly("下卡开始 ${heroBean.heroName}")
                 downing = true
                 carps.get(heroBean.position).click()
-                withTimeoutOrNull(2000) {//下卡时 被结束的弹窗挡住，这里一直不fit（挡住了就检测不到出售按钮）。然后也不会执行 结束的按钮点击。所以这里加个超时
+                withTimeoutOrNull(400) {//下卡时 被结束的弹窗挡住，这里一直不fit（挡住了就检测不到出售按钮）。然后也不会执行 结束的按钮点击。所以这里加个超时
                     while (!Recognize.saleRect.isFit()) {
                         delay(10)//妈的，这里不加delay就检测不会timeout，fuck
                     }

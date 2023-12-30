@@ -872,8 +872,10 @@ fun saveImgTest(file:File,rect:MRect){
 }
 
 fun test() {
-
-
+//WxUtil.findWindowAndMove()
+//    WxUtil.getText().apply {
+//        log(this)
+//    }
 
 //    ChuanZhangTest.startChuanZhangOberserver()
 //    saveImgTest(File(App.caijiPath,"1701233714591.png"),Recognize.IcAdv4Hezuo.rectFinal)

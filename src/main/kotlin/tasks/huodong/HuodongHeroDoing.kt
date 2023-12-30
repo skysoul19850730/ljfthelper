@@ -1,7 +1,6 @@
 package tasks.huodong
 
 import App
-import com.sun.jna.platform.win32.User32
 import com.sun.jna.platform.win32.WinUser
 import data.Config
 import data.HeroBean
@@ -33,14 +32,14 @@ class HuodongHeroDoing : HeroDoing(0), App.KeyListener {
 
     override fun initHeroes() {
         heros = arrayListOf<HeroBean>().apply {
-            add(HeroBean("dianfa"))
-            add(HeroBean("xiaoye"))
-
-            add(HeroBean("sishen"))
+            add(HeroBean("houyi"))
             add(HeroBean("hugong"))
+
+            add(HeroBean("houzi"))
+            add(HeroBean("xiaoye"))
             add(HeroBean("gugu"))
-            add(HeroBean("xiaochou"))
-            add(HeroBean("shexian", needCar = false, isGongCheng = true))
+            add(HeroBean("dianfa"))
+            add(HeroBean("dapao", needCar = false, isGongCheng = true))
             add(HeroBean("guangqiu", needCar = false))
             add(muqiu)
             add(hunqiu)

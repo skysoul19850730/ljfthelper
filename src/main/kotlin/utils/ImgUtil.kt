@@ -108,7 +108,7 @@ object ImgUtil {
         }
     }
 
-     fun colorCompare(color1: Int, color2: Int): Boolean {
+    private fun colorCompare(color1: Int, color2: Int): Boolean {
         if (sim == 0) {
             return color1 == color2
         }

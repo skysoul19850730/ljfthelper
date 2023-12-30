@@ -41,9 +41,6 @@ import javax.imageio.ImageIO
 import kotlin.math.abs
 
 object MRobot {
-
-    val DispatchersClick = newFixedThreadPoolContext(1,"mclick")
-
     val robot = Robot()
 
     val houtai = true
@@ -86,7 +83,7 @@ object MRobot {
             x += rect.left
             y += rect.top
         }
-        withContext(DispatchersClick) {
+        withContext(Dispatchers.Main) {
             logOnly("click point start ${x}  ${y}")
             robot.mouseMove(x, y)
             delay(30)
@@ -262,7 +259,7 @@ object MRobot {
 
 
     suspend fun WinDef.HWND.clickPoint(point: MPoint) {
-        withContext(DispatchersClick) {
+        withContext(Dispatchers.Main) {
             var value: Long = ((point.y shl 16) or point.x).toLong()
             User32.INSTANCE.SendMessage(this@clickPoint, 0x0201, WinDef.WPARAM(0x0001), WinDef.LPARAM(value.toLong()))
             delay(30)

@@ -4,10 +4,12 @@ import data.MRect
 import tasks.WxUtil
 import utils.MRobot
 import utils.MRobot.houtai
+import java.awt.Color
 import java.awt.Rectangle
 import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
+import kotlin.math.abs
 
 fun getImage(rect: MRect,window: WinDef.HWND? = App.tfWindow!!): BufferedImage {
     var img2 =
@@ -21,6 +23,12 @@ fun getImage(rect: MRect,window: WinDef.HWND? = App.tfWindow!!): BufferedImage {
                 height = rect.bottom - rect.top + 1
             })
     return img2
+}
+
+fun Color.simTo(c1: java.awt.Color, sim: Int = 20): Boolean {
+    return (abs(c1.red - red) <= sim
+            && abs(c1.green - green) <= sim
+            && abs(c1.blue - blue) <= sim)
 }
 
 fun BufferedImage.foreach(back:(Int,Int)->Boolean){
