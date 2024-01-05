@@ -53,6 +53,10 @@ fun BufferedImage.saveTo(file: File) {
     log(this)
 }
 
+fun BufferedImage.saveToApp(){
+    saveTo(File(App.caijiPath, "${System.currentTimeMillis()}.png"))
+}
+
 fun BufferedImage.saveSubTo(subRect: MRect, file: File) {
     getSubImage(subRect).saveTo(file)
 }

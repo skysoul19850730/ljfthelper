@@ -1,6 +1,8 @@
 @file:OptIn(ExperimentalComposeUiApi::class)
 
 import App.state
+import MainData.guan
+import MainData.heros
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -73,6 +75,7 @@ fun App() {
 
     MaterialTheme {
         Row {
+            carInfo()
             Column(Modifier.weight(1f).fillMaxHeight()) {
                 Row(Modifier.fillMaxWidth().background(Color.LightGray).padding(12.dp)) {
                     MCheckBox("Home", Config.isHome4Setting)
@@ -116,12 +119,12 @@ fun App() {
                             } else if (item is BufferedImage) {
                                 var ww = item.width
                                 var hh = item.height
-                                if(item.width>item.height && item.width>400){
+                                if (item.width > item.height && item.width > 400) {
                                     ww = 400
-                                    hh = ((item.height*1f*ww)/item.width).toInt()
-                                }else if(item.height>item.width && item.height>400){
+                                    hh = ((item.height * 1f * ww) / item.width).toInt()
+                                } else if (item.height > item.width && item.height > 400) {
                                     hh = 400
-                                    ww = ((item.width*1f/item.height)*hh).toInt()
+                                    ww = ((item.width * 1f / item.height) * hh).toInt()
                                 }
                                 Image(item.toPainter(), null, Modifier.width(ww.dp).height(hh.dp))
                             }
@@ -302,6 +305,45 @@ fun App() {
         addJiexiHeroResult(showJieXiHeroUI)
 
         addHezuoMenuDialog(showHezuoZhannvMenu)
+    }
+}
+
+
+object MainData {
+    val heros = mutableStateOf(arrayListOf<HeroBean?>())
+    val guan = mutableStateOf(0)
+}
+
+@Composable
+fun carInfo() {
+    Row {
+        Column {
+            Text("关卡",Modifier.height(20.dp))
+            Text("${guan.value}", Modifier.height(20.dp))
+            VSpace(12)
+            carPosInfo(heros.value.getOrNull(5))
+            carPosInfo(heros.value.getOrNull(3))
+            carPosInfo(heros.value.getOrNull(1))
+        }
+        HSpace(12)
+        Column {
+            carPosInfo(heros.value.getOrNull(6))
+            carPosInfo(heros.value.getOrNull(4))
+            carPosInfo(heros.value.getOrNull(2))
+            carPosInfo(heros.value.getOrNull(0))
+        }
+
+    }
+}
+
+@Composable
+fun carPosInfo(hero: HeroBean?) {
+    val name = hero?.heroName ?: "空位"
+    val star = hero?.currentLevel?.toString() ?: ""
+    Column {
+        Text("$name", Modifier.background(Color.Gray).width(60.dp).height(20.dp))
+        Text("$star",Modifier.width(60.dp).height(20.dp))
+        VSpace(12)
     }
 }
 
@@ -837,7 +879,7 @@ fun testSim() {
     }
 }
 
-fun deleteSimPic(){
+fun deleteSimPic() {
     var list = arrayListOf<File>()
     var imgs = arrayListOf<BufferedImage>()
     var files = File(App.caijiPath).listFiles()
@@ -848,7 +890,7 @@ fun deleteSimPic(){
             var img = getImageFromFile(it)
             var has = false
             imgs.forEach { i ->
-                if (ImgUtil.isImageSim(img, i,0.95)) {
+                if (ImgUtil.isImageSim(img, i, 0.95)) {
                     has = true
                 }
             }
@@ -867,8 +909,8 @@ fun deleteSimPic(){
     }
 }
 
-fun saveImgTest(file:File,rect:MRect){
-    getImageFromFile(file).saveSubTo(rect,File(App.caijiPath,System.currentTimeMillis().toString()+".png"))
+fun saveImgTest(file: File, rect: MRect) {
+    getImageFromFile(file).saveSubTo(rect, File(App.caijiPath, System.currentTimeMillis().toString() + ".png"))
 }
 
 fun test() {
@@ -877,9 +919,9 @@ fun test() {
 //        log(this)
 //    }
 
-//    ChuanZhangTest.startChuanZhangOberserver()
+    ChuanZhangTest.startChuanZhangOberserver()
 //    saveImgTest(File(App.caijiPath,"1701233714591.png"),Recognize.IcAdv4Hezuo.rectFinal)
-    autoMoveMouse()
+//    autoMoveMouse()
 //    testKaiJi()
 //    GlobalScope.launch {
 //        delay(2000)

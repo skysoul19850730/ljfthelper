@@ -1,5 +1,6 @@
 package tasks.guankatask
 
+import MainData
 import data.Config
 import getImage
 import getImageFromFile
@@ -50,6 +51,7 @@ class GuankaTask {
                     if(ImgUtil.isImageSim(curImg,imgList.get(i),0.98)){
                         if(currentGuanIndex != i){
                             currentGuanIndex = i
+                            MainData.guan.value = currentGuanIndex
                             log("当前关卡：${currentGuanIndex+1}")
                             has = true
                             changeListener?.onGuanChange(currentGuanIndex+1)
@@ -71,5 +73,6 @@ class GuankaTask {
 
     fun stop() {
         running = false
+        MainData.guan.value = 0
     }
 }

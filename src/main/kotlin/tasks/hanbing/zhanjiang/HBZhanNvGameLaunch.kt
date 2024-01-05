@@ -15,7 +15,7 @@ class HBZhanNvGameLaunch : IGameLaunch {
     //幻给副卡，脚本不用
     //270（管卡不采集检测了，直接检测右上角的boss，每5秒一次即可），看到孤星 下冰女卡住，遇到 神龙和乌龟，上狂将。
     var isRunning = false
-    var heroDoing: HBZhanNvHeroDoing? = null
+    var heroDoing: HBZhanNvHeroDoing2? = null
     var mJob: Job? = null
 
     var isHezuoIng = false
@@ -60,7 +60,7 @@ class HBZhanNvGameLaunch : IGameLaunch {
 //        }
 //        log("识别车辆位置 $chePosition")
 //        heroDoing = ZhanNvHeroDoing(chePosition)
-        heroDoing = HBZhanNvHeroDoing()
+        heroDoing = HBZhanNvHeroDoing2()
         heroDoing?.init()
         heroDoing?.start()
 

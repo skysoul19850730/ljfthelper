@@ -3,6 +3,7 @@ package tasks
 import com.sun.jna.platform.win32.GDI32Util
 import com.sun.jna.platform.win32.User32
 import com.sun.jna.platform.win32.WinDef
+import data.Config
 import data.MPoint
 import data.MRect
 import getImage
@@ -36,8 +37,8 @@ object WxUtil {
             sendPoint = MPoint(wxWindowRect.width-80,wxWindowRect.height - 25)
 //            User32.INSTANCE.MoveWindow(wxWindow, 0, 620, 700, 400, true)
         }
-       var bitmap = GDI32Util.getScreenshot(wxWindow)
-        log(bitmap)
+//       var bitmap = GDI32Util.getScreenshot(wxWindow)
+//        log(bitmap)
     }
 
     suspend fun sendText(text: String) {
@@ -61,7 +62,9 @@ object WxUtil {
 
     fun getText(): String {
         val img = getImage(wxWindowRect,wxWindow)
-        log(img)
+        if(Config.debug) {
+            log(img)
+        }
         var text = Tess.getText(img)
         return text
     }

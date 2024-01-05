@@ -1,5 +1,7 @@
 package tasks
 
+import MainData
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import data.*
 import data.Config.debug
@@ -254,6 +256,7 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
             println("check timeout")
             return false
         }
+        sysDataToMain()
         return checkHasChanged
     }
 
@@ -273,6 +276,7 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
             hero.checkStarLevelUseCard(this)
             log("${hero.heroName} level is ${hero.currentLevel}")
         }
+        sysDataToMain()
     }
 
     suspend fun checkStars() {
@@ -300,6 +304,7 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
             log("${hero.heroName} level is ${hero.currentLevel}")
 
         }
+        sysDataToMain()
     }
 
     /**
@@ -407,6 +412,8 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
         }
 
         log("hero ${heroBean.heroName} add ,position is ${heroBean.position} level is ${heroBean.currentLevel}")
+
+        sysDataToMain()
     }
 
     suspend fun downPosition(position: Int) {
@@ -437,6 +444,7 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
                 downing = false
             }
         }
+        sysDataToMain()
     }
 
 
@@ -497,10 +505,10 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
         var coast = System.currentTimeMillis() - startTime
         if (maxRate > 0.1) {
             log("最符合的车位是$maxIndex 其比例为:$maxRate  coast:$coast")
-            log(img)
+//            log(img)
         }
         if (maxRate > 0.2) {
-            img.saveTo(File(App.caijiPath, "${System.currentTimeMillis()}.png"))
+//            img.saveTo(File(App.caijiPath, "${System.currentTimeMillis()}.png"))
             return Pair(maxIndex,maxRate)
         }
 //        log(img)
@@ -544,5 +552,18 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
         return (abs(c1.red - c2.red) <= 20
                 && abs(c1.green - c2.green) <= 20
                 && abs(c1.blue - c2.blue) <= 20)
+    }
+
+    var mainData:MutableState<ArrayList<HeroBean?>>?=null
+    fun attchToMain(){
+        mainData = MainData.heros
+    }
+    private fun sysDataToMain(){
+        mainData?.value = arrayListOf<HeroBean?>().apply {
+            addAll(heroList.map {
+                it?.copy()
+            })
+        }
+        log("sysDataToMain")
     }
 }

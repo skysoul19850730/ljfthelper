@@ -1,5 +1,6 @@
 package tasks
 
+import MainData
 import data.*
 import data.Config.delayLong
 import data.Config.delayNor
@@ -36,6 +37,7 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
         initHeroes()
         carDoing = CarDoing(chePosition).apply {
             initPositions()
+            attchToMain()
         }
     }
 
@@ -61,7 +63,7 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
 
 
     open fun onStop() {
-
+        MainData.heros.value = arrayListOf()
     }
 
     override fun stop() {
@@ -88,7 +90,18 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
             hs = getPreHeros(if (needShuaxin) delayLong else 10000)
         }
         log("识别到英雄 ${hs?.getOrNull(0)?.heroName}  ${hs?.getOrNull(1)?.heroName}  ${hs?.getOrNull(2)?.heroName}")
-        log(getImage(MRect.create4P(Config.zhandou_hero1CheckRect.left,Config.zhandou_hero1CheckRect.top,Config.zhandou_hero3CheckRect.right,Config.zhandou_hero1CheckRect.bottom)))
+        if(Config.debug) {
+            log(
+                getImage(
+                    MRect.create4P(
+                        Config.zhandou_hero1CheckRect.left,
+                        Config.zhandou_hero1CheckRect.top,
+                        Config.zhandou_hero3CheckRect.right,
+                        Config.zhandou_hero1CheckRect.bottom
+                    )
+                )
+            )
+        }
         return hs!!
     }
 

@@ -14,7 +14,7 @@ import java.io.File
 
 //weightModel 0有就行，1 优先满金,2不满星
 //heroname取文件夹名字，但文件夹名字就是取得英雄名字
-class HeroBean(
+data class HeroBean(
     val heroName: String,
     var weight: Int = 0,
     val weightModel: Int = 1,
