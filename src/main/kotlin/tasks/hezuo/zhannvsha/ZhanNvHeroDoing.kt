@@ -1,5 +1,6 @@
 package tasks.hezuo.zhannvsha
 
+import App
 import data.Config
 import data.Config.delayLong
 import data.Config.delayNor
@@ -142,6 +143,11 @@ class ZhanNvHeroDoing : HeroDoing(0) {//默认赋值0，左边，借用左边第
             if (guanka == 21 && Zhuangbei.isYandou()) {
                 guanka = 2
             }
+        }
+
+        if(App.reCheckStar){
+            carDoing.reCheckStars()
+            App.reCheckStar = false
         }
 
     }

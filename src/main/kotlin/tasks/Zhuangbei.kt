@@ -1,5 +1,6 @@
 package tasks
 
+import MainData
 import data.Config
 import getImage
 import getImageFromRes
@@ -73,6 +74,8 @@ object Zhuangbei {
         longxins.forEach {
             if (ImgUtil.isImageInRect(it, Config.zhandou_zhuangbeiCheckRect)) {
                 log("是龙心")
+                MainData.zhuangbei.value = "龙心"
+
                 return true
             }
         }
@@ -84,6 +87,7 @@ object Zhuangbei {
         yandous.forEach {
             if (ImgUtil.isImageInRect(it, Config.zhandou_zhuangbeiCheckRect)) {
                 log("是烟斗")
+                MainData.zhuangbei.value = "烟斗"
 
                 return true
             }
@@ -96,6 +100,7 @@ object Zhuangbei {
         qiangxis.forEach {
             if (ImgUtil.isImageInRect(it, Config.zhandou_zhuangbeiCheckRect)) {
                 log("是强袭")
+                MainData.zhuangbei.value = "强袭"
 
                 return true
             }
@@ -108,6 +113,8 @@ object Zhuangbei {
         shengjians.forEach {
             if (ImgUtil.isImageInRect(it, Config.zhandou_zhuangbeiCheckRect)) {
                 log("是圣剑")
+                MainData.zhuangbei.value = "圣剑"
+
                 return true
             }
         }
@@ -119,6 +126,7 @@ object Zhuangbei {
         var result = isLongxin() || isShengjian() || isYandou() || isQiangxi()
         if(!result){
             log("没装备")
+            MainData.zhuangbei.value = "没装备"
         }
         return result
     }

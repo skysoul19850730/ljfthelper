@@ -1,5 +1,6 @@
 package tasks.duizhan.longquan
 
+import MainData
 import data.Config
 import data.Config.delayLong
 import data.Config.delayNor
@@ -84,10 +85,13 @@ class LongQuanGameLaunch : IGameLaunch {
             if(DuiZhanResultSuc.isFit()){
                 log("战斗胜利")
                 allSucCount++
+                MainData.sucCount.value++
                 failCount = 0
             }else{
                 log("战斗失败")
                 allFailCount++
+                MainData.failCount.value++
+
                 failCount++
             }
             log("战斗胜利： $allSucCount 失败：$allFailCount 胜率：${(allSucCount*100f)/(allSucCount+allFailCount)}%")

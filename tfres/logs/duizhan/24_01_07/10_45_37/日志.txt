@@ -1,0 +1,13 @@
+10:45:37 herodoing stop
+10:45:37 checkIfEnd ok
+10:44:06 下卡完成：xiaolu position:0
+10:44:05 英雄上阵:xiaolu 位置:0 等级:1
+10:44:05 识别到英雄 kuanglong  xiaolu  kui
+10:44:04 下卡完成：xiaolu position:0
+10:44:04 英雄上阵:xiaolu 位置:0 等级:1
+10:44:03 识别到英雄 nvwang  xiaolu  xiaochou
+10:43:57 checkDuizhan ok
+10:43:57 checkDuizhan
+10:43:54 checkAdv
+10:43:51 战斗胜利： 1 失败：0 胜率：100.0%
+10:43:51 战斗胜利

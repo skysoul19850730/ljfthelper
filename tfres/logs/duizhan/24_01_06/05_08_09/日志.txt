@@ -1,0 +1,60 @@
+05:08:09 herodoing stop
+05:08:09 checkIfEnd ok
+05:08:08 英雄上阵:dijing 位置:4 等级:1
+05:07:56 识别到英雄 kui  dijing  bingnv
+05:07:47 英雄上阵:nvwang 位置:2 等级:2
+05:07:47 识别到英雄 xiaochou  bawang  nvwang
+05:07:40 英雄上阵:kuanglong 位置:3 等级:1
+05:07:39 识别到英雄 kuanglong  bingnv  dijing
+05:07:37 英雄上阵:nvwang 位置:2 等级:1
+05:07:37 识别到英雄 bawang  dijing  nvwang
+05:07:36 英雄上阵:bawang 位置:1 等级:1
+05:07:36 识别到英雄 bawang  bingnv  nvwang
+05:07:35 longquan 卡片检测星级结果： 4级 changed:true
+05:07:34 英雄上阵:guangqiu 位置:-1 等级:0
+05:07:33 下卡完成：xiaochou position:1
+05:07:33 下卡完成：bingnv position:2
+05:07:33 识别到英雄 kui  xiaolu  guangqiu
+05:07:32 英雄上阵:longquan 位置:0 等级:3
+05:07:31 识别到英雄 xiaolu  longquan  dijing
+05:07:31 下卡完成：xiaolu position:3
+05:07:31 英雄上阵:xiaolu 位置:3 等级:1
+05:07:30 识别到英雄 bingnv  xiaolu  bawang
+05:07:29 识别到英雄 kuanglong  bawang  kui
+05:07:29 识别到英雄 kuanglong  bawang  kui
+05:07:28 英雄上阵:longquan 位置:0 等级:2
+05:07:28 识别到英雄 kuanglong  longquan  bingnv
+05:07:27 下卡完成：xiaolu position:3
+05:07:27 英雄上阵:xiaolu 位置:3 等级:1
+05:07:26 识别到英雄 nvwang  kui  xiaolu
+05:07:26 下卡完成：xiaolu position:3
+05:07:26 英雄上阵:xiaolu 位置:3 等级:1
+05:07:25 识别到英雄 xiaolu  bawang  kui
+05:07:24 下卡完成：xiaolu position:3
+05:07:24 英雄上阵:xiaolu 位置:3 等级:1
+05:07:24 识别到英雄 xiaolu  kuanglong  bingnv
+05:07:23 下卡完成：xiaolu position:3
+05:07:23 英雄上阵:xiaolu 位置:3 等级:1
+05:07:20 识别到英雄 bawang  xiaochou  xiaolu
+05:07:19 英雄上阵:xiaochou 位置:1 等级:2
+05:07:19 识别到英雄 xiaochou  nvwang  kuanglong
+05:07:18 英雄上阵:bingnv 位置:2 等级:1
+05:07:17 下卡完成：bingnv position:2
+05:07:17 识别到英雄 kui  bingnv  nvwang
+05:07:16 英雄上阵:bingnv 位置:2 等级:1
+05:07:16 识别到英雄 xiaochou  kuanglong  bingnv
+05:07:15 下卡完成：xiaolu position:2
+05:07:15 英雄上阵:xiaolu 位置:2 等级:1
+05:07:15 识别到英雄 bingnv  xiaolu  xiaochou
+05:07:14 下卡完成：xiaolu position:2
+05:07:14 英雄上阵:xiaolu 位置:2 等级:1
+05:06:48 识别到英雄 kuanglong  nvwang  xiaolu
+05:06:47 英雄上阵:xiaochou 位置:1 等级:1
+05:06:46 识别到英雄 nvwang  bawang  xiaochou
+05:06:45 英雄上阵:longquan 位置:0 等级:1
+05:06:45 识别到英雄 longquan  nvwang  xiaochou
+05:06:38 checkDuizhan ok
+05:06:38 checkDuizhan
+05:06:36 checkAdv
+05:06:32 战斗胜利： 39 失败：41 胜率：48.75%
+05:06:32 战斗失败

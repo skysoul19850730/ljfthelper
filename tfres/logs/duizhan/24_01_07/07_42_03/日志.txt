@@ -1,0 +1,63 @@
+07:42:03 herodoing stop
+07:42:03 checkIfEnd ok
+07:41:53 英雄上阵:kuanglong 位置:3 等级:1
+07:41:53 识别到英雄 kuanglong  bawang  guangqiu
+07:41:49 英雄上阵:nvwang 位置:2 等级:1
+07:41:49 识别到英雄 xiaolu  kui  nvwang
+07:41:48 下卡完成：xiaolu position:2
+07:41:48 英雄上阵:xiaolu 位置:2 等级:1
+07:41:48 识别到英雄 bingnv  xiaolu  kui
+07:41:43 英雄上阵:bawang 位置:0 等级:1
+07:41:42 识别到英雄 bingnv  bawang  kui
+07:41:42 longquan 卡片检测星级结果： 4级 changed:true
+07:41:40 英雄上阵:guangqiu 位置:-1 等级:0
+07:41:39 下卡完成：dijing position:2
+07:41:39 下卡完成：bingnv position:0
+07:41:39 识别到英雄 kuanglong  guangqiu  xiaochou
+07:41:38 识别到英雄 kui  kuanglong  bawang
+07:41:37 英雄上阵:bingnv 位置:0 等级:1
+07:41:37 下卡完成：bingnv position:0
+07:41:36 识别到英雄 bingnv  bawang  nvwang
+07:41:36 下卡完成：xiaolu position:3
+07:41:36 英雄上阵:xiaolu 位置:3 等级:1
+07:41:35 识别到英雄 nvwang  kuanglong  xiaolu
+07:41:35 英雄上阵:dijing 位置:2 等级:1
+07:41:34 识别到英雄 nvwang  dijing  bingnv
+07:41:33 longquan 卡片检测星级结果： 3级 changed:false
+07:41:32 英雄上阵:longquan 位置:1 等级:3
+07:41:32 识别到英雄 bawang  longquan  kui
+07:41:31 英雄上阵:bingnv 位置:0 等级:1
+07:41:31 下卡完成：bingnv position:0
+07:41:31 识别到英雄 nvwang  kui  bingnv
+07:41:30 英雄上阵:bingnv 位置:0 等级:1
+07:41:30 识别到英雄 kuanglong  bingnv  kui
+07:41:29 下卡完成：xiaolu position:0
+07:41:29 英雄上阵:xiaolu 位置:0 等级:1
+07:41:28 识别到英雄 xiaolu  bingnv  bawang
+07:41:28 下卡完成：xiaolu position:0
+07:41:27 英雄上阵:xiaolu 位置:0 等级:1
+07:41:27 识别到英雄 kuanglong  xiaolu  dijing
+07:41:26 下卡完成：xiaolu position:0
+07:41:26 英雄上阵:xiaolu 位置:0 等级:1
+07:41:25 识别到英雄 xiaolu  bawang  bingnv
+07:41:25 longquan 卡片检测星级结果： 2级 changed:true
+07:41:23 英雄上阵:guangqiu 位置:-1 等级:0
+07:41:23 下卡完成：xiaochou position:2
+07:41:23 下卡完成：bingnv position:0
+07:41:22 识别到英雄 dijing  guangqiu  bingnv
+07:41:22 下卡完成：xiaolu position:3
+07:41:22 英雄上阵:xiaolu 位置:3 等级:1
+07:41:11 识别到英雄 xiaolu  xiaochou  dijing
+07:41:06 英雄上阵:xiaochou 位置:2 等级:1
+07:40:58 识别到英雄 bawang  kui  xiaochou
+07:40:58 英雄上阵:longquan 位置:1 等级:1
+07:40:56 识别到英雄 bawang  nvwang  longquan
+07:40:55 英雄上阵:guangqiu 位置:-1 等级:0
+07:40:55 识别到英雄 nvwang  guangqiu  null
+07:40:53 英雄上阵:bingnv 位置:0 等级:1
+07:40:52 识别到英雄 guangqiu  bingnv  xiaochou
+07:40:43 checkDuizhan ok
+07:40:43 checkDuizhan
+07:40:40 checkAdv
+07:40:37 战斗胜利： 22 失败：17 胜率：56.410255%
+07:40:37 战斗胜利

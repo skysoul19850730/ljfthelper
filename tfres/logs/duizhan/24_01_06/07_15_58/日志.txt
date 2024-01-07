@@ -1,0 +1,64 @@
+07:15:58 herodoing stop
+07:15:58 checkIfEnd ok
+07:15:54 英雄上阵:bawang 位置:4 等级:3
+07:15:54 识别到英雄 bingnv  bawang  kui
+07:15:52 英雄上阵:bawang 位置:4 等级:2
+07:15:52 识别到英雄 bingnv  bawang  xiaolu
+07:15:51 英雄上阵:dijing 位置:2 等级:3
+07:15:50 识别到英雄 bingnv  kui  dijing
+07:15:50 英雄上阵:bawang 位置:4 等级:1
+07:15:49 识别到英雄 kuanglong  bawang  kui
+07:15:49 下卡完成：xiaolu position:4
+07:15:48 英雄上阵:xiaolu 位置:4 等级:1
+07:15:48 识别到英雄 xiaolu  kuanglong  bingnv
+07:15:47 下卡完成：xiaolu position:4
+07:15:47 英雄上阵:xiaolu 位置:4 等级:1
+07:15:46 识别到英雄 xiaolu  dijing  kui
+07:15:45 下卡完成：xiaolu position:4
+07:15:45 英雄上阵:xiaolu 位置:4 等级:1
+07:15:23 识别到英雄 kui  xiaolu  bingnv
+07:15:07 英雄上阵:nvwang 位置:3 等级:1
+07:15:06 识别到英雄 guangqiu  nvwang  bingnv
+07:15:02 英雄上阵:dijing 位置:2 等级:2
+07:15:02 识别到英雄 kui  dijing  bingnv
+07:15:01 下卡完成：xiaolu position:3
+07:15:01 英雄上阵:xiaolu 位置:3 等级:1
+07:14:40 识别到英雄 guangqiu  kui  xiaolu
+07:14:40 英雄上阵:dijing 位置:2 等级:1
+07:14:39 识别到英雄 xiaolu  dijing  kui
+07:14:39 英雄上阵:kuanglong 位置:1 等级:1
+07:14:38 识别到英雄 kuanglong  nvwang  xiaolu
+07:14:38 longquan 卡片检测星级结果： 4级 changed:true
+07:14:36 英雄上阵:guangqiu 位置:-1 等级:0
+07:14:35 下卡完成：dijing position:2
+07:14:35 下卡完成：bingnv position:1
+07:14:35 识别到英雄 xiaolu  kuanglong  guangqiu
+07:14:35 英雄上阵:bingnv 位置:1 等级:1
+07:14:34 下卡完成：bingnv position:1
+07:14:34 识别到英雄 bawang  bingnv  kui
+07:14:33 英雄上阵:dijing 位置:2 等级:1
+07:14:33 识别到英雄 bingnv  kui  dijing
+07:14:32 下卡完成：xiaolu position:2
+07:14:32 英雄上阵:xiaolu 位置:2 等级:1
+07:14:31 识别到英雄 nvwang  bingnv  xiaolu
+07:14:30 下卡完成：xiaolu position:2
+07:14:30 英雄上阵:xiaolu 位置:2 等级:1
+07:14:27 识别到英雄 bawang  xiaolu  kuanglong
+07:14:26 longquan 卡片检测星级结果： 3级 changed:false
+07:14:25 英雄上阵:longquan 位置:0 等级:3
+07:14:24 识别到英雄 nvwang  longquan  bawang
+07:14:24 英雄上阵:bingnv 位置:1 等级:1
+07:14:23 识别到英雄 kui  bawang  bingnv
+07:14:23 下卡完成：xiaolu position:1
+07:14:23 英雄上阵:xiaolu 位置:1 等级:1
+07:14:21 识别到英雄 bingnv  kuanglong  xiaolu
+07:14:21 longquan 卡片检测星级结果： 2级 changed:true
+07:14:19 英雄上阵:guangqiu 位置:-1 等级:0
+07:14:19 识别到英雄 bawang  nvwang  guangqiu
+07:14:18 英雄上阵:longquan 位置:0 等级:1
+07:14:18 识别到英雄 dijing  longquan  bawang
+07:14:11 checkDuizhan ok
+07:14:11 checkDuizhan
+07:14:08 checkAdv
+07:14:05 战斗胜利： 59 失败：57 胜率：50.86207%
+07:14:05 战斗胜利

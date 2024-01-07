@@ -49,6 +49,9 @@ fun BufferedImage.getSubImage(rect: MRect): BufferedImage {
 }
 
 fun BufferedImage.saveTo(file: File) {
+    if(!file.parentFile.exists()){
+        file.parentFile.mkdirs()
+    }
     ImageIO.write(this, "png", file)
     log(this)
 }

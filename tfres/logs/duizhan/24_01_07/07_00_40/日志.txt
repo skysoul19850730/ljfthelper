@@ -1,0 +1,12 @@
+07:00:40 herodoing stop
+07:00:40 checkIfEnd ok
+07:00:40 下卡完成：xiaolu position:1
+07:00:40 英雄上阵:xiaolu 位置:1 等级:1
+07:00:32 识别到英雄 kui  xiaolu  bingnv
+07:00:32 英雄上阵:dijing 位置:0 等级:1
+07:00:31 识别到英雄 dijing  bawang  nvwang
+07:00:22 checkDuizhan ok
+07:00:22 checkDuizhan
+06:59:45 checkAdv
+06:59:42 战斗胜利： 10 失败：7 胜率：58.82353%
+06:59:42 战斗失败

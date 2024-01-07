@@ -1,0 +1,60 @@
+07:20:57 herodoing stop
+07:20:57 checkIfEnd ok
+07:20:50 识别到英雄 bingnv  kui  xiaolu
+07:20:43 识别到英雄 bingnv  xiaochou  kui
+07:20:36 识别到英雄 kui  xiaochou  bingnv
+07:20:31 英雄上阵:nvwang 位置:2 等级:2
+07:20:31 识别到英雄 nvwang  bawang  xiaochou
+07:20:26 英雄上阵:kuanglong 位置:3 等级:1
+07:20:26 识别到英雄 bingnv  bawang  kuanglong
+07:20:25 nvwang 卡片检测星级结果： 2级 changed:false
+07:20:24 下卡完成：xiaolu position:3
+07:20:24 英雄上阵:xiaolu 位置:3 等级:1
+07:20:04 识别到英雄 xiaolu  kui  xiaochou
+07:19:55 nvwang 卡片检测星级结果： 2级 changed:false
+07:19:54 英雄上阵:nvwang 位置:2 等级:2
+07:19:54 识别到英雄 kui  dijing  nvwang
+07:19:43 英雄上阵:nvwang 位置:2 等级:1
+07:19:43 识别到英雄 nvwang  dijing  bawang
+07:19:42 英雄上阵:bawang 位置:1 等级:1
+07:19:42 识别到英雄 bawang  kui  bingnv
+07:19:41 longquan 卡片检测星级结果： 4级 changed:true
+07:19:39 英雄上阵:guangqiu 位置:-1 等级:0
+07:19:39 下卡完成：xiaochou position:1
+07:19:39 下卡完成：bingnv position:2
+07:19:39 识别到英雄 guangqiu  kui  xiaolu
+07:19:38 英雄上阵:bingnv 位置:2 等级:1
+07:19:37 识别到英雄 nvwang  dijing  bingnv
+07:19:36 英雄上阵:xiaochou 位置:1 等级:1
+07:19:36 识别到英雄 xiaochou  kui  bawang
+07:19:35 下卡完成：xiaolu position:1
+07:19:35 英雄上阵:xiaolu 位置:1 等级:1
+07:19:35 识别到英雄 xiaolu  nvwang  dijing
+07:19:34 下卡完成：xiaolu position:1
+07:19:34 英雄上阵:xiaolu 位置:1 等级:1
+07:19:33 识别到英雄 xiaolu  bawang  nvwang
+07:19:33 下卡完成：xiaolu position:1
+07:19:32 英雄上阵:xiaolu 位置:1 等级:1
+07:19:32 识别到英雄 xiaolu  xiaochou  nvwang
+07:19:31 下卡完成：xiaolu position:1
+07:19:31 英雄上阵:xiaolu 位置:1 等级:1
+07:19:31 识别到英雄 xiaolu  dijing  bawang
+07:19:30 longquan 卡片检测星级结果： 3级 changed:true
+07:19:28 英雄上阵:guangqiu 位置:-1 等级:0
+07:19:28 下卡完成：bingnv position:1
+07:19:28 识别到英雄 guangqiu  nvwang  kui
+07:19:27 英雄上阵:bingnv 位置:1 等级:1
+07:19:27 识别到英雄 bingnv  nvwang  bawang
+07:19:26 longquan 卡片检测星级结果： 2级 changed:true
+07:19:25 英雄上阵:guangqiu 位置:-1 等级:0
+07:19:24 下卡完成：bingnv position:1
+07:19:24 识别到英雄 kuanglong  bawang  guangqiu
+07:19:23 英雄上阵:bingnv 位置:1 等级:1
+07:19:22 识别到英雄 kuanglong  nvwang  bingnv
+07:19:22 英雄上阵:longquan 位置:0 等级:1
+07:19:21 识别到英雄 xiaochou  xiaolu  longquan
+07:19:14 checkDuizhan ok
+07:19:14 checkDuizhan
+07:19:11 checkAdv
+07:19:08 战斗胜利： 17 失败：10 胜率：62.962963%
+07:19:08 战斗胜利

@@ -1,0 +1,13 @@
+05:11:21 herodoing stop
+05:11:21 checkIfEnd ok
+05:11:20 longquan 卡片检测星级结果： 0级 changed:true
+05:11:19 未检测到星级，超时
+05:11:17 英雄上阵:guangqiu 位置:-1 等级:0
+05:11:16 识别到英雄 bawang  bingnv  guangqiu
+05:11:16 英雄上阵:longquan 位置:0 等级:1
+05:11:15 识别到英雄 longquan  xiaochou  xiaolu
+05:11:09 checkDuizhan ok
+05:11:09 checkDuizhan
+05:11:06 checkAdv
+05:11:03 战斗胜利： 41 失败：41 胜率：50.0%
+05:11:03 战斗胜利

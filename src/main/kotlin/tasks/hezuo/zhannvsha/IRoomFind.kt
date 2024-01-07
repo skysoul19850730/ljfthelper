@@ -6,6 +6,7 @@ import kotlinx.coroutines.delay
 import tasks.WxUtil
 import utils.MRobot
 import log
+import logOnly
 
 abstract class IRoomFind {
     var roomUsed = arrayListOf<String>()//用过的房间号
@@ -49,7 +50,7 @@ abstract class IRoomFind {
         }
         while (roomToUser.isEmpty()) {
             var text = getText()
-            log("截图text:$text")
+            logOnly("截图text:$text")
             Regex("(?<=a).*?(?=a)").findAll(text, 0).forEach {
                 log("find text :" + it.value, true)
                 var text = it.value.toString().replace("l", "1")

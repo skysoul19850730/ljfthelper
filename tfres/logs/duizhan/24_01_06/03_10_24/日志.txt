@@ -1,0 +1,60 @@
+03:10:24 herodoing stop
+03:10:24 checkIfEnd ok
+03:10:23 未检测到星级，超时
+03:10:21 英雄上阵:bingnv 位置:2 等级:1
+03:10:20 下卡完成：bingnv position:2
+03:10:20 识别到英雄 bingnv  kui  kuanglong
+03:10:03 英雄上阵:dijing 位置:3 等级:2
+03:10:03 识别到英雄 kui  dijing  bawang
+03:10:00 英雄上阵:bingnv 位置:2 等级:1
+03:09:59 下卡完成：bingnv position:2
+03:09:59 识别到英雄 bingnv  dijing  nvwang
+03:09:41 英雄上阵:dijing 位置:3 等级:1
+03:09:18 识别到英雄 nvwang  dijing  bawang
+03:09:00 英雄上阵:bingnv 位置:2 等级:1
+03:08:59 识别到英雄 bingnv  kui  nvwang
+03:08:53 识别到英雄 bawang  nvwang  kui
+03:08:15 英雄上阵:xiaochou 位置:0 等级:1
+03:08:15 识别到英雄 kui  nvwang  xiaochou
+03:08:14 longquan 卡片检测星级结果： 3级 changed:true
+03:08:12 英雄上阵:guangqiu 位置:-1 等级:0
+03:08:12 下卡完成：xiaochou position:2
+03:08:12 下卡完成：bingnv position:0
+03:08:11 识别到英雄 guangqiu  nvwang  bingnv
+03:07:56 英雄上阵:xiaochou 位置:2 等级:1
+03:07:56 识别到英雄 kuanglong  bingnv  xiaochou
+03:07:55 英雄上阵:bingnv 位置:0 等级:1
+03:07:55 下卡完成：bingnv position:0
+03:07:55 识别到英雄 bingnv  bawang  kui
+03:07:54 英雄上阵:bingnv 位置:0 等级:1
+03:07:53 下卡完成：bingnv position:0
+03:07:53 识别到英雄 kui  bingnv  nvwang
+03:07:53 下卡完成：xiaolu position:2
+03:07:52 英雄上阵:xiaolu 位置:2 等级:1
+03:07:52 识别到英雄 dijing  nvwang  xiaolu
+03:07:49 识别到英雄 kui  kuanglong  nvwang
+03:07:49 下卡完成：xiaolu position:2
+03:07:49 英雄上阵:xiaolu 位置:2 等级:1
+03:07:48 识别到英雄 nvwang  xiaolu  kui
+03:07:40 识别到英雄 bawang  kui  kuanglong
+03:07:40 英雄上阵:bingnv 位置:0 等级:1
+03:07:39 识别到英雄 bawang  bingnv  nvwang
+03:07:39 longquan 卡片检测星级结果： 2级 changed:true
+03:07:37 英雄上阵:guangqiu 位置:-1 等级:0
+03:07:37 下卡完成：dijing position:2
+03:07:36 下卡完成：bingnv position:0
+03:07:36 识别到英雄 guangqiu  bawang  kui
+03:07:31 识别到英雄 nvwang  kuanglong  bawang
+03:07:27 英雄上阵:dijing 位置:2 等级:1
+03:07:15 识别到英雄 bingnv  dijing  bawang
+03:07:14 英雄上阵:longquan 位置:1 等级:1
+03:07:12 识别到英雄 xiaochou  bawang  longquan
+03:07:12 识别到英雄 kui  nvwang  bawang
+03:07:12 识别到英雄 kui  nvwang  bawang
+03:07:11 英雄上阵:bingnv 位置:0 等级:1
+03:07:11 识别到英雄 xiaochou  bingnv  dijing
+03:07:02 checkDuizhan ok
+03:07:02 checkDuizhan
+03:06:59 checkAdv
+03:06:56 战斗胜利： 13 失败：14 胜率：48.148148%
+03:06:56 战斗胜利

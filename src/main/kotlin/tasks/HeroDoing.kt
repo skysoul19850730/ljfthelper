@@ -8,6 +8,7 @@ import getImage
 import kotlinx.coroutines.*
 import log
 import logOnly
+import utils.LogUtil
 import utils.MRobot
 import kotlin.coroutines.resume
 
@@ -64,6 +65,7 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
 
     open fun onStop() {
         MainData.heros.value = arrayListOf()
+        LogUtil.saveAndClear()
     }
 
     override fun stop() {
@@ -130,7 +132,7 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
 
         if (hs == null) {//上车了(点击后再检验，目标区域不含英雄了）
             carDoing.addHero(heroBean)
-            log("英雄上阵:${heroBean.heroName} 等级:${heroBean.currentLevel}")
+            log("英雄上阵:${heroBean.heroName} 位置:${heroBean.position} 等级:${heroBean.currentLevel}")
             afterHeroClick(heroBean)
         } else {//上不去，没格子了(如何是换卡，在这之前已经下了卡了，下了卡就能上去，所以这里只会因为没有格子而上不去，所以点扩建再尝试上卡
             logOnly("英雄未上阵")

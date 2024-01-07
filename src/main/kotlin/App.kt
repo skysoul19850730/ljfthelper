@@ -21,6 +21,8 @@ import java.awt.event.KeyEvent.*
 import java.io.File
 
 object App {
+    var reCheckStar = false
+
     var caijing = mutableStateOf(false)
     var timerText = mutableStateOf("定时关闭")
     var windowClose = mutableStateOf(0)

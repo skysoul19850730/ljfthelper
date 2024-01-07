@@ -23,13 +23,13 @@ class HuodongHeroDoing2 : HeroDoing(0), App.KeyListener {
 
     override fun initHeroes() {
         heros = arrayListOf<HeroBean>().apply {
-            add(HeroBean("tieqi"))
-            add(HeroBean("jianke", weightModel = 0))
+            add(HeroBean("shan"))
+            add(HeroBean("mengyan", weightModel = 0))
 
             add(HeroBean("bingnv", weightModel = 0))
-            add(HeroBean("saman"))
-            add(HeroBean("kuangjiang"))
+            add(HeroBean("tieqi"))
             add(HeroBean("daoke"))
+            add(HeroBean("wangjiang"))
 
             add(HeroBean("guangqiu", needCar = false))
 

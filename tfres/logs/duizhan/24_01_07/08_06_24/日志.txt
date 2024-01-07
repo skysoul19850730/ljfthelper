@@ -1,0 +1,62 @@
+08:06:24 herodoing stop
+08:06:24 checkIfEnd ok
+08:06:17 识别到英雄 kuanglong  kui  xiaochou
+08:06:16 英雄上阵:guangqiu 位置:-1 等级:0
+08:06:16 下卡完成：bingnv position:0
+08:06:16 识别到英雄 bingnv  xiaolu  guangqiu
+08:06:14 英雄上阵:bingnv 位置:0 等级:1
+08:06:14 识别到英雄 kuanglong  dijing  bingnv
+08:06:13 下卡完成：xiaolu position:0
+08:06:13 英雄上阵:xiaolu 位置:0 等级:1
+08:06:13 识别到英雄 xiaolu  dijing  kui
+08:06:12 下卡完成：xiaolu position:0
+08:06:12 英雄上阵:xiaolu 位置:0 等级:1
+08:06:11 识别到英雄 kui  bingnv  xiaolu
+08:06:04 英雄上阵:guangqiu 位置:-1 等级:0
+08:06:03 识别到英雄 nvwang  xiaolu  guangqiu
+08:06:01 英雄上阵:guangqiu 位置:-1 等级:0
+08:06:01 下卡完成：bingnv position:0
+08:06:01 识别到英雄 xiaolu  guangqiu  xiaochou
+08:05:56 识别到英雄 dijing  kuanglong  longquan
+08:05:55 识别到英雄 longquan  kui  kuanglong
+08:05:55 识别到英雄 longquan  kui  kuanglong
+08:05:54 下卡完成：xiaolu position:3
+08:05:54 英雄上阵:xiaolu 位置:3 等级:1
+08:05:54 识别到英雄 xiaolu  longquan  kui
+08:05:53 下卡完成：xiaolu position:3
+08:05:53 英雄上阵:xiaolu 位置:3 等级:1
+08:05:53 识别到英雄 bingnv  kui  xiaolu
+08:05:52 英雄上阵:bawang 位置:1 等级:4
+08:05:52 识别到英雄 bingnv  xiaolu  bawang
+08:05:51 下卡完成：xiaolu position:3
+08:05:51 英雄上阵:xiaolu 位置:3 等级:1
+08:05:50 识别到英雄 xiaolu  kui  dijing
+08:05:50 下卡完成：xiaolu position:3
+08:05:49 英雄上阵:xiaolu 位置:3 等级:1
+08:05:35 识别到英雄 xiaolu  kui  longquan
+08:05:31 英雄上阵:bingnv 位置:0 等级:1
+08:05:31 下卡完成：bingnv position:0
+08:05:31 识别到英雄 kuanglong  bingnv  kui
+08:05:29 识别到英雄 kuanglong  xiaochou  dijing
+08:05:28 bawang 卡片检测星级结果： 3级 changed:false
+08:05:27 英雄上阵:bawang 位置:1 等级:3
+08:05:27 识别到英雄 bawang  bingnv  kuanglong
+08:05:24 bawang 卡片检测星级结果： 2级 changed:false
+08:05:23 英雄上阵:bawang 位置:1 等级:2
+08:05:23 识别到英雄 nvwang  kuanglong  bawang
+08:05:18 英雄上阵:nvwang 位置:2 等级:2
+08:05:18 识别到英雄 longquan  nvwang  kui
+08:05:16 英雄上阵:nvwang 位置:2 等级:1
+08:05:15 识别到英雄 bingnv  nvwang  kuanglong
+08:05:15 英雄上阵:bawang 位置:1 等级:1
+08:05:14 识别到英雄 bawang  guangqiu  dijing
+08:05:14 下卡完成：xiaolu position:1
+08:05:13 英雄上阵:xiaolu 位置:1 等级:1
+08:05:12 识别到英雄 bingnv  xiaolu  longquan
+08:05:11 英雄上阵:bingnv 位置:0 等级:1
+08:05:11 识别到英雄 guangqiu  kuanglong  bingnv
+08:05:04 checkDuizhan ok
+08:05:04 checkDuizhan
+08:05:02 checkAdv
+08:04:58 战斗胜利： 27 失败：25 胜率：51.923077%
+08:04:58 战斗失败

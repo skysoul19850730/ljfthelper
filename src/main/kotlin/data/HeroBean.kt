@@ -6,6 +6,7 @@ import getImageFromRes
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withTimeout
 import log
+import logOnly
 import resFile
 import tasks.CarDoing
 import utils.ImgUtil
@@ -83,7 +84,7 @@ data class HeroBean(
     suspend fun checkStarLevelUseCard(carDoing: CarDoing): Boolean {
         if (isInCar()) {
             delay(delayNor)
-            log("$heroName is check star")
+            logOnly("$heroName is check star")
             carDoing.carps.get(position).click()
             delay(delayNor)
             var level = 0
@@ -121,7 +122,7 @@ data class HeroBean(
             } catch (e: Exception) {
             }
             CarDoing.cardClosePoint.click()
-            log("$heroName check star is ${level} changed:${result}")
+            log("$heroName 卡片检测星级结果： ${level}级 changed:${result}")
             return result
         }
         return false

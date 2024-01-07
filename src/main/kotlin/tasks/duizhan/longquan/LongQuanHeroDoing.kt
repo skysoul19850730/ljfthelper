@@ -42,7 +42,7 @@ class LongQuanHeroDoing(val renji: Boolean = false) : HeroDoing(-1) {
         nvwang = HeroBean("nvwang", 80)
         kuanglong = HeroBean("kuanglong", 70)
         guangqiu = HeroBean("guangqiu", 60, needCar = false, compareRate = 0.99)
-        moqiu = HeroBean("moqiu", 50, needCar = false, compareRate = 0.95)
+        moqiu = HeroBean("kui", 50, needCar = false, compareRate = 0.95)
         bingnv = HeroBean("bingnv", 40)
         dijing = HeroBean("dijing", 30, compareRate = 0.95)
         xiaochou = HeroBean("xiaochou", 0)
@@ -194,7 +194,7 @@ class LongQuanHeroDoing(val renji: Boolean = false) : HeroDoing(-1) {
             return indexguangqiu
         }
 
-        if (indexmoqiu > -1 && heroCountInCar() > 0 && xuliangOk()) {
+        if (moqiu.heroName=="moqiu" && indexmoqiu > -1 && heroCountInCar() > 0 && xuliangOk()) {
             return indexmoqiu
         }
 
@@ -223,7 +223,7 @@ class LongQuanHeroDoing(val renji: Boolean = false) : HeroDoing(-1) {
             }
         }
 
-        if (indexmoqiu > -1) {
+        if (moqiu.heroName=="moqiu" &&indexmoqiu > -1) {
             return indexmoqiu
         }
 
@@ -297,7 +297,7 @@ class LongQuanHeroDoing(val renji: Boolean = false) : HeroDoing(-1) {
                 return indexxiaochou
             }
 
-            if (indexmoqiu > -1 && xuliangOk()) {
+            if (moqiu.heroName=="moqiu" &&indexmoqiu > -1 && xuliangOk()) {
                 return indexmoqiu
             }
 
@@ -333,7 +333,7 @@ class LongQuanHeroDoing(val renji: Boolean = false) : HeroDoing(-1) {
             if (indexbawang > -1) {
                 return indexbawang
             }
-            if (indexmoqiu > -1 && xuliangOk()) {
+            if (moqiu.heroName=="moqiu" &&indexmoqiu > -1 && xuliangOk()) {
                 return indexmoqiu
             }
 

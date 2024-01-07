@@ -3,6 +3,7 @@
 import App.state
 import MainData.guan
 import MainData.heros
+import MainData.zhuangbei
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -51,12 +52,15 @@ import kotlin.math.min
 import tasks.huodong.HuodongUtil
 import utils.ImgUtil
 import java.awt.event.KeyEvent
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 @Preview
 fun App() {
+
 
     var modelText by remember {
         mutableStateOf("选择模式")
@@ -80,6 +84,9 @@ fun App() {
                 Row(Modifier.fillMaxWidth().background(Color.LightGray).padding(12.dp)) {
                     MCheckBox("Home", Config.isHome4Setting)
                     MCheckBox("采集", App.caijing)
+                    button("重新检测星级"){
+                       App.reCheckStar = true
+                    }
 //                    HSpace(6)
 //                    MRadioBUtton("模拟器", Config.platform_moniqi, Config.platform)
 //                    HSpace(6)
@@ -112,21 +119,30 @@ fun App() {
                 }
                 Box(Modifier.fillMaxSize()) {
                     var state = rememberLazyListState()
-                    LazyColumn(Modifier.fillMaxSize(), state) {
+                    LazyColumn(Modifier.fillMaxSize(), state, verticalArrangement = Arrangement.spacedBy(12.dp)) {
                         itemsIndexed(LogUtil.messages) { index, item ->
-                            if (item is String) {
-                                Text(item, Modifier.padding(0.dp, 10.dp, 0.dp, 0.dp))
-                            } else if (item is BufferedImage) {
-                                var ww = item.width
-                                var hh = item.height
-                                if (item.width > item.height && item.width > 400) {
-                                    ww = 400
-                                    hh = ((item.height * 1f * ww) / item.width).toInt()
-                                } else if (item.height > item.width && item.height > 400) {
-                                    hh = 400
-                                    ww = ((item.width * 1f / item.height) * hh).toInt()
+                            if (item is LogUtil.LogData) {
+                                val time = item.time + ": "
+                                Row {
+                                    Text(time)
+
+                                    if (item.data is String) {
+                                        Text(item.data as String)
+                                    } else if (item.data is BufferedImage) {
+                                        var item = item.data as BufferedImage
+                                        var ww = item.width
+                                        var hh = item.height
+                                        if (item.width > item.height && item.width > 400) {
+                                            ww = 400
+                                            hh = ((item.height * 1f * ww) / item.width).toInt()
+                                        } else if (item.height > item.width && item.height > 400) {
+                                            hh = 400
+                                            ww = ((item.width * 1f / item.height) * hh).toInt()
+                                        }
+                                        Image(item.toPainter(), null, Modifier.width(ww.dp).height(hh.dp))
+                                    }
                                 }
-                                Image(item.toPainter(), null, Modifier.width(ww.dp).height(hh.dp))
+
                             }
                         }
                     }
@@ -312,18 +328,23 @@ fun App() {
 object MainData {
     val heros = mutableStateOf(arrayListOf<HeroBean?>())
     val guan = mutableStateOf(0)
+    val zhuangbei = mutableStateOf("")
+    val sucCount = mutableStateOf(0)
+    val failCount = mutableStateOf(0)
 }
 
 @Composable
 fun carInfo() {
     Row {
         Column {
-            Text("关卡",Modifier.height(20.dp))
+            Text("关卡", Modifier.height(20.dp))
             Text("${guan.value}", Modifier.height(20.dp))
             VSpace(12)
             carPosInfo(heros.value.getOrNull(5))
             carPosInfo(heros.value.getOrNull(3))
             carPosInfo(heros.value.getOrNull(1))
+
+            Text(zhuangbei.value)
         }
         HSpace(12)
         Column {
@@ -331,6 +352,10 @@ fun carInfo() {
             carPosInfo(heros.value.getOrNull(4))
             carPosInfo(heros.value.getOrNull(2))
             carPosInfo(heros.value.getOrNull(0))
+            if(App.mLaunchModel and App.model_duizhan !=0) {
+                Text("胜利：${MainData.sucCount.value}", color = Color.Red)
+                Text("失败：${MainData.failCount.value}", color = Color.Gray)
+            }
         }
 
     }
@@ -342,7 +367,7 @@ fun carPosInfo(hero: HeroBean?) {
     val star = hero?.currentLevel?.toString() ?: ""
     Column {
         Text("$name", Modifier.background(Color.Gray).width(60.dp).height(20.dp))
-        Text("$star",Modifier.width(60.dp).height(20.dp))
+        Text("$star", Modifier.width(60.dp).height(20.dp))
         VSpace(12)
     }
 }
@@ -969,11 +994,17 @@ private fun testSim(hero: HeroBean, hero2: HeroBean) {
     }
 }
 
+fun Any.toLogData(): LogUtil.LogData {
+    return LogUtil.LogData().apply {
+        time = SimpleDateFormat("hh:mm:ss").format(System.currentTimeMillis())
+        data = this@toLogData
+    }
+}
 
 fun Any.log(msg: Any, onlyPrint: Boolean = false) {
     println(msg.toString())
     if (!onlyPrint) {
-        LogUtil.messages.add(0, msg)
+        LogUtil.messages.add(0, msg.toLogData())
     }
 }
 

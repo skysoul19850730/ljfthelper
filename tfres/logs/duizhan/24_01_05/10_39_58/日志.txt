@@ -1,0 +1,13 @@
+10:39:58 herodoing stop
+10:39:58 checkIfEnd ok
+10:39:57 英雄上阵:dijing 位置:4 等级:1
+10:39:51 识别到英雄 xiaolu  bingnv  dijing
+10:39:41 英雄上阵:nvwang 位置:0 等级:2
+10:39:40 识别到英雄 nvwang  guangqiu  xiaolu
+10:39:37 英雄上阵:bawang 位置:3 等级:2
+10:39:37 识别到英雄 bingnv  kui  bawang
+10:39:26 英雄上阵:bawang 位置:3 等级:1
+10:39:17 识别到英雄 kui  guangqiu  bawang
+10:39:16 英雄上阵:kuanglong 位置:2 等级:1
+10:39:16 识别到英雄 dijing  xiaochou  kuanglong
+10:39:13 英雄上阵:nvwang 位置:0 等级:1

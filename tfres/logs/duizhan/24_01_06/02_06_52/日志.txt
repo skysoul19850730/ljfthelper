@@ -1,0 +1,31 @@
+02:06:52 herodoing stop
+02:06:52 checkIfEnd ok
+02:06:33 英雄上阵:nvwang 位置:1 等级:1
+02:06:32 识别到英雄 nvwang  xiaochou  dijing
+02:06:26 longquan 卡片检测星级结果： 4级 changed:true
+02:06:25 英雄上阵:guangqiu 位置:-1 等级:0
+02:06:24 识别到英雄 guangqiu  xiaolu  bingnv
+02:06:23 下卡完成：xiaolu position:1
+02:06:23 英雄上阵:xiaolu 位置:1 等级:1
+02:06:23 识别到英雄 xiaolu  kui  kuanglong
+02:06:20 longquan 卡片检测星级结果： 3级 changed:true
+02:06:18 英雄上阵:guangqiu 位置:-1 等级:0
+02:06:17 下卡完成：xiaochou position:1
+02:06:17 识别到英雄 guangqiu  bawang  bingnv
+02:06:14 英雄上阵:xiaochou 位置:1 等级:1
+02:06:14 识别到英雄 xiaochou  kui  kuanglong
+02:06:13 识别到英雄 nvwang  kuanglong  kui
+02:06:08 longquan 卡片检测星级结果： 2级 changed:true
+02:06:06 英雄上阵:guangqiu 位置:-1 等级:0
+02:06:06 识别到英雄 xiaolu  guangqiu  dijing
+02:06:05 下卡完成：xiaolu position:1
+02:06:05 英雄上阵:xiaolu 位置:1 等级:1
+02:06:04 识别到英雄 kuanglong  xiaolu  bingnv
+02:06:04 下卡完成：xiaolu position:1
+02:06:04 英雄上阵:xiaolu 位置:1 等级:1
+02:06:02 识别到英雄 bawang  xiaolu  kui
+02:06:02 英雄上阵:longquan 位置:0 等级:1
+02:06:01 识别到英雄 longquan  dijing  xiaolu
+02:05:54 checkDuizhan ok
+02:05:54 checkDuizhan
+02:05:53 合作完毕：309 关，用时： 62分22秒

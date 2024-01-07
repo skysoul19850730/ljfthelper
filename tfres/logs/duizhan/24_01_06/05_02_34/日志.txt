@@ -1,0 +1,59 @@
+05:02:34 herodoing stop
+05:02:34 checkIfEnd ok
+05:02:23 英雄上阵:nvwang 位置:1 等级:2
+05:02:23 识别到英雄 nvwang  xiaochou  kui
+05:02:22 下卡完成：xiaolu position:0
+05:02:22 英雄上阵:xiaolu 位置:0 等级:1
+05:02:22 识别到英雄 longquan  kuanglong  xiaolu
+05:02:21 英雄上阵:guangqiu 位置:-1 等级:0
+05:02:20 下卡完成：bingnv position:0
+05:02:20 识别到英雄 longquan  kuanglong  guangqiu
+05:02:16 识别到英雄 xiaochou  longquan  dijing
+05:02:15 下卡完成：xiaolu position:3
+05:02:15 英雄上阵:xiaolu 位置:3 等级:1
+05:02:15 识别到英雄 kui  dijing  xiaolu
+05:02:07 英雄上阵:nvwang 位置:1 等级:1
+05:02:07 识别到英雄 nvwang  bingnv  kui
+05:01:59 识别到英雄 dijing  longquan  xiaochou
+05:01:47 英雄上阵:bingnv 位置:0 等级:1
+05:01:46 识别到英雄 bingnv  kuanglong  kui
+05:01:46 bawang 卡片检测星级结果： 4级 changed:true
+05:01:44 英雄上阵:guangqiu 位置:-1 等级:0
+05:01:44 下卡完成：bingnv position:1
+05:01:43 下卡完成：nvwang position:0
+05:01:43 识别到英雄 bingnv  guangqiu  nvwang
+05:01:43 bawang 卡片检测星级结果： 3级 changed:false
+05:01:41 下卡完成：xiaolu position:3
+05:01:41 英雄上阵:xiaolu 位置:3 等级:1
+05:01:18 识别到英雄 xiaolu  kuanglong  xiaochou
+05:01:12 bawang 卡片检测星级结果： 3级 changed:false
+05:01:11 英雄上阵:nvwang 位置:0 等级:2
+05:01:10 识别到英雄 nvwang  kui  xiaochou
+05:01:05 识别到英雄 kuanglong  dijing  kui
+05:01:04 bawang 卡片检测星级结果： 3级 changed:false
+05:01:03 英雄上阵:bingnv 位置:1 等级:1
+05:01:03 下卡完成：bingnv position:1
+05:01:02 识别到英雄 bingnv  kui  kuanglong
+05:00:53 bawang 卡片检测星级结果： 3级 changed:false
+05:00:52 英雄上阵:bawang 位置:2 等级:3
+05:00:51 识别到英雄 bawang  xiaochou  kui
+05:00:40 bawang 卡片检测星级结果： 2级 changed:false
+05:00:39 英雄上阵:bawang 位置:2 等级:2
+05:00:38 识别到英雄 bawang  kui  bingnv
+05:00:38 识别到英雄 kuanglong  longquan  dijing
+05:00:37 识别到英雄 kuanglong  longquan  dijing
+05:00:34 识别到英雄 longquan  kui  kuanglong
+05:00:33 bawang 卡片检测星级结果： 1级 changed:false
+05:00:32 英雄上阵:bawang 位置:2 等级:1
+05:00:23 识别到英雄 xiaolu  bawang  guangqiu
+05:00:22 英雄上阵:bingnv 位置:1 等级:1
+05:00:21 识别到英雄 bingnv  xiaochou  kuanglong
+05:00:20 英雄上阵:guangqiu 位置:-1 等级:0
+05:00:19 识别到英雄 guangqiu  longquan  bingnv
+05:00:19 英雄上阵:nvwang 位置:0 等级:1
+05:00:18 识别到英雄 null  nvwang  guangqiu
+05:00:06 checkDuizhan ok
+05:00:06 checkDuizhan
+05:00:04 checkAdv
+05:00:01 战斗胜利： 37 失败：40 胜率：48.05195%
+05:00:01 战斗失败

@@ -411,7 +411,7 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
             heroList.set(6, heroBean)
         }
 
-        log("hero ${heroBean.heroName} add ,position is ${heroBean.position} level is ${heroBean.currentLevel}")
+//        log("hero ${heroBean.heroName} add ,position is ${heroBean.position} level is ${heroBean.currentLevel}")
 
         sysDataToMain()
     }
@@ -439,8 +439,8 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
 
                 MRobot.singleClick(salePoint)
                 heroList.set(heroBean.position, null)
-                heroBean.reset()
                 log("下卡完成：${heroBean.heroName} position:${heroBean.position}")
+                heroBean.reset()
                 downing = false
             }
         }
@@ -561,9 +561,11 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
     private fun sysDataToMain(){
         mainData?.value = arrayListOf<HeroBean?>().apply {
             addAll(heroList.map {
-                it?.copy()
+                it?.copy()?.apply {
+                    currentLevel = it.currentLevel
+                }
             })
         }
-        log("sysDataToMain")
+//        log("sysDataToMain")
     }
 }

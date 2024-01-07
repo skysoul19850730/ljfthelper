@@ -1,0 +1,9 @@
+06:42:25 herodoing stop
+06:42:25 checkIfEnd ok
+06:42:24 英雄上阵:bingnv 位置:0 等级:1
+06:42:23 识别到英雄 null  dijing  bingnv
+06:42:11 checkDuizhan ok
+06:42:11 checkDuizhan
+06:42:09 checkAdv
+06:42:05 战斗胜利： 49 失败：49 胜率：50.0%
+06:42:05 战斗胜利

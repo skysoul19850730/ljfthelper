@@ -5,35 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb7aa5ff-a60c-44e7-9b56-eaa9b9270de9" name="Changes" comment="first">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/guanka/1701475733602/1701475733610.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/guanka/1701475734819/1701475734844.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/guanka/1701475734819/1701475736893.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/guanka/1701475897705/1701475897738.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/guanka/1701476195677/1701476195701.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/guanka/1701476195677/1701476196728.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/guanka/1701512199471/1701512199496.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/guanka/1703338803515/1703338803571.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/guanka/1703338803515/1703338804716.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/guanka/1703338803515/1703338805749.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/guanka/1703338803515/1703338806796.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/guanka/1703338803515/1703338807847.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/guanka/1703338803515/1703338808897.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/guanka/1703338803515/1703338809929.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/guanka/1703338803515/1703338810964.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/guanka/1703338803515/1703338812014.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/hero/sishen/sishen0.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/hero/sishen/sishen1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/hero/sishen/sishen2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/hero/sishen/sishen3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/hero/sishen/sishen4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/hero/sishen/sishen5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/hero/sishen/sishen6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/hero/sishen/sishen7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/hero/sishen/sishen8.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/hero/sishen/sishen9.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/zhuangbei/1700959264676.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/HeroBean.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/HeroBean.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/CarDoing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/CarDoing.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/HeroDoing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/HeroDoing.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/Zhuangbei.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/Zhuangbei.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/duizhan/longquan/LongQuanGameLaunch.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/duizhan/longquan/LongQuanGameLaunch.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/duizhan/longquan/LongQuanHeroDoing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/duizhan/longquan/LongQuanHeroDoing.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/hezuo/zhannvsha/IRoomFind.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/hezuo/zhannvsha/IRoomFind.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/hezuo/zhannvsha/ZhanNvHeroDoing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/hezuo/zhannvsha/ZhanNvHeroDoing.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/huodong/HuodongHeroDoing2.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/huodong/HuodongHeroDoing2.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/util.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/util.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/utils/LogUtil.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/utils/LogUtil.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -1,0 +1,13 @@
+06:22:38 herodoing stop
+06:22:38 checkIfEnd ok
+06:21:21 下卡完成：xiaolu position:0
+06:21:21 英雄上阵:xiaolu 位置:0 等级:1
+06:21:20 识别到英雄 bawang  xiaolu  kui
+06:21:20 下卡完成：xiaolu position:0
+06:21:19 英雄上阵:xiaolu 位置:0 等级:1
+06:21:19 识别到英雄 dijing  guangqiu  xiaolu
+06:21:12 checkDuizhan ok
+06:21:12 checkDuizhan
+06:20:35 checkAdv
+06:20:32 战斗胜利： 1 失败：1 胜率：50.0%
+06:20:32 战斗失败

@@ -1,0 +1,62 @@
+03:03:31 herodoing stop
+03:03:31 checkIfEnd ok
+03:03:25 英雄上阵:bingnv 位置:2 等级:1
+03:03:25 识别到英雄 bingnv  xiaochou  dijing
+03:03:24 下卡完成：xiaolu position:2
+03:03:24 英雄上阵:xiaolu 位置:2 等级:1
+03:03:24 识别到英雄 xiaolu  xiaochou  longquan
+03:03:23 英雄上阵:guangqiu 位置:-1 等级:0
+03:03:22 下卡完成：bingnv position:2
+03:03:22 识别到英雄 xiaolu  longquan  guangqiu
+03:03:18 识别到英雄 kui  longquan  xiaochou
+03:03:16 英雄上阵:bingnv 位置:2 等级:1
+03:03:16 识别到英雄 xiaochou  bingnv  kui
+03:03:15 下卡完成：xiaolu position:2
+03:03:15 英雄上阵:xiaolu 位置:2 等级:1
+03:03:15 识别到英雄 xiaolu  kuanglong  kui
+03:03:14 下卡完成：xiaolu position:2
+03:03:14 英雄上阵:xiaolu 位置:2 等级:1
+03:03:13 识别到英雄 bingnv  xiaolu  kui
+03:03:02 英雄上阵:guangqiu 位置:-1 等级:0
+03:03:02 识别到英雄 xiaolu  guangqiu  kuanglong
+03:03:01 识别到英雄 longquan  xiaochou  dijing
+03:03:01 识别到英雄 longquan  xiaochou  dijing
+03:03:00 英雄上阵:guangqiu 位置:-1 等级:0
+03:02:59 下卡完成：bingnv position:2
+03:02:59 识别到英雄 xiaolu  guangqiu  xiaochou
+03:02:54 英雄上阵:bingnv 位置:2 等级:1
+03:02:53 识别到英雄 xiaochou  bingnv  kui
+03:02:53 英雄上阵:bawang 位置:0 等级:4
+03:02:52 识别到英雄 kui  longquan  bawang
+03:02:51 英雄上阵:bawang 位置:0 等级:3
+03:02:51 识别到英雄 xiaolu  dijing  bawang
+03:02:50 英雄上阵:guangqiu 位置:-1 等级:0
+03:02:49 下卡完成：bingnv position:2
+03:02:49 识别到英雄 xiaochou  guangqiu  bingnv
+03:02:48 下卡完成：xiaolu position:3
+03:02:48 英雄上阵:xiaolu 位置:3 等级:1
+03:02:48 识别到英雄 xiaochou  kui  xiaolu
+03:02:47 下卡完成：xiaolu position:3
+03:02:47 英雄上阵:xiaolu 位置:3 等级:1
+03:02:32 识别到英雄 bingnv  xiaolu  kuanglong
+03:02:32 英雄上阵:bingnv 位置:2 等级:1
+03:02:31 识别到英雄 kui  bingnv  kuanglong
+03:02:31 英雄上阵:nvwang 位置:1 等级:3
+03:02:30 识别到英雄 longquan  kui  nvwang
+03:02:30 英雄上阵:nvwang 位置:1 等级:2
+03:02:29 识别到英雄 kuanglong  longquan  nvwang
+03:02:28 下卡完成：xiaolu position:2
+03:02:28 英雄上阵:xiaolu 位置:2 等级:1
+03:02:22 识别到英雄 xiaolu  bingnv  kuanglong
+03:02:21 bawang 卡片检测星级结果： 2级 changed:false
+03:02:20 英雄上阵:bawang 位置:0 等级:2
+03:02:19 识别到英雄 xiaolu  bawang  kui
+03:02:19 英雄上阵:nvwang 位置:1 等级:1
+03:02:18 识别到英雄 kui  nvwang  bingnv
+03:02:17 英雄上阵:bawang 位置:0 等级:1
+03:02:17 识别到英雄 xiaochou  null  bawang
+03:02:05 checkDuizhan ok
+03:02:05 checkDuizhan
+03:02:02 checkAdv
+03:01:59 战斗胜利： 11 失败：13 胜率：45.833332%
+03:01:59 战斗失败

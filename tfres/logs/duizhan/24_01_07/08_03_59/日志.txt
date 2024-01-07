@@ -1,0 +1,69 @@
+08:03:59 herodoing stop
+08:03:59 checkIfEnd ok
+08:03:55 英雄上阵:guangqiu 位置:-1 等级:0
+08:03:54 识别到英雄 kui  guangqiu  bingnv
+08:03:49 英雄上阵:bawang 位置:3 等级:1
+08:03:49 识别到英雄 xiaochou  guangqiu  bawang
+08:03:48 英雄上阵:guangqiu 位置:-1 等级:0
+08:03:47 识别到英雄 kuanglong  xiaochou  guangqiu
+08:03:47 英雄上阵:kuanglong 位置:2 等级:1
+08:03:46 识别到英雄 kuanglong  xiaolu  kui
+08:03:40 英雄上阵:guangqiu 位置:-1 等级:0
+08:03:40 识别到英雄 xiaolu  bingnv  guangqiu
+08:03:33 英雄上阵:nvwang 位置:1 等级:1
+08:03:32 识别到英雄 dijing  xiaochou  nvwang
+08:03:24 longquan 卡片检测星级结果： 4级 changed:true
+08:03:22 英雄上阵:guangqiu 位置:-1 等级:0
+08:03:22 下卡完成：xiaochou position:1
+08:03:22 下卡完成：dijing position:2
+08:03:22 识别到英雄 guangqiu  xiaochou  kuanglong
+08:03:21 下卡完成：xiaolu position:3
+08:03:21 英雄上阵:xiaolu 位置:3 等级:1
+08:03:20 识别到英雄 bingnv  bawang  xiaolu
+08:03:08 下卡完成：bingnv position:3
+08:03:07 高级梦魇啊
+08:03:07 英雄上阵:bingnv 位置:3 等级:1
+08:02:18 识别到英雄 bawang  bingnv  dijing
+08:01:53 英雄上阵:dijing 位置:2 等级:1
+08:01:52 识别到英雄 kui  dijing  bawang
+08:01:49 longquan 卡片检测星级结果： 3级 changed:false
+08:01:48 英雄上阵:longquan 位置:0 等级:3
+08:01:48 识别到英雄 longquan  kuanglong  xiaolu
+08:01:47 下卡完成：xiaolu position:2
+08:01:47 英雄上阵:xiaolu 位置:2 等级:1
+08:01:46 识别到英雄 nvwang  xiaolu  dijing
+08:01:46 下卡完成：bingnv position:2
+08:01:46 高级梦魇啊
+08:01:46 英雄上阵:bingnv 位置:2 等级:1
+08:01:45 识别到英雄 dijing  bingnv  kuanglong
+08:01:45 下卡完成：xiaolu position:2
+08:01:44 英雄上阵:xiaolu 位置:2 等级:1
+08:01:44 识别到英雄 bawang  xiaolu  bingnv
+08:01:43 下卡完成：bingnv position:2
+08:01:43 高级梦魇啊
+08:01:43 英雄上阵:bingnv 位置:2 等级:1
+08:01:28 识别到英雄 kui  dijing  bingnv
+08:01:25 英雄上阵:xiaochou 位置:1 等级:1
+08:01:25 识别到英雄 bawang  nvwang  xiaochou
+08:01:24 下卡完成：bingnv position:1
+08:01:24 高级梦魇啊
+08:01:24 英雄上阵:bingnv 位置:1 等级:1
+08:01:23 识别到英雄 bingnv  bawang  dijing
+08:01:23 longquan 卡片检测星级结果： 2级 changed:false
+08:01:22 英雄上阵:longquan 位置:0 等级:2
+08:01:21 识别到英雄 longquan  kui  bawang
+08:01:21 下卡完成：bingnv position:1
+08:01:20 高级梦魇啊
+08:01:20 英雄上阵:bingnv 位置:1 等级:1
+08:01:20 识别到英雄 bingnv  dijing  kuanglong
+08:01:11 英雄上阵:longquan 位置:0 等级:1
+08:01:10 识别到英雄 longquan  guangqiu  bawang
+08:01:09 英雄上阵:guangqiu 位置:-1 等级:0
+08:01:08 识别到英雄 guangqiu  bawang  kui
+08:01:07 英雄上阵:guangqiu 位置:-1 等级:0
+08:01:07 识别到英雄 bawang  nvwang  guangqiu
+08:00:59 checkDuizhan ok
+08:00:59 checkDuizhan
+08:00:56 checkAdv
+08:00:53 战斗胜利： 27 失败：23 胜率：54.0%
+08:00:53 战斗失败

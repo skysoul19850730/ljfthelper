@@ -1,0 +1,65 @@
+06:49:44 herodoing stop
+06:49:44 checkIfEnd ok
+06:49:38 英雄上阵:bingnv 位置:1 等级:1
+06:49:37 下卡完成：bingnv position:1
+06:49:37 识别到英雄 nvwang  kui  bingnv
+06:49:36 英雄上阵:bingnv 位置:1 等级:1
+06:49:36 下卡完成：bingnv position:1
+06:49:36 识别到英雄 bawang  bingnv  kuanglong
+06:49:19 英雄上阵:dijing 位置:2 等级:2
+06:49:19 识别到英雄 kui  kuanglong  dijing
+06:49:11 英雄上阵:dijing 位置:2 等级:1
+06:49:10 识别到英雄 xiaochou  dijing  bawang
+06:49:01 英雄上阵:bingnv 位置:1 等级:1
+06:49:00 识别到英雄 bingnv  dijing  bawang
+06:48:59 下卡完成：xiaolu position:1
+06:48:59 英雄上阵:xiaolu 位置:1 等级:1
+06:48:59 识别到英雄 kuanglong  xiaochou  xiaolu
+06:48:58 longquan 卡片检测星级结果： 3级 changed:true
+06:48:56 英雄上阵:guangqiu 位置:-1 等级:0
+06:48:56 下卡完成：xiaochou position:2
+06:48:56 下卡完成：dijing position:3
+06:48:55 下卡完成：bingnv position:1
+06:48:55 识别到英雄 kuanglong  guangqiu  kui
+06:48:55 英雄上阵:dijing 位置:3 等级:2
+06:48:54 识别到英雄 xiaochou  dijing  kuanglong
+06:48:53 下卡完成：xiaolu position:4
+06:48:53 英雄上阵:xiaolu 位置:4 等级:1
+06:48:53 识别到英雄 bawang  nvwang  xiaolu
+06:48:52 下卡完成：xiaolu position:4
+06:48:52 英雄上阵:xiaolu 位置:4 等级:1
+06:48:48 识别到英雄 xiaolu  kui  bingnv
+06:48:48 英雄上阵:dijing 位置:3 等级:1
+06:48:47 识别到英雄 kui  kuanglong  dijing
+06:48:47 下卡完成：xiaolu position:3
+06:48:46 英雄上阵:xiaolu 位置:3 等级:1
+06:48:46 识别到英雄 xiaolu  bawang  kuanglong
+06:48:45 下卡完成：xiaolu position:3
+06:48:45 英雄上阵:xiaolu 位置:3 等级:1
+06:48:32 识别到英雄 xiaochou  xiaolu  kuanglong
+06:48:32 英雄上阵:xiaochou 位置:2 等级:1
+06:48:31 识别到英雄 xiaochou  nvwang  bawang
+06:48:31 下卡完成：xiaolu position:2
+06:48:30 英雄上阵:xiaolu 位置:2 等级:1
+06:48:30 识别到英雄 xiaolu  nvwang  kui
+06:48:29 longquan 卡片检测星级结果： 2级 changed:false
+06:48:28 英雄上阵:longquan 位置:0 等级:2
+06:48:28 识别到英雄 bawang  kuanglong  longquan
+06:48:27 下卡完成：xiaolu position:2
+06:48:27 英雄上阵:xiaolu 位置:2 等级:1
+06:48:24 识别到英雄 kui  bingnv  xiaolu
+06:48:24 longquan 卡片检测星级结果： 2级 changed:false
+06:48:23 英雄上阵:longquan 位置:0 等级:2
+06:48:22 识别到英雄 bawang  longquan  bingnv
+06:48:21 英雄上阵:bingnv 位置:1 等级:1
+06:48:20 识别到英雄 dijing  bawang  bingnv
+06:48:20 英雄上阵:longquan 位置:0 等级:1
+06:48:19 识别到英雄 xiaolu  longquan  bingnv
+06:48:19 下卡完成：xiaolu position:0
+06:48:18 英雄上阵:xiaolu 位置:0 等级:1
+06:48:18 识别到英雄 bingnv  xiaolu  xiaochou
+06:48:11 checkDuizhan ok
+06:48:11 checkDuizhan
+06:47:34 checkAdv
+06:47:31 战斗胜利： 8 失败：5 胜率：61.53846%
+06:47:31 战斗失败

@@ -1,0 +1,56 @@
+05:13:49 herodoing stop
+05:13:49 checkIfEnd ok
+05:13:44 英雄上阵:guangqiu 位置:-1 等级:0
+05:13:43 识别到英雄 kuanglong  guangqiu  bawang
+05:13:42 英雄上阵:guangqiu 位置:-1 等级:0
+05:13:42 识别到英雄 guangqiu  dijing  bingnv
+05:13:38 英雄上阵:nvwang 位置:3 等级:2
+05:13:38 识别到英雄 guangqiu  nvwang  kui
+05:13:34 英雄上阵:kuanglong 位置:5 等级:1
+05:13:18 识别到英雄 bawang  kuanglong  xiaolu
+05:13:10 英雄上阵:nvwang 位置:3 等级:2
+05:13:10 识别到英雄 nvwang  bawang  kui
+05:13:08 英雄上阵:bawang 位置:4 等级:1
+05:13:08 识别到英雄 bawang  xiaolu  kui
+05:13:07 下卡完成：xiaolu position:4
+05:13:07 英雄上阵:xiaolu 位置:4 等级:1
+05:13:00 识别到英雄 dijing  bingnv  xiaolu
+05:12:54 英雄上阵:nvwang 位置:3 等级:1
+05:12:54 识别到英雄 nvwang  bingnv  guangqiu
+05:12:51 英雄上阵:longquan 位置:0 等级:4
+05:12:51 识别到英雄 longquan  bingnv  kuanglong
+05:12:49 识别到英雄 bawang  kuanglong  nvwang
+05:12:48 下卡完成：xiaolu position:3
+05:12:48 英雄上阵:xiaolu 位置:3 等级:1
+05:12:30 识别到英雄 kui  xiaolu  bingnv
+05:12:20 英雄上阵:bingnv 位置:2 等级:1
+05:12:20 识别到英雄 bawang  bingnv  xiaochou
+05:12:19 英雄上阵:dijing 位置:1 等级:1
+05:12:18 识别到英雄 xiaochou  bawang  dijing
+05:12:17 longquan 卡片检测星级结果： 3级 changed:true
+05:12:16 英雄上阵:guangqiu 位置:-1 等级:0
+05:12:15 下卡完成：bingnv position:1
+05:12:15 识别到英雄 bingnv  kui  guangqiu
+05:12:09 英雄上阵:bingnv 位置:1 等级:1
+05:12:09 识别到英雄 bawang  bingnv  nvwang
+05:12:08 longquan 卡片检测星级结果： 2级 changed:true
+05:12:07 英雄上阵:guangqiu 位置:-1 等级:0
+05:12:06 下卡完成：xiaochou position:2
+05:12:06 下卡完成：bingnv position:1
+05:12:06 识别到英雄 xiaolu  guangqiu  nvwang
+05:12:05 英雄上阵:bingnv 位置:1 等级:1
+05:12:05 下卡完成：bingnv position:1
+05:12:04 识别到英雄 kui  bingnv  bawang
+05:11:59 英雄上阵:xiaochou 位置:2 等级:1
+05:11:47 识别到英雄 xiaochou  kui  nvwang
+05:11:40 识别到英雄 nvwang  kui  kuanglong
+05:11:37 英雄上阵:bingnv 位置:1 等级:1
+05:11:36 识别到英雄 bingnv  xiaochou  bawang
+05:11:35 英雄上阵:longquan 位置:0 等级:1
+05:11:35 识别到英雄 longquan  xiaochou  xiaolu
+05:11:34 识别到英雄 kuanglong  bawang  nvwang
+05:11:27 checkDuizhan ok
+05:11:27 checkDuizhan
+05:11:24 checkAdv
+05:11:21 战斗胜利： 41 失败：42 胜率：49.39759%
+05:11:21 战斗失败

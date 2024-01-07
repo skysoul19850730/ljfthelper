@@ -1,0 +1,63 @@
+06:46:34 herodoing stop
+06:46:34 checkIfEnd ok
+06:46:25 英雄上阵:kuanglong 位置:3 等级:1
+06:46:25 识别到英雄 kuanglong  dijing  kui
+06:46:15 英雄上阵:bawang 位置:2 等级:1
+06:46:15 识别到英雄 kui  bawang  nvwang
+06:46:14 英雄上阵:nvwang 位置:0 等级:1
+06:46:14 识别到英雄 bingnv  nvwang  xiaochou
+06:46:13 longquan 卡片检测星级结果： 4级 changed:true
+06:46:11 英雄上阵:guangqiu 位置:-1 等级:0
+06:46:11 下卡完成：xiaochou position:3
+06:46:11 下卡完成：dijing position:2
+06:46:10 下卡完成：bingnv position:0
+06:46:10 识别到英雄 guangqiu  bawang  kuanglong
+06:46:10 longquan 卡片检测星级结果： 3级 changed:false
+06:46:08 英雄上阵:longquan 位置:1 等级:3
+06:46:08 识别到英雄 bawang  kui  longquan
+06:46:07 下卡完成：xiaolu position:4
+06:46:07 英雄上阵:xiaolu 位置:4 等级:1
+06:46:06 识别到英雄 xiaochou  kui  xiaolu
+06:45:54 下卡完成：xiaolu position:4
+06:45:54 英雄上阵:xiaolu 位置:4 等级:1
+06:45:36 识别到英雄 xiaochou  xiaolu  kui
+06:45:29 英雄上阵:longquan 位置:1 等级:3
+06:45:29 识别到英雄 bawang  longquan  nvwang
+06:45:28 英雄上阵:bingnv 位置:0 等级:1
+06:45:27 下卡完成：bingnv position:0
+06:45:27 识别到英雄 bingnv  bawang  dijing
+06:45:26 英雄上阵:xiaochou 位置:3 等级:2
+06:45:25 识别到英雄 kui  nvwang  xiaochou
+06:45:25 英雄上阵:bingnv 位置:0 等级:1
+06:45:24 下卡完成：bingnv position:0
+06:45:24 识别到英雄 bingnv  kui  kuanglong
+06:45:19 英雄上阵:longquan 位置:1 等级:2
+06:45:18 识别到英雄 xiaolu  longquan  guangqiu
+06:45:18 英雄上阵:xiaochou 位置:3 等级:1
+06:45:17 识别到英雄 kui  xiaochou  kuanglong
+06:45:16 longquan 卡片检测星级结果： 1级 changed:true
+06:45:15 英雄上阵:bingnv 位置:0 等级:1
+06:45:14 下卡完成：bingnv position:0
+06:45:14 识别到英雄 bawang  bingnv  kui
+06:45:13 英雄上阵:longquan 位置:1 等级:2
+06:45:13 识别到英雄 longquan  nvwang  kuanglong
+06:45:12 英雄上阵:bingnv 位置:0 等级:1
+06:45:11 下卡完成：bingnv position:0
+06:45:11 识别到英雄 bingnv  bawang  nvwang
+06:45:11 英雄上阵:dijing 位置:2 等级:1
+06:45:10 识别到英雄 dijing  kui  kuanglong
+06:45:09 下卡完成：xiaolu position:2
+06:45:09 英雄上阵:xiaolu 位置:2 等级:1
+06:45:09 识别到英雄 xiaochou  dijing  xiaolu
+06:45:08 下卡完成：xiaolu position:2
+06:45:08 英雄上阵:xiaolu 位置:2 等级:1
+06:44:57 识别到英雄 bawang  xiaolu  nvwang
+06:44:56 英雄上阵:longquan 位置:1 等级:1
+06:44:55 识别到英雄 kui  longquan  xiaochou
+06:44:54 英雄上阵:bingnv 位置:0 等级:1
+06:44:54 识别到英雄 bingnv  nvwang  bawang
+06:44:47 checkDuizhan ok
+06:44:47 checkDuizhan
+06:44:44 checkAdv
+06:44:41 战斗胜利： 50 失败：50 胜率：50.0%
+06:44:41 战斗失败

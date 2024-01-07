@@ -1,0 +1,139 @@
+06:07:51 herodoing stop
+06:07:48 英雄上阵:muqiu 位置:-1 等级:0
+06:07:48 识别到英雄 guangqiu  muqiu  muqiu
+06:07:47 英雄上阵:muqiu 位置:-1 等级:0
+06:07:47 识别到英雄 muqiu  muqiu  guangqiu
+06:07:46 英雄上阵:muqiu 位置:-1 等级:0
+06:07:46 识别到英雄 muqiu  muqiu  guangqiu
+06:07:45 英雄上阵:muqiu 位置:-1 等级:0
+06:07:45 识别到英雄 hunqiu  guangqiu  muqiu
+06:07:44 英雄上阵:muqiu 位置:-1 等级:0
+06:07:43 识别到英雄 muqiu  muqiu  guangqiu
+06:07:43 英雄上阵:muqiu 位置:-1 等级:0
+06:07:42 识别到英雄 guangqiu  muqiu  muqiu
+06:07:42 英雄上阵:muqiu 位置:-1 等级:0
+06:07:41 识别到英雄 guangqiu  muqiu  muqiu
+06:07:41 英雄上阵:muqiu 位置:-1 等级:0
+06:07:40 识别到英雄 muqiu  muqiu  guangqiu
+06:07:40 英雄上阵:muqiu 位置:-1 等级:0
+06:07:39 识别到英雄 muqiu  muqiu  guangqiu
+06:07:39 英雄上阵:muqiu 位置:-1 等级:0
+06:07:38 识别到英雄 muqiu  muqiu  guangqiu
+06:07:38 英雄上阵:muqiu 位置:-1 等级:0
+06:07:37 识别到英雄 guangqiu  muqiu  muqiu
+06:07:37 英雄上阵:muqiu 位置:-1 等级:0
+06:07:36 识别到英雄 muqiu  muqiu  guangqiu
+06:07:36 英雄上阵:muqiu 位置:-1 等级:0
+06:07:35 识别到英雄 muqiu  guangqiu  muqiu
+06:07:35 英雄上阵:muqiu 位置:-1 等级:0
+06:07:34 识别到英雄 muqiu  muqiu  guangqiu
+06:07:34 英雄上阵:muqiu 位置:-1 等级:0
+06:07:33 识别到英雄 muqiu  muqiu  guangqiu
+06:07:33 英雄上阵:muqiu 位置:-1 等级:0
+06:07:32 识别到英雄 guangqiu  muqiu  muqiu
+06:07:32 英雄上阵:muqiu 位置:-1 等级:0
+06:07:31 识别到英雄 guangqiu  muqiu  muqiu
+06:07:31 英雄上阵:muqiu 位置:-1 等级:0
+06:07:30 识别到英雄 muqiu  muqiu  guangqiu
+06:07:30 英雄上阵:muqiu 位置:-1 等级:0
+06:07:29 识别到英雄 guangqiu  muqiu  muqiu
+06:07:29 英雄上阵:muqiu 位置:-1 等级:0
+06:07:28 识别到英雄 muqiu  guangqiu  muqiu
+06:07:28 英雄上阵:muqiu 位置:-1 等级:0
+06:07:27 识别到英雄 guangqiu  muqiu  muqiu
+06:07:26 英雄上阵:muqiu 位置:-1 等级:0
+06:07:26 识别到英雄 muqiu  muqiu  guangqiu
+06:07:25 英雄上阵:muqiu 位置:-1 等级:0
+06:07:25 识别到英雄 guangqiu  muqiu  muqiu
+06:07:24 英雄上阵:muqiu 位置:-1 等级:0
+06:07:24 识别到英雄 muqiu  guangqiu  muqiu
+06:07:23 英雄上阵:muqiu 位置:-1 等级:0
+06:07:23 识别到英雄 muqiu  muqiu  guangqiu
+06:07:22 英雄上阵:muqiu 位置:-1 等级:0
+06:07:22 识别到英雄 guangqiu  muqiu  muqiu
+06:07:21 英雄上阵:muqiu 位置:-1 等级:0
+06:07:21 识别到英雄 muqiu  guangqiu  muqiu
+06:07:20 英雄上阵:muqiu 位置:-1 等级:0
+06:07:20 识别到英雄 muqiu  guangqiu  muqiu
+06:07:19 英雄上阵:muqiu 位置:-1 等级:0
+06:07:19 识别到英雄 muqiu  muqiu  guangqiu
+06:07:18 英雄上阵:muqiu 位置:-1 等级:0
+06:07:17 识别到英雄 muqiu  muqiu  guangqiu
+06:07:17 英雄上阵:muqiu 位置:-1 等级:0
+06:07:17 识别到英雄 muqiu  muqiu  guangqiu
+06:07:16 英雄上阵:muqiu 位置:-1 等级:0
+06:07:16 识别到英雄 muqiu  guangqiu  muqiu
+06:07:15 英雄上阵:muqiu 位置:-1 等级:0
+06:07:14 识别到英雄 muqiu  guangqiu  muqiu
+06:07:14 英雄上阵:muqiu 位置:-1 等级:0
+06:07:13 识别到英雄 muqiu  muqiu  guangqiu
+06:07:13 英雄上阵:muqiu 位置:-1 等级:0
+06:07:12 识别到英雄 muqiu  muqiu  guangqiu
+06:07:11 英雄上阵:muqiu 位置:-1 等级:0
+06:07:11 识别到英雄 muqiu  guangqiu  muqiu
+06:06:50 英雄上阵:hugong 位置:0 等级:4
+06:06:49 识别到英雄 muqiu  muqiu  hugong
+06:06:49 英雄上阵:xiaoye 位置:5 等级:4
+06:06:48 识别到英雄 xiaoye  guangqiu  hunqiu
+06:06:48 英雄上阵:dapao 位置:6 等级:4
+06:06:47 识别到英雄 muqiu  muqiu  dapao
+06:06:47 英雄上阵:dapao 位置:6 等级:3
+06:06:46 识别到英雄 muqiu  guangqiu  dapao
+06:06:45 英雄上阵:dapao 位置:6 等级:2
+06:06:45 识别到英雄 muqiu  muqiu  dapao
+06:06:45 英雄上阵:dianfa 位置:2 等级:4
+06:06:44 识别到英雄 dianfa  guangqiu  muqiu
+06:06:43 英雄上阵:xiaoye 位置:5 等级:3
+06:06:43 识别到英雄 xiaoye  dapao  muqiu
+06:06:42 英雄上阵:xiaoye 位置:5 等级:2
+06:06:42 识别到英雄 muqiu  xiaoye  dapao
+06:06:41 英雄上阵:xiaoye 位置:5 等级:1
+06:06:40 识别到英雄 dapao  xiaoye  muqiu
+06:06:40 英雄上阵:gugu 位置:3 等级:4
+06:06:39 识别到英雄 dapao  muqiu  gugu
+06:06:39 英雄上阵:gugu 位置:3 等级:3
+06:06:38 识别到英雄 gugu  muqiu  dapao
+06:06:38 英雄上阵:dapao 位置:6 等级:1
+06:06:37 识别到英雄 muqiu  muqiu  dapao
+06:06:37 英雄上阵:houyi 位置:4 等级:4
+06:06:36 识别到英雄 xiaoye  houyi  hugong
+06:06:36 英雄上阵:houyi 位置:4 等级:3
+06:06:35 识别到英雄 gugu  houyi  hugong
+06:06:35 houyi level is 2
+06:06:35 gugu level is 2
+06:06:35 dianfa level is 3
+06:06:35 dianfa 卡片检测星级结果： 3级 changed:true
+06:06:34 houzi level is 4
+06:06:34 hugong level is 3
+06:06:34 hugong 卡片检测星级结果： 3级 changed:false
+06:06:33 hugong:位置0  houzi:位置1  dianfa:位置2  gugu:位置3  houyi:位置4  
+06:06:32 英雄上阵:guangqiu 位置:-1 等级:0
+06:06:31 识别到英雄 muqiu  guangqiu  muqiu
+06:06:31 英雄上阵:gugu 位置:3 等级:2
+06:06:30 识别到英雄 gugu  guangqiu  muqiu
+06:06:30 英雄上阵:houzi 位置:1 等级:4
+06:06:29 识别到英雄 muqiu  xiaoye  houzi
+06:06:29 英雄上阵:hugong 位置:0 等级:3
+06:06:28 识别到英雄 muqiu  gugu  hugong
+06:06:28 英雄上阵:dianfa 位置:2 等级:2
+06:06:27 识别到英雄 hunqiu  muqiu  dianfa
+06:06:27 英雄上阵:houzi 位置:1 等级:3
+06:06:26 识别到英雄 xiaoye  houzi  muqiu
+06:06:26 英雄上阵:houyi 位置:4 等级:2
+06:06:25 识别到英雄 houzi  muqiu  houyi
+06:06:25 英雄上阵:houyi 位置:4 等级:1
+06:06:24 识别到英雄 houyi  dapao  muqiu
+06:06:23 英雄上阵:houzi 位置:1 等级:2
+06:06:23 识别到英雄 gugu  dapao  houzi
+06:06:22 英雄上阵:gugu 位置:3 等级:1
+06:06:21 识别到英雄 dapao  gugu  muqiu
+06:06:20 英雄上阵:dianfa 位置:2 等级:1
+06:06:19 识别到英雄 dianfa  muqiu  muqiu
+06:06:19 英雄上阵:houzi 位置:1 等级:1
+06:06:17 识别到英雄 dapao  dianfa  houzi
+06:06:17 英雄上阵:hugong 位置:0 等级:2
+06:06:17 识别到英雄 gugu  hugong  dianfa
+06:06:16 识别车位结果：0
+06:06:15 开始检测车
+06:06:15 英雄上阵:hugong 位置:0 等级:1
+06:06:14 识别到英雄 gugu  hugong  dapao
