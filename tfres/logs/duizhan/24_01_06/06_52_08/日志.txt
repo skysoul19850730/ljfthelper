@@ -1,7 +1,0 @@
-06:52:08 herodoing stop
-06:52:08 checkIfEnd ok
-06:51:23 checkDuizhan ok
-06:51:23 checkDuizhan
-06:51:20 checkAdv
-06:51:17 战斗胜利： 52 失败：51 胜率：50.485435%
-06:51:17 战斗失败

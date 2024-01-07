@@ -1,9 +1,0 @@
-07:03:46 herodoing stop
-07:03:46 checkIfEnd ok
-07:03:42 英雄上阵:dijing 位置:0 等级:1
-07:03:42 识别到英雄 null  dijing  guangqiu
-07:03:30 checkDuizhan ok
-07:03:30 checkDuizhan
-07:02:52 checkAdv
-07:02:49 战斗胜利： 11 失败：8 胜率：57.894737%
-07:02:49 战斗失败

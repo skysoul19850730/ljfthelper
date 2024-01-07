@@ -1,8 +1,0 @@
-06:30:50 herodoing stop
-06:30:50 checkIfEnd ok
-06:30:50 识别到英雄 nvwang  null  kuanglong
-06:30:38 checkDuizhan ok
-06:30:38 checkDuizhan
-06:30:35 checkAdv
-06:30:32 战斗胜利： 45 失败：47 胜率：48.913044%
-06:30:32 战斗失败
