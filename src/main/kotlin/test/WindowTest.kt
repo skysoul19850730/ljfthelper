@@ -1,6 +1,7 @@
 package test
 
 import com.sun.jna.platform.WindowUtils
+import logOnly
 import utils.MRobot
 import java.awt.Shape
 import java.awt.Window
@@ -9,7 +10,7 @@ import java.awt.event.InputEvent
 object WindowTest {
     fun test(){
         WindowUtils.getAllWindows(true).forEach {
-            println("${it.title}")
+            logOnly("${it.title}")
             if(it.title.contains("微信")){
                 var x = it.locAndSize.x
                 var y = it.locAndSize.y

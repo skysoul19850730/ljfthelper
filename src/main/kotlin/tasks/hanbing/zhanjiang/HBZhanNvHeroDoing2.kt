@@ -1,21 +1,14 @@
 package tasks.hanbing.zhanjiang
 
-import data.Config
-import data.HeroBean
-import data.MRect
-import data.Recognize
-import getImage
+import data.*
 import kotlinx.coroutines.*
 import log
-import logOnly
-import tasks.CarDoing
-import tasks.HeroDoing
+import tasks.XueLiang
 import tasks.Zhuangbei
-import tasks.guankatask.GuankaTask
-import utils.ImgUtil.forEach4Result
+import tasks.hanbing.BaseHBHeroDoing
 import java.awt.event.KeyEvent.*
 
-class HBZhanNvHeroDoing2 : HeroDoing(0), App.KeyListener {//默认赋值0，左边，借用左边第一个position得点击，去识别车位置后再更改
+class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用左边第一个position得点击，去识别车位置后再更改
 //es8  es4 ye5   6e0 y80  y50 y56 e04
 
     enum class Guan {
@@ -51,7 +44,7 @@ class HBZhanNvHeroDoing2 : HeroDoing(0), App.KeyListener {//默认赋值0，左�
         g110,
 
         /**
-         * 龙心
+         * 龙心 船长有上下卡，等131再和副卡切女王萨满
          */
         g131,
 
@@ -69,7 +62,6 @@ class HBZhanNvHeroDoing2 : HeroDoing(0), App.KeyListener {//默认赋值0，左�
     }
 
     var guanka = Guan.g1
-    var waiting = false
 
     val zhanjiang = HeroBean("zhanjiang", 100)
     val nvwang = HeroBean("nvwang", 90)
@@ -78,73 +70,97 @@ class HBZhanNvHeroDoing2 : HeroDoing(0), App.KeyListener {//默认赋值0，左�
     val shahuang = HeroBean("shahuang", 60, compareRate = 0.9)
     val sishen = HeroBean("sishen", 50)
     val muqiu = HeroBean("muqiu", 40, needCar = false, compareRate = 0.95)
-    val shexian = HeroBean("shexian", 30, needCar = false, isGongCheng = true, compareRate = 0.9)
+    val baoku = HeroBean("baoku", 30, needCar = true, isGongCheng = true, compareRate = 0.9)
     val huanqiu = HeroBean("huanqiu", 20, needCar = false, compareRate = 0.95)
     val guangqiu = HeroBean("guangqiu", 0, needCar = false)
 
+    override fun doOnGuanChanged(guan: Int) {
 
-    var guankaTask = GuankaTask().apply {
-        changeListener = object : GuankaTask.ChangeListener {
-            override fun onGuanChange(guan: Int) {
+        if (guan > 149) {
+            App.startAutoSave()
+        }
 
+        if (guan == 149) {
+            App.startAutoSave()
+        }
 
-                if (guan == 140) {
-                    guanka = Guan.g140
-                    waiting = false
-                    return
-                }
+        if (guan > 140 && guanka != Guan.g140) {
+            guanka = Guan.g140
+            waiting = false
+            return
+        }
 
-                if (guan == 139 && guanka != Guan.g139) {
-                    guanka = Guan.g139
-                    waiting = false
-                    return
-                }
+        if (guan > 139 && guanka != Guan.g139) {
+            App.stopAutoSave()
+            guanka = Guan.g139
+            waiting = false
+            return
+        }
+        if (guan == 139) {
+            App.startAutoSave()
+        }
 
-                if (guan > 129 && guanka != Guan.g131) {
-                    chuanZhangObeserver = false
-                    guanka = Guan.g131
-                    waiting = false
-                    return
-                }
+        if (guan > 129 && guanka != Guan.g131) {
+            chuanZhangObeserver = false
+            guanka = Guan.g131
+            waiting = false
+            return
+        }
 
-                if (guan in 128..129 && guanka == Guan.g110) {
-                    startChuanZhangOberserver()
-                    return
-                }
-                if (guan > 109 && guanka == Guan.g108) {
-                    guanka = Guan.g110
-                    waiting = false
-                    return
-                }
+        if (guan in 128..129 && guanka == Guan.g110) {
+            startChuanZhangOberserver()
+            return
+        }
+        if (guan > 109 && guanka == Guan.g108) {
+            guanka = Guan.g110
+            waiting = false
+            return
+        }
 
-                if (guan in 108..109 && guanka == Guan.g101) {
-                    guanka = Guan.g108
-                    waiting = false
-                    return
-                }
+        if (guan in 108..109 && guanka == Guan.g101) {
+            guanka = Guan.g108
+            waiting = false
+            return
+        }
 
-                if (guan > 99 && guanka == Guan.g41) {
-                    longwangObserver = false
-                    guanka = Guan.g101
-                    waiting = false
-                    return
-                }
-                if (guan in 98..99) {
-                    startLongWangOberserver()
-                    return
-                }
+        if (guan > 99 && guanka == Guan.g41) {
+            longwangObserver = false
+            guanka = Guan.g101
+            waiting = false
+            return
+        }
+        if (guan in 98..99) {
+            startLongWangOberserver()
+            return
+        }
 
-                if (guan >= 38 && guanka == Guan.g26) {
-                    guanka = Guan.g41
-                    waiting = false
-                    return
-                }
+        if (guan >= 38 && guanka == Guan.g26) {
+            guanka = Guan.g41
+            waiting = false
+            return
+        }
 
-                if (guan > 25 && guanka == Guan.g1) {
-                    guanka = Guan.g26
-                    waiting = false
-                    return
-                }
+        if (guan > 25 && guanka == Guan.g1) {
+            guanka = Guan.g26
+            waiting = false
+            return
+        }
+    }
+
+    override suspend fun onLongwangPoint(point: MPoint, downed: (Boolean) -> Unit) {
+        when (point) {
+            Config.hbFSCloud -> {
+                carDoing.downHero(shahuang)
+                downed.invoke(true)
+            }
+//            Config.hbMSCloud ->{
+//                carDoing.downHero(xiaoye)
+//                carDoing.downHero(saman)
+//                carDoing.downHero(jiaonv)
+//                downed.invoke(true)
+//            }
+            else -> {
+                downed.invoke(false)
             }
         }
     }
@@ -153,9 +169,12 @@ class HBZhanNvHeroDoing2 : HeroDoing(0), App.KeyListener {//默认赋值0，左�
 
         if (g == Guan.g139) return false
         if (g == Guan.g140) return Zhuangbei.isYandou()
-        if( g == Guan.g1) return zhanjiang.isFull() && jiaonv.isFull() && sishen.isFull()&&saman.isFull()&&Zhuangbei.isLongxin()
+        if (g == Guan.g1) return zhanjiang.isFull() && jiaonv.isFull() && sishen.isFull() && saman.isFull() && Zhuangbei.isLongxin()
 
-        var heroOk = zhanjiang.isFull() && jiaonv.isFull() && sishen.isFull() && shexian.isFull()
+        var heroOk = zhanjiang.isFull() && jiaonv.isFull() && sishen.isFull()
+        if (baoku.heroName == "baoku") {
+            heroOk = heroOk && baoku.isFull()
+        }
         if (!heroOk) return false
         return when (g) {
             Guan.g1 -> {
@@ -180,7 +199,7 @@ class HBZhanNvHeroDoing2 : HeroDoing(0), App.KeyListener {//默认赋值0，左�
             }
 
             Guan.g110 -> {
-                Zhuangbei.isQiangxi() && nvwang.isInCar() && shahuang.isFull() && saman.isInCar()
+                Zhuangbei.isQiangxi() && nvwang.isFull() && shahuang.isFull() && saman.isFull()
             }
 
             Guan.g131 -> {
@@ -191,163 +210,8 @@ class HBZhanNvHeroDoing2 : HeroDoing(0), App.KeyListener {//默认赋值0，左�
         }
     }
 
-    var longwangObserver = false
-    private fun startLongWangOberserver() {
-        if (longwangObserver) return
-        longwangObserver = true
-        GlobalScope.launch {
-            while (longwangObserver) {
-                var needDown = true
-                if (Config.hbFSCloud.isFit()) {
-                    waiting = true
-                    carDoing.downHero(shahuang)
-                } else if(Config.hbMSCloud.isFit()){
-                    carDoing.downHero(saman)
-                    carDoing.downHero(sishen)
-                    carDoing.downHero(jiaonv)
-                    waiting = true
-                }
-                if (needDown) {
-                    delay(10000)
-                    waiting = false
-                }
-                delay(100)
-            }
-        }
-    }
-
-    var chuanZhangObeserver = false
-    var chuanzhangDownCount = 0
-    var time1 = 0L
-    var time2 = 0L
-    var time3 = 0L
-    private fun startChuanZhangOberserver() {
-        if (chuanZhangObeserver) return
-        chuanZhangObeserver = true
-
-//        GlobalScope.launch {
-//            var shibiedao = false
-//            var firstttt = 0L
-//            while (chuanZhangObeserver){
-//                var img = getImage(MRect.createWH(4,100,300,370))
-//                var count =0
-//                img.foreach { i, i2 ->
-//                    if(img.getRGB(i,i2) == Config.Color_ChuangZhang.rgb){
-//                        count++
-//                    }
-//                    false
-//                }
-//                if(count>0) {
-//                    if(!shibiedao) {//首次识别到
-//                        firstttt = System.currentTimeMillis()
-//                        shibiedao = true
-//                        img.log("数量：$count   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx船长识别到关键颜色 ")
-//                    }
-//                }else{
-//                    if(shibiedao) {//首次识别到   到  识别不到.可以代表本次的持续时间,排查有没有特殊的和船长颜色一样的颜色被错误识别成，以便后续逻辑优化
-//                        shibiedao = false
-//                        img.logOnly("本次未识别到船长颜色 持续时间 ${System.currentTimeMillis() - firstttt}")
-//                        firstttt = 0L
-//                    }
-//                }
-//            }
-//        }
-
-        GlobalScope.launch {
-            while (chuanZhangObeserver) {
-                //4 100 300 370
-                var img = getImage(App.rectWindow)
-                var fitCount = 0
-                MRect.createWH(4, 100, 300, 370).forEach4Result { x, y ->
-                    if (img.getRGB(x, y) == Config.Color_ChuangZhang.rgb) {
-                        fitCount++
-                    }
-                    fitCount > 1000
-                }
-
-
-                var index = carDoing.getChuanZhangMax(img)
-                var index2 = CarDoing((carDoing.chePosition + 1) % 2, CarDoing.CheType_YangChe).run {
-                    initPositions()
-                    getChuanZhangMax(img)
-                }
-                var shibiedao = false
-                if (index != null || index2 != null) {
-                    shibiedao = true
-                    if (index != null && (index2 == null || index.second > index2.second)) {
-                        var hero = carDoing.heroList.get(index.first)
-                        log("检测到被标记 本车：  位置：$index  英雄：${hero?.heroName}")
-
-//                        if (hasWuDi && hero == mengyan) {//点梦魇，有无敌，不下
-//                            hasWuDi = false
-//                        } else {
-                        if (hero != null) {
-                            carDoing.downHero(hero)
-                            waiting = false
-                        }
-//                        }
-                    }else{
-                        log("检测到被标记 副车：  位置：$index2 ")
-
-                    }
-
-
-                }
-                if(fitCount>100){
-                    log("fitcount is $fitCount")
-                }
-                if (fitCount > 1000 || shibiedao) {
-                    log("船长点名啦")
-                    log(img)
-                    chuanzhangDownCount++
-
-                    var isSencodDianming = chuanzhangDownCount % 2 == 0
-                    if (!isSencodDianming) {//第一次点卡后等3秒再开始识别
-                        log("第1次识别到船长，休整3秒后再开始识别：")
-                        delay(3000)
-                    } else {//第二次点卡后 刷6秒补卡然后停止（这个时间慢慢校验)要撞船了
-                        if (chuanZhangObeserver) {
-                            time1 = System.currentTimeMillis()
-//                            delay(10000)
-                            log("第2次识别到船长，6.5秒后暂停刷卡：")
-
-                            delay(6500)
-                            waiting = true
-                            log("第2次识别到船长，暂停刷卡,14秒后开始刷卡,暂停识别，10秒后开始识别")
-
-                            GlobalScope.launch {
-                                delay(14000)
-                                log("第2次识别到船长，恢复刷卡")
-                                waiting = false
-                            }
-                            delay(10000)//5秒后 效果消失，继续补卡，并监听点名,10秒后开始监听，但刷卡由上面代码14秒后执行，再调整
-
-//                            waiting = false
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        guankaTask.start()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        chuanZhangObeserver = false
-        guankaTask.stop()
-        App.keyListeners.remove(this)
-    }
-
-    companion object {
-        var che300Name: String? = null
-    }
 
     override fun initHeroes() {
-        che300Name = null
         heros = arrayListOf()
         heros.add(zhanjiang)
         heros.add(nvwang)
@@ -356,14 +220,11 @@ class HBZhanNvHeroDoing2 : HeroDoing(0), App.KeyListener {//默认赋值0，左�
         heros.add(shahuang)
         heros.add(sishen)
         heros.add(muqiu)
-        heros.add(shexian)
+        heros.add(baoku)
         heros.add(huanqiu)
         heros.add(guangqiu)
-
-        App.keyListeners.add(this)
     }
 
-    var longyunStart = 0L
     suspend fun doOnKeyDown(code: Int): Boolean {
 
         if (code == VK_NUMPAD1 || code == VK_1) {//按1刷木
@@ -392,90 +253,16 @@ class HBZhanNvHeroDoing2 : HeroDoing(0), App.KeyListener {//默认赋值0，左�
     }
 
 
-    var needCheckStar = false
-    private suspend fun checkStars() {
-        carDoing.checkStars()
-        needCheckStar = false
-    }
-
-    var mChePos = -1
-    var kuojianguo = false
-    var curZhuangBei: Int = 0
-
-    override suspend fun afterHeroClick(heroBean: HeroBean) {
-        if (heroCountInCar() > 1) {
-            kuojianguo = true
-        }
-
-        if (mChePos == -1 && heroBean.needCar) {//未识别车时,并且 这个hero是上阵得英雄
-            log("开始检测车")
-            carDoing.carps.get(0).click()
-            delay(1000)
-            if (Recognize.saleRect.isFit()) {//是自己，啥也不用干，开始初始化得位置就是对得
-                mChePos = 0//
-            } else {
-                //我在右边
-                mChePos = 1
-                chePosition = 1
-                carDoing.chePosition = 1
-                carDoing.initPositions()
-            }
-            log("识别车位结果：$mChePos")
-            CarDoing.cardClosePoint.click()
-
-            if (mChePos == 1) {
-                Config.zhandou_kuojianPoint.click()//如果在右边就扩建，否则无法识别星级
-                delay(500)
-            }
-            kuojianguo = true
-        }
-
-
-//        if (needCheckStar && heroBean.needCar && kuojianguo) {//等再次上英雄时 再查
-        if (needCheckStar && kuojianguo) {//等再次上英雄时 再查
-            checkStars()
-        }
-
-        if (heroBean == guangqiu) {
-
-            if (guanka == Guan.g108) {//乱补星时不检测光球，必中，小翼减一个，只要用光，要么是自己没降星，要么就满上了
-                delay(500)
-            } else {
-                var checked = carDoing.checkStarsWithoutCard()
-                if (!checked) {//1.5秒没有check到的话，再使用弹窗识别
-                    if (kuojianguo) {//扩建过开启检查，否则车位不准，先不检查,等上英雄时再检查
-//                    delay(1500)
-                        checkStars()
-                    } else {
-                        needCheckStar = true
-                    }
-                }
-            }
-        }
-
-        if (heroBean == huanqiu) {
-            //扔幻时 记录当前  发生改变后就可以结束（因为主卡幻一定成功）否则这里逻辑就不可以了
-            curZhuangBei = Zhuangbei.getZhuangBei()
-            delay(Config.delayNor)
-            try {
-                withTimeout(1500) {//加个超时保险一些，防止死循环
-                    while (Zhuangbei.getZhuangBei() == curZhuangBei && Zhuangbei.getZhuangBei() != 0) {
-                        delay(Config.delayNor)
-                    }
-                }
-            } catch (e: Exception) {
-
-            }
-        }
-
+    override suspend fun doAfterHeroBeforeWaiting(heroBean: HeroBean) {
         if (!waiting && isGkOver(guanka)) {
-            waiting = true
-        }
-
-        while (waiting) {//卡住 不再刷卡，幻的原因是，之前先预选了卡，比如第一个是木球，但过程中使用幻或者其他操作已经改变了预选卡的组成，比如第一个变成了幻。导致小翼无限刷卡时第一个判断上木，结果就上成了幻！！！
-            delay(100)
+            if (guanka == Guan.g110 && beimu) {//如果beimu时，不waiting，去dealhero里去卡住
+                waiting = false
+            } else {
+                waiting = true
+            }
         }
     }
+
 
     /**
      * 110检查一遍星级，以补满卡
@@ -523,7 +310,10 @@ class HBZhanNvHeroDoing2 : HeroDoing(0), App.KeyListener {//默认赋值0，左�
             }
             return -1
         } else if (guanka == Guan.g26) {
-            var fullList = arrayListOf(nvwang, jiaonv, saman, sishen, zhanjiang, shexian)//防止没满
+            var fullList = arrayListOf(nvwang, jiaonv, saman, sishen, zhanjiang)//防止没满
+            if (baoku.heroName == "baoku") {
+                fullList.add(baoku)
+            }
             var index = defaultDealHero(
                 heros,
                 fullList
@@ -541,7 +331,10 @@ class HBZhanNvHeroDoing2 : HeroDoing(0), App.KeyListener {//默认赋值0，左�
             }
 
         } else if (guanka == Guan.g41) {
-            var fullList = arrayListOf(shahuang, nvwang, jiaonv, saman, sishen, zhanjiang, shexian)//防止没满
+            var fullList = arrayListOf(shahuang, nvwang, jiaonv, saman, sishen, zhanjiang)//防止没满
+            if (baoku.heroName == "baoku") {
+                fullList.add(baoku)
+            }
             var index = defaultDealHero(
                 heros,
                 fullList
@@ -558,7 +351,10 @@ class HBZhanNvHeroDoing2 : HeroDoing(0), App.KeyListener {//默认赋值0，左�
                 return index
             }
         } else if (guanka == Guan.g101) {//101 yandou
-            var fullList = arrayListOf(nvwang, shahuang, saman, zhanjiang, sishen, jiaonv, shexian)
+            var fullList = arrayListOf(nvwang, shahuang, saman, zhanjiang, sishen, jiaonv)
+            if (baoku.heroName == "baoku") {
+                fullList.add(baoku)
+            }
             var index = defaultDealHero(
                 heros,
                 fullList
@@ -577,7 +373,10 @@ class HBZhanNvHeroDoing2 : HeroDoing(0), App.KeyListener {//默认赋值0，左�
             }
 
         } else if (guanka == Guan.g108) {//乱补
-            var fullList = arrayListOf(nvwang, shahuang, saman, zhanjiang, sishen, jiaonv, muqiu, guangqiu, shexian)
+            var fullList = arrayListOf(nvwang, shahuang, saman, zhanjiang, sishen, jiaonv, muqiu, guangqiu)
+            if (baoku.heroName == "baoku") {
+                fullList.add(baoku)
+            }
             var index = defaultDealHero(
                 heros,
                 fullList
@@ -591,30 +390,40 @@ class HBZhanNvHeroDoing2 : HeroDoing(0), App.KeyListener {//默认赋值0，左�
             }
 
         } else if (guanka == Guan.g110) {//111
-            if (nvwang.isFull()) {
-                carDoing.downHero(nvwang)
-            }
-            if (saman.isFull()) {
-                carDoing.downHero(saman)//主卡萨满16 ，低星有加成
-            }
+
             if (!recheckStarFor110) {
                 carDoing.reCheckStars()
                 recheckStarFor110 = true
             }
 
-            var fullList = arrayListOf(zhanjiang, shahuang, jiaonv, sishen, shexian)
+            var fullList = arrayListOf(zhanjiang, shahuang, jiaonv, sishen, nvwang, saman)
+            if (baoku.heroName == "baoku") {
+                fullList.add(baoku)
+            }
             var index = defaultDealHero(
                 heros,
                 fullList
             )
             if (index > -1) return index
-            index = heros.indexOf(nvwang)
-            if (index > -1 && !nvwang.isInCar()) {//换一星女王，副卡满（副卡18）
-                return index
-            }
-            index = heros.indexOf(saman)
-            if (index > -1 && !saman.isInCar()) {//换一星女王，副卡满（副卡18）
-                return index
+
+            if (isGkOver(Guan.g110)) {//船长补满卡后，背木
+                if (beimu) {
+                    index = heros.indexOf(muqiu)
+                    if (index > -1) {
+                        log("备好了木，等待使用")
+                        while (!XueLiang.isMLess(0.4f) && beimu) {//这里如果不加&& beimu，如果副卡打了木，血量一直不低于40，那么这里就会一直卡着，船长监听那里，也会在适当时机把beimu改成false，这样这里就会扔出去了
+                            delay(100)
+                        }
+                        log("血量低于40%，使用木")
+                        beimu = false //变成false，用木后，判断needwaiting就是true了，就不会刷完木又来刷卡
+                        return index
+                    }
+                }
+            } else {
+                index = heros.indexOf(guangqiu)
+                if (index > -1 && carDoing.hasNotFull()) {
+                    return index
+                }
             }
 
 
@@ -625,9 +434,18 @@ class HBZhanNvHeroDoing2 : HeroDoing(0), App.KeyListener {//默认赋值0，左�
 
 
         } else if (guanka == Guan.g131) {
+            if (nvwang.isFull()) {
+                carDoing.downHero(nvwang)
+            }
+            if (saman.isFull()) {
+                carDoing.downHero(saman)//主卡萨满16 ，低星有加成
+            }
 
             //防止船长点完卡没补满
-            var fullList = arrayListOf(zhanjiang, shahuang, jiaonv, sishen, shexian)
+            var fullList = arrayListOf(zhanjiang, shahuang, jiaonv, sishen)
+            if (baoku.heroName == "baoku") {
+                fullList.add(baoku)
+            }
             var index = defaultDealHero(
                 heros,
                 fullList
@@ -664,17 +482,15 @@ class HBZhanNvHeroDoing2 : HeroDoing(0), App.KeyListener {//默认赋值0，左�
         return -1
     }
 
-    var lastXiaoye = 0L
-
-    private suspend fun useMoqiu(): Boolean {
-        return false
-    }
 
     override fun changeHeroWhenNoSpace(heroBean: HeroBean): HeroBean? {
         return null
     }
 
     override suspend fun onKeyDown(code: Int): Boolean {
+        if (super.onKeyDown(code)) {
+            return true
+        }
         return doOnKeyDown(code)
     }
 }

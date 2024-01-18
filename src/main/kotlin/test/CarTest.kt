@@ -1,8 +1,7 @@
 package test
 
-import data.Recognize
-import getImageFromRes
-import tasks.CarDoing
+import logOnly
+import model.CarDoing
 
 object CarTest {
 
@@ -10,7 +9,7 @@ object CarTest {
         var starttime = System.currentTimeMillis()
         doTestStart()
         var end = System.currentTimeMillis()
-        println("time :${(end - starttime)}")
+        logOnly("time :${(end - starttime)}")
     }
 
     private fun doTestStart() {
@@ -24,8 +23,8 @@ object CarTest {
 
 
             carps.forEachIndexed { index, carPosition ->
-                var level = carPosition.getStarLevel()
-                println("position:$index level:$level")
+                var level = carPosition.getStarLevelDirect()
+                logOnly("position:$index level:$level")
             }
 
         }

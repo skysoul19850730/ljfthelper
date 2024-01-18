@@ -5,6 +5,7 @@ package utils
 //import com.android.ddmlib.RawImage
 import data.MPoint
 import kotlinx.coroutines.delay
+import logOnly
 import java.awt.image.BufferedImage
 
 object ADBUtil {
@@ -24,7 +25,7 @@ object ADBUtil {
         try {
             Runtime.getRuntime().exec("cmd /c adb shell input tap ${point.x} ${point.y}").waitFor()
         } catch (e: Exception) {
-            println("e ${e.message}")
+            logOnly("e ${e.message}")
         }
     }
 
@@ -32,7 +33,7 @@ object ADBUtil {
         try {
             Runtime.getRuntime().exec("cmd /c adb shell input text ${text}").waitFor()
         } catch (e: Exception) {
-            println("e ${e.message}")
+            logOnly("e ${e.message}")
         }
     }
 

@@ -68,7 +68,7 @@ object MRobot {
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
     }
 
-    suspend fun singleClickPc(point: MPoint, window: WinDef.HWND? = App.tfWindow!!) {
+    suspend fun singleClickPc(point: MPoint, window: WinDef.HWND? = App.tfWindow) {
         if (houtai && window != null && window != WxUtil.wxWindow) {
             logOnly("click point start ${point.x}  ${point.y}")
             window?.clickPoint(point)
@@ -93,7 +93,7 @@ object MRobot {
 
     }
 
-    suspend fun singleClick(point: MPoint, window: WinDef.HWND? = App.tfWindow!!) {
+    suspend fun singleClick(point: MPoint, window: WinDef.HWND? = App.tfWindow) {
 //        robot.mouseMove(point.x, point.y)
 //        robot.delay(30)
 //        singleClick()
@@ -120,7 +120,7 @@ object MRobot {
 //        }
 //    }
 
-    suspend fun niantie(text: String?, window: WinDef.HWND? = App.tfWindow!!) {
+    suspend fun niantie(text: String?, window: WinDef.HWND? = App.tfWindow) {
         log("输入房间号$text")
         if (!text.isNullOrEmpty()) {
             copyText(text)
@@ -226,7 +226,7 @@ object MRobot {
         val start = System.currentTimeMillis()
         val bitmap = GDI32Util.getScreenshot(tf)
         val time = System.currentTimeMillis() - start
-        println("const $time")
+        logOnly("const $time")
         bitmap.saveTo(File(App.caijiPath, "${System.currentTimeMillis()}.png"))
     }
 

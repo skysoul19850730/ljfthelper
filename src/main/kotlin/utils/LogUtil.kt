@@ -3,6 +3,8 @@ package utils
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import data.Config
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import saveTo
 import java.awt.image.BufferedImage
 import java.io.File
@@ -45,7 +47,10 @@ object LogUtil {
                 }
             }
         }
-        messages.clear()
+        MainScope().launch {
+            messages.clear()
+        }
+
     }
 
     private fun logChildDirWithModel(): String {

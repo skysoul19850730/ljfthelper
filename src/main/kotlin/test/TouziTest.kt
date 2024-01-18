@@ -3,6 +3,7 @@ package test
 import data.MRect
 import getImageFromRes
 import getSubImage
+import logOnly
 import utils.ImgUtil.forEach
 import java.awt.image.BufferedImage
 import kotlin.math.abs
@@ -17,7 +18,7 @@ object TouziTest {
         var img = img2.getSubImage(touziRect)
         var result = touziCheck(img)
         var end = System.currentTimeMillis()
-        println("识别骰子:$result  time :${(end - starttime)}")
+        logOnly("识别骰子:$result  time :${(end - starttime)}")
     }
 
     private fun touziCheck(img: BufferedImage): Boolean {

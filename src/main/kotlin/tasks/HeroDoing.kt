@@ -136,7 +136,7 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
             afterHeroClick(heroBean)
         } else {//上不去，没格子了(如何是换卡，在这之前已经下了卡了，下了卡就能上去，所以这里只会因为没有格子而上不去，所以点扩建再尝试上卡
             logOnly("英雄未上阵")
-            if(Config.rect4KuojianColor.hasWhiteColor()){
+            if(Config.rect4KuojianColor.hasWhiteColor() && !hasKuoJianClicked){
                 logOnly("尝试点击一次扩建")
                 MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
                 delay(Config.delayNor)
