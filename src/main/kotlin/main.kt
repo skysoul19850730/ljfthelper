@@ -2,7 +2,7 @@
 
 import App.state
 import MainData.guan
-import MainData.heros
+import MainData.carPositions
 import MainData.zhuangbei
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.*
@@ -23,23 +23,30 @@ import androidx.compose.ui.awt.ComposeWindow
 import androidx.compose.ui.awt.awtEvent
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.toPainter
 import androidx.compose.ui.input.pointer.PointerEventType
 import androidx.compose.ui.input.pointer.isPrimaryPressed
 import androidx.compose.ui.input.pointer.isSecondaryPressed
 import androidx.compose.ui.input.pointer.onPointerEvent
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.FrameWindowScope
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import com.sun.jna.platform.win32.*
 import data.*
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import model.CarDoing
+import model.CarPosition
 import tasks.*
-import tasks.hanbing.mengyan.ChuanZhangTest
+import tasks.hanbing.zhanjiang.HBZhanNvHeroDoing
 import tasks.hezuo.zhannvsha.ZhanNvGameLaunch
 import utils.LogUtil
 import utils.MRobot
@@ -51,8 +58,6 @@ import kotlin.math.max
 import kotlin.math.min
 import tasks.huodong.HuodongUtil
 import utils.ImgUtil
-import java.awt.event.KeyEvent
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 
 
@@ -60,7 +65,6 @@ import java.text.SimpleDateFormat
 @Composable
 @Preview
 fun App() {
-
 
     var modelText by remember {
         mutableStateOf("选择模式")
@@ -84,8 +88,15 @@ fun App() {
                 Row(Modifier.fillMaxWidth().background(Color.LightGray).padding(12.dp)) {
                     MCheckBox("Home", Config.isHome4Setting)
                     MCheckBox("采集", App.caijing)
-                    button("重新检测星级"){
-                       App.reCheckStar = true
+                    button("重新检测星级") {
+                        App.reCheckStar = true
+                    }
+                    if (selectModel.value and App.model_duizhan > 0) {
+                        MCheckBox("看失败广告", Config.viewFailAdv)
+                        MCheckBox("投降", Config.touxiangAuto)
+                        if (Config.touxiangAuto.value) {
+                            MCheckBox("全投降", Config.touxiangAll)
+                        }
                     }
 //                    HSpace(6)
 //                    MRadioBUtton("模拟器", Config.platform_moniqi, Config.platform)
@@ -142,7 +153,6 @@ fun App() {
                                         Image(item.toPainter(), null, Modifier.width(ww.dp).height(hh.dp))
                                     }
                                 }
-
                             }
                         }
                     }
@@ -231,15 +241,6 @@ fun App() {
                                     state = rememberScrollState()
                                 )
                         ) {
-                            button("天空模式") {
-                                showChooseModel.value = false
-//                                App.setLaunchModel(App.modelCaiji)
-//                                selectModel.value = App.modelCaiji
-//                                modelText = "采集模式"
-                                App.setLaunchModel(App.model_tiankong_5f)
-                                selectModel.value = App.model_tiankong_5f
-                                modelText = "天空5法"
-                            }
                             button("对战-龙拳") {
                                 showChooseModel.value = false
                                 App.setLaunchModel(App.model_longquan)
@@ -282,9 +283,9 @@ fun App() {
             showOtherWindow(customScreen)
         }
 
-        if (CarDoing.showTouziRect.value) {
-            showTouziRect()
-        }
+//        if (CarDoing.showTouziRect.value) {
+//            showTouziRect()
+//        }
 
         showInputDialog("输入时长分钟数，可以浮点型", "例如：120", timeInputDialog) {
             try {
@@ -324,9 +325,8 @@ fun App() {
     }
 }
 
-
 object MainData {
-    val heros = mutableStateOf(arrayListOf<HeroBean?>())
+    val carPositions = mutableStateListOf<CarPosition>()
     val guan = mutableStateOf(0)
     val zhuangbei = mutableStateOf("")
     val sucCount = mutableStateOf(0)
@@ -337,22 +337,21 @@ object MainData {
 fun carInfo() {
     Row {
         Column {
-            Text("关卡", Modifier.height(20.dp))
-            Text("${guan.value}", Modifier.height(20.dp))
-            VSpace(12)
-            carPosInfo(heros.value.getOrNull(5))
-            carPosInfo(heros.value.getOrNull(3))
-            carPosInfo(heros.value.getOrNull(1))
-
+            Column(Modifier.width(35.dp).height(56.dp)) {
+                Text("关卡", Modifier.height(20.dp).align(Alignment.CenterHorizontally))
+                Text("${guan.value}", Modifier.height(20.dp).align(Alignment.CenterHorizontally))
+            }
+            carPosInfo(carPositions.getOrNull(5))
+            carPosInfo(carPositions.getOrNull(3))
+            carPosInfo(carPositions.getOrNull(1))
             Text(zhuangbei.value)
         }
-        HSpace(12)
         Column {
-            carPosInfo(heros.value.getOrNull(6))
-            carPosInfo(heros.value.getOrNull(4))
-            carPosInfo(heros.value.getOrNull(2))
-            carPosInfo(heros.value.getOrNull(0))
-            if(App.mLaunchModel and App.model_duizhan !=0) {
+            carPosInfo(carPositions.getOrNull(6))
+            carPosInfo(carPositions.getOrNull(4))
+            carPosInfo(carPositions.getOrNull(2))
+            carPosInfo(carPositions.getOrNull(0))
+            if (App.mLaunchModel and App.model_duizhan != 0) {
                 Text("胜利：${MainData.sucCount.value}", color = Color.Red)
                 Text("失败：${MainData.failCount.value}", color = Color.Gray)
             }
@@ -362,13 +361,52 @@ fun carInfo() {
 }
 
 @Composable
-fun carPosInfo(hero: HeroBean?) {
-    val name = hero?.heroName ?: "空位"
-    val star = hero?.currentLevel?.toString() ?: ""
-    Column {
-        Text("$name", Modifier.background(Color.Gray).width(60.dp).height(20.dp))
-        Text("$star", Modifier.width(60.dp).height(20.dp))
-        VSpace(12)
+fun carPosInfo(pos: CarPosition?) {
+    val img = pos?.mHeroBean?.imgList?.last()
+    val star = pos?.mHeroBean?.currentLevel ?: -1
+    val starIcon: BufferedImage? = when (star) {
+        1 -> getImageFromRes(Recognize.heroStar1.resNameFinal)
+        2 -> getImageFromRes(Recognize.heroStar2.resNameFinal)
+        3 -> getImageFromRes(Recognize.heroStar3.resNameFinal)
+        4 -> getImageFromRes(Recognize.heroStar4.resNameFinal)
+        else -> null
+    }
+    Column(Modifier.width(35.dp).height(56.dp).padding(horizontal = 5.dp)) {
+        Box(Modifier.border(1.dp, Color.Gray).width(25.dp).height(35.dp)) {
+            if (img != null) {
+                Image(img.toPainter(), "", Modifier.fillMaxSize())
+            } else {
+                Text("空", modifier = Modifier.align(Alignment.Center), color = Color.Gray, fontSize = 20.sp)
+            }
+        }
+        VSpace(5)
+        if (starIcon != null) {
+            Row {
+                Text("-", Modifier.clickable {
+                    var level = pos?.mHeroBean?.currentLevel ?: 0
+                    if (level > 1) {
+                        pos?.mHeroBean?.currentLevel = level - 1
+                    }
+                    var list = arrayListOf<CarPosition>().apply {
+                        addAll(carPositions)
+                    }
+                    MainData.carPositions.clear()
+                    carPositions.addAll(list)
+                })
+                Image(starIcon.toPainter(), "", Modifier.width(16.dp).height(16.dp))
+                Text("+", Modifier.clickable {
+                    var level = pos?.mHeroBean?.currentLevel ?: 0
+                    if (level < 4) {
+                        pos?.mHeroBean?.currentLevel = level + 1
+                    }
+                    var list = arrayListOf<CarPosition>().apply {
+                        addAll(carPositions)
+                    }
+                    MainData.carPositions.clear()
+                    carPositions.addAll(list)
+                })
+            }
+        }
     }
 }
 
@@ -605,29 +643,29 @@ private fun showInputDialog(
     }
 }
 
-@Composable
-private fun showTouziRect() {
-    Window({
-        CarDoing.showTouziRect.value = false
-    }, transparent = true, undecorated = true, resizable = false, alwaysOnTop = true) {
-        MaterialTheme {
-            Box(
-                Modifier.width(CarDoing.touziRect.width.dp).height(CarDoing.touziRect.height.dp)
-                    .border(1.dp, Color.Green)
-            ) {
-            }
-
-            this.window.setLocation(CarDoing.touziLeft.value, CarDoing.touziRect.top)
-            this.window.setBounds(
-                CarDoing.touziLeft.value,
-                CarDoing.touziRect.top,
-                CarDoing.touziRect.width,
-                CarDoing.touziRect.height
-            )
-        }
-
-    }
-}
+//@Composable
+//private fun showTouziRect() {
+//    Window({
+//        CarDoing.showTouziRect.value = false
+//    }, transparent = true, undecorated = true, resizable = false, alwaysOnTop = true) {
+//        MaterialTheme {
+//            Box(
+//                Modifier.width(CarDoing.touziRect.width.dp).height(CarDoing.touziRect.height.dp)
+//                    .border(1.dp, Color.Green)
+//            ) {
+//            }
+//
+//            this.window.setLocation(CarDoing.touziLeft.value, CarDoing.touziRect.top)
+//            this.window.setBounds(
+//                CarDoing.touziLeft.value,
+//                CarDoing.touziRect.top,
+//                CarDoing.touziRect.width,
+//                CarDoing.touziRect.height
+//            )
+//        }
+//
+//    }
+//}
 
 @Composable
 private fun showOtherWindow(customScreen: MutableState<Boolean>) {
@@ -938,15 +976,37 @@ fun saveImgTest(file: File, rect: MRect) {
     getImageFromFile(file).saveSubTo(rect, File(App.caijiPath, System.currentTimeMillis().toString() + ".png"))
 }
 
-fun test() {
-//WxUtil.findWindowAndMove()
-//    WxUtil.getText().apply {
-//        log(this)
-//    }
+fun testHerosUI() {
+    var carDoing = CarDoing().apply {
+        initPositions()
+        attchToMain()
+    }
+    var hero = HeroBean("zhanjiang")
+    GlobalScope.launch {
+        carDoing.addHero(hero)
+        delay(3000)
+        carDoing.addHero(hero)
+        delay(3000)
+        carDoing.addHero(hero)
+        delay(3000)
+        carDoing.addHero(hero)
+    }
+}
 
-    ChuanZhangTest.startChuanZhangOberserver()
+private fun testChuanZhang(){
+    var hd = HBZhanNvHeroDoing()
+    hd.init()
+    hd.start()
+    hd.startChuanZhangOberserver()
+}
+
+fun test() {
+    autoMoveMouse()
+//testChuanZhang()
+
+//testHerosUI()
+//    ChuanZhangTest.startChuanZhangOberserver()
 //    saveImgTest(File(App.caijiPath,"1701233714591.png"),Recognize.IcAdv4Hezuo.rectFinal)
-//    autoMoveMouse()
 //    testKaiJi()
 //    GlobalScope.launch {
 //        delay(2000)
@@ -1002,9 +1062,12 @@ fun Any.toLogData(): LogUtil.LogData {
 }
 
 fun Any.log(msg: Any, onlyPrint: Boolean = false) {
-    println(msg.toString())
+    var logData = msg.toLogData()
+    println(logData.time + " " + logData.data.toString())
     if (!onlyPrint) {
-        LogUtil.messages.add(0, msg.toLogData())
+        MainScope().launch {
+            LogUtil.messages.add(0, logData)
+        }
     }
 }
 
@@ -1026,15 +1089,18 @@ fun logWin(win: WinDef.HWND) {
 
 
 fun main() = application {
-    App.initPath()
-    if (App.windowClose.value > 0) {
-        App.closeApp()
+    App.initPath{
         testing = false
-        GlobalScope.launch {
-            delay(3000)
-            exitApplication()
-        }
+        exitApplication()
     }
+//    if (App.windowClose.value > 0) {
+//        testing = false
+//        App.closeApp()
+//        GlobalScope.launch {
+//            delay(3000)
+//            exitApplication()
+//        }
+//    }
     Window(onCloseRequest = {
         App.closeApp()
         exitApplication()

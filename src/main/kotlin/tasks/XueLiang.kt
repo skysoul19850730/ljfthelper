@@ -1,10 +1,10 @@
 package tasks
 
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
+import colorCompare
 import data.MPoint
 import data.MRect
 import utils.MRobot
+import java.awt.Color
 
 object XueLiang {
 
@@ -19,7 +19,7 @@ object XueLiang {
     fun isMLess(rate:Float):Boolean{
 
         var checkPoint = MPoint((mRect.left+ mRect.width*rate).toInt(),y)
-        return MRobot.robot.getPixelColor(checkPoint.x,checkPoint.y).rgb == blackColor.toArgb()
+        return colorCompare(MRobot.robot.getPixelColor(checkPoint.x,checkPoint.y) ,blackColor)
 
     }
 

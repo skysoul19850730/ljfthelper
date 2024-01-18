@@ -1,6 +1,5 @@
 package tasks.guankatask
 
-import MainData
 import data.Config
 import getImage
 import getImageFromFile
@@ -47,11 +46,11 @@ class GuankaTask {
 
                 var curImg = getImage(Config.zhandou_hezuo_guankaRect)
                 var has = false
-                for(i in currentGuanIndex..min(currentGuanIndex+10,imgList.size-1)){
+                for(i in currentGuanIndex..min(currentGuanIndex+50,imgList.size-1)){
                     if(ImgUtil.isImageSim(curImg,imgList.get(i),0.98)){
                         if(currentGuanIndex != i){
                             currentGuanIndex = i
-                            MainData.guan.value = currentGuanIndex
+                            MainData.guan.value = currentGuanIndex+1
                             log("当前关卡：${currentGuanIndex+1}")
                             has = true
                             changeListener?.onGuanChange(currentGuanIndex+1)

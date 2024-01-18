@@ -1,5 +1,6 @@
 package tasks.duizhan.longquan
 
+import data.Config
 import data.HeroBean
 import data.MPoint
 import kotlinx.coroutines.delay
@@ -42,9 +43,9 @@ class LongQuanHeroDoing(val renji: Boolean = false) : HeroDoing(-1) {
         nvwang = HeroBean("nvwang", 80)
         kuanglong = HeroBean("kuanglong", 70)
         guangqiu = HeroBean("guangqiu", 60, needCar = false, compareRate = 0.99)
-        moqiu = HeroBean("kui", 50, needCar = false, compareRate = 0.95)
+        moqiu = HeroBean("moqiu", 50, needCar = false, compareRate = 0.95)
         bingnv = HeroBean("bingnv", 40)
-        dijing = HeroBean("dijing", 30, compareRate = 0.95)
+        dijing = HeroBean("muqiu", 30, compareRate = 0.95)
         xiaochou = HeroBean("xiaochou", 0)
         xiaolu = HeroBean("xiaolu", 0)
     }
@@ -65,20 +66,15 @@ class LongQuanHeroDoing(val renji: Boolean = false) : HeroDoing(-1) {
 
     var mChePositionCount = 0
 
-    override suspend fun afterHeroClick(heroBean: HeroBean) {
+    override suspend fun doAfterHeroBeforeWaiting(heroBean: HeroBean) {
+        super.doAfterHeroBeforeWaiting(heroBean)
         if (heroBean.needCar) {
             mChePositionCount = max(mChePositionCount, heroCountInCar())
         }
         if (heroBean == moqiu) {
-            delay(1000)
+//            delay(1000)
         } else if (heroBean == xiaolu) {
             carDoing.downHero(heroBean)
-        } else if (heroBean == guangqiu) {//节省时间，只看龙拳和女王，其他不看
-//            var checked = carDoing.checkStarsWithoutCard()
-//            if (!checked) {
-//                carDoing.checkStars()
-//            }
-            delay(500)
         } else if (heroBean == bingnv) {
             if (isGaojiMengyan()) {
                 carDoing.downHero(bingnv)
@@ -103,6 +99,7 @@ class LongQuanHeroDoing(val renji: Boolean = false) : HeroDoing(-1) {
             }
         }
     }
+
 
     fun changeHeroWhenNoSpaceRenji(heroBean: HeroBean): HeroBean? {
         if (mChePositionCount < 3) {
@@ -135,7 +132,7 @@ class LongQuanHeroDoing(val renji: Boolean = false) : HeroDoing(-1) {
             return changeHeroWhenNoSpaceRenji(heroBean)
         }
 
-        if (mChePositionCount < 5) {//不管，开过5格开会替换
+        if (mChePositionCount < 4) {//不管，开过5格开会替换
 
         } else {
 
@@ -223,7 +220,7 @@ class LongQuanHeroDoing(val renji: Boolean = false) : HeroDoing(-1) {
             }
         }
 
-        if (moqiu.heroName=="moqiu" &&indexmoqiu > -1) {
+        if (moqiu.heroName=="moqiu" && indexmoqiu > -1) {
             return indexmoqiu
         }
 
@@ -231,10 +228,16 @@ class LongQuanHeroDoing(val renji: Boolean = false) : HeroDoing(-1) {
     }
 
 
+
     override suspend fun dealHero(heros: List<HeroBean?>): Int {
+
+
         if (renji) {
             return dealHeroRenji(heros)
         }
+
+
+
         var list = arrayListOf<HeroBean?>()
         list.addAll(heros)
         if (list.isEmpty()) return -1
@@ -256,10 +259,14 @@ class LongQuanHeroDoing(val renji: Boolean = false) : HeroDoing(-1) {
         }
 
         if (!longquan.isFull()) {
-            if (indexguangqiu > -1 && longquan.isInCar() && !longquan.isFull()) {//如果只有龙拳且没满用光,如果有经济卡等，就不优先用光了
+            if (indexguangqiu > -1 && longquan.isInCar() ) {//优先满龙拳
                 this.heros.forEach {
                     if (it != null && it != longquan && it.isInCar() && !it.isFull()) {
-                        carDoing.downHero(it)
+                        if(it == nvwang && nvwang.currentLevel==3){
+                         //女王如果3星了就不下了
+                        }else {
+                            carDoing.downHero(it)
+                        }
                     }
                 }
                 return indexguangqiu
@@ -272,9 +279,9 @@ class LongQuanHeroDoing(val renji: Boolean = false) : HeroDoing(-1) {
             if (indexbingnv > -1 && !bingnv.isInCar()) {
                 return indexbingnv
             }
-            if (indexdijing > -1 && !dijing.isInCar()) {
-                return indexdijing
-            }
+//            if (indexdijing > -1 && !dijing.isInCar()) {
+//                return indexdijing
+//            }
 
             if (indexxiaochou > -1 && !xiaochou.isInCar()) {
                 return indexxiaochou
@@ -288,16 +295,19 @@ class LongQuanHeroDoing(val renji: Boolean = false) : HeroDoing(-1) {
             if (indexguangqiu > -1) {//光球
                 return indexguangqiu
             }
-
-            if (indexdijing > -1) {
-                return indexdijing
+            if(indexnvwang>-1){
+                return indexnvwang
             }
+
+//            if (indexdijing > -1) {
+//                return indexdijing
+//            }
 
             if (indexxiaochou > -1) {
                 return indexxiaochou
             }
 
-            if (moqiu.heroName=="moqiu" &&indexmoqiu > -1 && xuliangOk()) {
+            if (moqiu.heroName=="moqiu" && indexmoqiu > -1 && xuliangOk()) {
                 return indexmoqiu
             }
 
@@ -317,27 +327,47 @@ class LongQuanHeroDoing(val renji: Boolean = false) : HeroDoing(-1) {
             }
 
             if (indexguangqiu > -1 && !nvwang.isFull() && nvwang.isInCar()) {//女王没满就碰运气光球
+                if(nvwang.currentLevel==3){
+                    if(bawang.isInCar() && kuanglong.isInCar()){
+                        //如果羁绊已形成，就不强满女王了
+                    }else{
+                        this.heros.forEach {//不是女王 龙拳的都下掉，强满女王
+                            if(!it.isFull() && it!=nvwang && it!=longquan){
+                                carDoing.downHero(it)
+                            }
+                        }
+                    }
+                }
                 return indexguangqiu
             }
 
-            if (indexdijing > -1 && !dijing.isInCar()) {//补个地精防止熊猫
-                return indexdijing
+//            if (indexdijing > -1 && !dijing.isInCar()) {//补个地精防止熊猫
+//                return indexdijing
+//            }
+            if (indexbawang > -1 && nvwang.isInCar()) {//女王已经在车了，就随缘升霸王，比小鹿等级高，毕竟小鹿可能卡住升格子
+                return indexbawang
             }
 
             if (indexxiaolu > -1) {//
 //                if(bingnv.isInCar() || xiaochou.isInCar() || bawang.isFull()) {//如果这俩都不在，就只剩4主力+地精了，因为熊猫可能存在，所以不下地精,但如果霸王满了，可以下地精（霸王攻击比龙拳高
                 if (bingnv.isInCar() || xiaochou.isInCar() || heroCountInCar() < 5) {//算了，地精就一直在吧,<5是因为可能上次小鹿时小丑在，把小丑卖了，小鹿也卖了，这是有空位，但遇到小鹿它不上，所以小于5时也可以上小鹿
-                    return indexxiaolu
+                    if(nvwang.isFull()&& kuanglong.isInCar() && bawang.isInCar()&&carDoing.openCount()<5){
+                     //如果这时只有4个开的格子，并且女王龙拳都已经满了，就不刷小鹿了，就随缘刷刷霸王，这时上小鹿还要等开格子没意义了，女王如果没满就等小鹿，毕竟需要第5个格子来上下小鹿冰女来刷女王
+                    }else {
+                        return indexxiaolu
+                    }
                 }
             }
-            if (indexbawang > -1) {
-                return indexbawang
-            }
-            if (moqiu.heroName=="moqiu" &&indexmoqiu > -1 && xuliangOk()) {
+
+            if (moqiu.heroName=="moqiu" && indexmoqiu > -1 && xuliangOk()) {
                 return indexmoqiu
             }
 
-            if (indexguangqiu > -1) {//光球垫底
+            if (indexbawang > -1) {
+                return indexbawang
+            }
+
+            if (indexguangqiu > -1 && !nvwang.isFull()) {//光球垫底,女王满了就不用了，防止狂龙满（龙拳阵容用的人太多，自己狂龙满了等于帮助对面的狂龙了)
                 return indexguangqiu
             }
             if (indexbingnv > -1) {
@@ -345,19 +375,28 @@ class LongQuanHeroDoing(val renji: Boolean = false) : HeroDoing(-1) {
                     carDoing.downHero(bingnv)
                     return indexbingnv
                 }
-                if (heroCountInCar() < 5 && mChePositionCount == 5) {//下了小鹿有位置时，如果没刷到其他卡，刷到冰女可以上冰女
+                if (carDoing.hasOpenSpace()) {//下了小鹿有位置时，如果没刷到其他卡，刷到冰女可以上冰女
                     return indexbingnv
                 }
             }
-            if (indexdijing > -1) {
-                return indexdijing
+
+            if (indexkuanglong > -1 && kuanglong.currentLevel>1) {
+                //其他卡都验过了，轮到有狂龙了，那么如果狂龙等级太高就下掉重新上,比如当前卡片组是 狂龙 任务卡 光球。那就下狂龙再上
+                carDoing.downHero(kuanglong)
+                return indexkuanglong
             }
+//            if (indexdijing > -1) {
+//                return indexdijing
+//            }
         }
         return -1
     }
 
 
     fun xuliangOk(): Boolean {
-        return !XueLiang.isMLess(0.7f)
+        var xlOk = !XueLiang.isMLess(0.6f)
+        var msg = if(xlOk) "血量健康，释放魔球" else "血量不健康，本次不释放魔球"
+        log(msg)
+        return xlOk
     }
 }

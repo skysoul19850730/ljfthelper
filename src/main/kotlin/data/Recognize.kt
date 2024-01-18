@@ -1,7 +1,7 @@
 package data
 
 import data.Config.platform
-import tasks.CarDoing
+import model.CarDoing
 import utils.ImgUtil
 import utils.MRobot
 

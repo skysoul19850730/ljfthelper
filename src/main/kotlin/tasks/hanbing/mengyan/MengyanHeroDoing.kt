@@ -1,19 +1,19 @@
 package tasks.hanbing.mengyan
 
-import com.sun.jdi.CharType
 import data.Config.delayNor
 import data.HeroBean
 import data.Recognize
 import getImage
 import kotlinx.coroutines.*
 import log
-import tasks.CarDoing
+import model.CarDoing
 import tasks.HeroDoing
 import tasks.Zhuangbei
 import tasks.guankatask.GuankaTask
 import java.awt.event.KeyEvent
 
-class MengyanHeroDoing : HeroDoing(0), App.KeyListener {//默认赋值0，左边，借用左边第一个position得点击，去识别车位置后再更改
+class MengyanHeroDoing : HeroDoing(0, FLAG_GUANKA or FLAG_KEYEVENT),
+    App.KeyListener {//默认赋值0，左边，借用左边第一个position得点击，去识别车位置后再更改
 
 
     /**
@@ -38,7 +38,6 @@ class MengyanHeroDoing : HeroDoing(0), App.KeyListener {//默认赋值0，左边
     val huanqiu = HeroBean("huanqiu", needCar = false)
     val shengqi = HeroBean("shengqi")
 
-    var waiting = false
     var hasWuDi = true
 
     override fun initHeroes() {
@@ -54,57 +53,50 @@ class MengyanHeroDoing : HeroDoing(0), App.KeyListener {//默认赋值0，左边
         heros.add(huanqiu)
         heros.add(shengqi)
 
-        App.keyListeners.add(this)
     }
 
-    var guankaTask = GuankaTask().apply {
-        changeListener = object : GuankaTask.ChangeListener {
-            override fun onGuanChange(guan: Int) {
+    override fun onGuanChange(guan: Int) {
+        super.onGuanChange(guan)
+        if (guan > 129 && guanka != 7) {
+            chuanZhangObeserver = false
+            guanka = 7
+            waiting = false
+            return
+        }
 
-                if (guan > 129 && guanka != 7) {
-                    chuanZhangObeserver = false
-                    guanka = 7
-                    waiting = false
-                    return
-                }
+        if (guan > 126 && guanka < 7) {
+            startChuanZhangOberserver()
+            return
+        }
+        if (guan > 110 && (guanka == 4 || guanka == 9)) {
+            guanka = 5
+            waiting = false
+            return
+        }
 
-                if (guan > 126 && guanka < 7) {
-                    startChuanZhangOberserver()
-                    return
-                }
-                if (guan > 110 && (guanka == 4 || guanka == 9)) {
-                    guanka = 5
-                    waiting = false
-                    return
-                }
+        if (guan in 108..109 && guanka != 9) {
+            guanka = 9
+            waiting = false
+            return
+        }
 
-                if (guan in 108..109 && guanka != 9) {
-                    guanka = 9
-                    waiting = false
-                    return
-                }
-
-                if (guan > 100 && guanka == 3 && isGk3Over()) {
-                    guanka = 4
-                    waiting = false
-                    return
-                }
+        if (guan > 100 && guanka == 3 && isGk3Over()) {
+            guanka = 4
+            waiting = false
+            return
+        }
 
 
-                if (guan > 90 && guanka == 2 && isGk2Over()) {
-                    guanka = 3
-                    waiting = false
-                    return
-                }
+        if (guan > 90 && guanka == 2 && isGk2Over()) {
+            guanka = 3
+            waiting = false
+            return
+        }
 
-                if (guan > 70 && guanka == 1 && isGk1Over()) {
-                    guanka = 2
-                    waiting = false
-                    return
-                }
-
-
-            }
+        if (guan > 70 && guanka == 1 && isGk1Over()) {
+            guanka = 2
+            waiting = false
+            return
         }
     }
 
@@ -113,6 +105,7 @@ class MengyanHeroDoing : HeroDoing(0), App.KeyListener {//默认赋值0，左边
     }
 
     suspend fun doOnKeyDown(code: Int): Boolean {
+        var curGuan = guankaTask?.currentGuanIndex ?: 0
         if (code == KeyEvent.VK_NUMPAD0) {
             hasWuDi = false
         } else if (code == KeyEvent.VK_NUMPAD9) {//小翼出现时按9无限补卡，管卡到110后（小翼死掉）会自动guanka = 5（guanka监听 就处理了，不用再处理)
@@ -124,37 +117,37 @@ class MengyanHeroDoing : HeroDoing(0), App.KeyListener {//默认赋值0，左边
         } else if (code == KeyEvent.VK_NUMPAD2) {
             carDoing.downPosition(0)
             //如果是船长，下卡后，立即触发上卡.(这里打过小翼后，就直接按女王，下女王再上女王 不满，让副卡满女王
-            if (guankaTask.currentGuanIndex > 120) {
+            if (curGuan > 120) {
                 guanka = 5
                 waiting = false
             }
         } else if (code == KeyEvent.VK_NUMPAD1) {
             carDoing.downPosition(1)
-            if (guankaTask.currentGuanIndex > 120) {
+            if (curGuan > 120) {
                 guanka = 5
                 waiting = false
             }
         } else if (code == KeyEvent.VK_NUMPAD5) {
             carDoing.downPosition(2)
-            if (guankaTask.currentGuanIndex > 120) {
+            if (curGuan > 120) {
                 guanka = 5
                 waiting = false
             }
         } else if (code == KeyEvent.VK_NUMPAD4) {
             carDoing.downPosition(3)
-            if (guankaTask.currentGuanIndex > 120) {
+            if (curGuan > 120) {
                 guanka = 5
                 waiting = false
             }
         } else if (code == KeyEvent.VK_NUMPAD8) {
             carDoing.downPosition(4)
-            if (guankaTask.currentGuanIndex > 120) {
+            if (curGuan > 120) {
                 guanka = 5
                 waiting = false
             }
         } else if (code == KeyEvent.VK_NUMPAD7) {
             carDoing.downPosition(5)
-            if (guankaTask.currentGuanIndex > 120) {
+            if (curGuan > 120) {
                 guanka = 5
                 waiting = false
             }
@@ -194,13 +187,13 @@ class MengyanHeroDoing : HeroDoing(0), App.KeyListener {//默认赋值0，左边
                 }
                 if (index != null || index2 != null) {
                     //如果本车识别到  并且  另一个车没识别到（以本车为主）或者另一个车识别到了，但结果小于本车，才认为是点的本车
-                    if (index !=null &&(index2==null || index.second>index2.second)) {
-                        var hero = carDoing.heroList.get(index.first)
+                    if (index != null && (index2 == null || index.second > index2.second)) {
+                        var hero = carDoing.carps.get(index.first).mHeroBean
                         log("检测到被标记  位置：$index  英雄：${hero?.heroName}")
 //                        if (hasWuDi && hero == mengyan) {//点梦魇，有无敌，不下
 //                            hasWuDi = false
 //                        } else {
-                        if(hero!=null) {
+                        if (hero != null) {
                             carDoing.downHero(hero)
                             guanka = 5
                             waiting = false
@@ -228,69 +221,21 @@ class MengyanHeroDoing : HeroDoing(0), App.KeyListener {//默认赋值0，左边
 
     override fun onStart() {
         super.onStart()
-        guankaTask.start()
     }
 
     override fun onStop() {
         super.onStop()
         chuanZhangObeserver = false
-        guankaTask.stop()
-        App.keyListeners.remove(this)
         log("time1 :$time1  time2:$time2  time3:$time3  下卡到停止刷新:${(time2 - time1) / 1000f},停止刷新到 开启刷新：${(time3 - time2) / 1000f}")
     }
 
     var shengqiUped = false
-    var needCheckStar = false
     private suspend fun checkStars() {
         carDoing.checkStars()
         needCheckStar = false
     }
 
-    var mChePos = -1
-    var kuojianguo = false
-    var curZhuangBei: Int = 0
-
-    override suspend fun afterHeroClick(heroBean: HeroBean) {
-        if (heroCountInCar() > 1) {
-            kuojianguo = true
-        }
-
-        if (mChePos == -1 && heroBean.needCar) {//未识别车时,并且 这个hero是上阵得英雄
-            log("开始检测车")
-            carDoing.carps.get(0).click()
-            delay(1000)
-            if (Recognize.saleRect.isFit()) {//是自己，啥也不用干，开始初始化得位置就是对得
-                mChePos = 0//
-            } else {
-                //我在右边
-                mChePos = 1
-                chePosition = 1
-                carDoing.chePosition = 1
-                carDoing.initPositions()
-            }
-            log("识别车位结果：$mChePos")
-            CarDoing.cardClosePoint.click()
-        }
-
-
-        if (needCheckStar && heroBean.needCar && kuojianguo) {//等再次上英雄时 再查
-            checkStars()
-        }
-
-        if (heroBean == huanqiu) {
-            //扔幻时 记录当前  发生改变后就可以结束（因为主卡幻一定成功）否则这里逻辑就不可以了
-            curZhuangBei = Zhuangbei.getZhuangBei()
-            delay(delayNor)
-            try {
-                withTimeout(1500) {//加个超时保险一些，防止死循环
-                    while (Zhuangbei.getZhuangBei() == curZhuangBei && Zhuangbei.getZhuangBei() != 0) {
-                        delay(delayNor)
-                    }
-                }
-            } catch (e: Exception) {
-
-            }
-        }
+    override suspend fun doAfterHeroBeforeWaiting(heroBean: HeroBean) {
         if (heroBean == shengqi) {
             delay(300)
             carDoing.downHero(shengqi)
@@ -305,13 +250,11 @@ class MengyanHeroDoing : HeroDoing(0), App.KeyListener {//默认赋值0，左边
             //但此时因为下了海妖guanka5over为false，所以会继续上管卡5的卡牌直到海妖满，会再次在这里卡住。
             waiting = true
         }
+    }
 
+    override suspend fun afterHeroClick(heroBean: HeroBean) {
 
-
-
-        while (waiting) {
-            delay(100)
-        }
+        super.afterHeroClick(heroBean)
     }
 
 
@@ -357,9 +300,6 @@ class MengyanHeroDoing : HeroDoing(0), App.KeyListener {//默认赋值0，左边
     }
 
     override suspend fun dealHero(heros: List<HeroBean?>): Int {
-        while (waiting) {
-            delay(100)
-        }
         if (guanka == 1) {//第一阶段
 
             var fullList = arrayListOf(mengyan, kuiqian, gugu, sishen, kui, haiyao)

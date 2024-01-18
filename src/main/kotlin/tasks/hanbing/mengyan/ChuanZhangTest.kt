@@ -1,20 +1,12 @@
 package tasks.hanbing.mengyan
 
-import androidx.compose.material.Card
-import androidx.compose.runtime.mutableStateOf
-import data.Config
-import data.HeroBean
-import data.MRect
 import getImageFromFile
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import log
-import tasks.CarDoing
-import tasks.CarDoing.Companion.CheType_MaChe
-import tasks.CarDoing.Companion.CheType_YangChe
-import utils.ImgUtil.forEach
-import java.awt.Color
+import model.CarDoing
+import model.CarDoing.Companion.CheType_MaChe
+import model.CarDoing.Companion.CheType_YangChe
 import java.io.File
 import kotlin.math.abs
 
@@ -30,8 +22,8 @@ object ChuanZhangTest {
             var car1 = CarDoing(1, CheType_YangChe).apply {
                 initPositions()
             }
-            File(App.caijiPath).listFiles().forEach {
-                if(it.name.startsWith("1704442888309")) {
+            File(App.caijiPath, "chuanzhang").listFiles().forEach {
+//                if(it.name.startsWith("1699936572466")) {
                     var img = getImageFromFile(it)
                     log(img)
 //                var count1 = 0
@@ -55,7 +47,7 @@ object ChuanZhangTest {
                     } else if (index2 != null && (index == null || index2.second > index.second)) {
                         log("检测结果 车位 1 位置 ${index2.first} rate ${index2.second}")
                     }
-                }
+//                }
             }
 
 

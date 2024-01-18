@@ -1,6 +1,5 @@
 package tasks.duizhan.longquan
 
-import MainData
 import data.Config
 import data.Config.delayLong
 import data.Config.delayNor
@@ -24,6 +23,8 @@ class LongQuanGameLaunch : IGameLaunch {
     var allFailCount = 0
 
     var failCount = 0
+
+    var lastSuc = false
 
     override fun init() {
     }
@@ -52,8 +53,50 @@ class LongQuanGameLaunch : IGameLaunch {
     override fun stop() {
         isRunning = false
         mJob?.cancel("tuichu")
-        heroDoing?.stop()
+        stopOneGame()
         kaida = false
+    }
+
+    //0打  1认输阵容
+    var mCurrentZhen = -1
+    private suspend fun changeToFailZhen() {
+        if (mCurrentZhen == 1) return
+        Config.pointHeroChoose.click()
+        delay(500)
+        Config.pointHeroDuiZhanFail.click()
+        delay(delayNor)
+        Config.pointHeroChooseBack.click()
+        delay(delayNor)
+        mCurrentZhen = 1
+
+    }
+
+    private suspend fun changeToSucZhen() {
+        if (mCurrentZhen == 0) return
+        Config.pointHeroChoose.click()
+        delay(500)
+        Config.pointHeroDuiZhan.click()
+        delay(delayNor)
+        Config.pointHeroChooseBack.click()
+        delay(delayNor)
+        mCurrentZhen = 0
+    }
+
+    private suspend fun changeZhenrong() {
+        if (Config.touxiangAuto.value) {
+            if (Config.touxiangAll.value) {
+                changeToFailZhen()
+            } else {
+                if (failCount < 2) {
+                    //切认输
+                    changeToFailZhen()
+                } else {
+                    changeToSucZhen()
+                }
+            }
+        } else {
+            changeToSucZhen()
+        }
     }
 
     private suspend fun checkDuizhan() {
@@ -61,6 +104,7 @@ class LongQuanGameLaunch : IGameLaunch {
         if (Duizhan.isFit()) {
             log("checkDuizhan ok")
 //            while (Duizhan.isFit()) {
+            changeZhenrong()
             delay(delayNor)
             Duizhan.click()
             delay(1000)
@@ -82,19 +126,18 @@ class LongQuanGameLaunch : IGameLaunch {
             stopOneGame()
             delay(100)
 
-            if(DuiZhanResultSuc.isFit()){
+            if (DuiZhanResultSuc.isFit()) {
                 log("战斗胜利")
                 allSucCount++
                 MainData.sucCount.value++
                 failCount = 0
-            }else{
+            } else {
                 log("战斗失败")
                 allFailCount++
                 MainData.failCount.value++
-
                 failCount++
             }
-            log("战斗胜利： $allSucCount 失败：$allFailCount 胜率：${(allSucCount*100f)/(allSucCount+allFailCount)}%")
+            log("战斗胜利： $allSucCount 失败：$allFailCount 胜率：${(allSucCount * 100f) / (allSucCount + allFailCount)}%")
 
             while (BtnOk.isFit()) {
                 BtnOk.click()
@@ -107,12 +150,25 @@ class LongQuanGameLaunch : IGameLaunch {
             stopOneGame()
             delay(100)
             checkAdv()
+        } else {
+            if (Config.touxiangAuto.value && Config.touxiangAll.value) {
+                touxiang()
+            } else if (Config.touxiangAuto.value && failCount<2) {
+                touxiang()
+            }
         }
+    }
+    private suspend fun touxiang(){
+        delay(500)
+        Config.pointDuiZhanRenshu.click()
+        delay(500)
+        Config.pointDuiZhanRenshuOk.click()
     }
 
     private suspend fun checkAdv() {
         log("checkAdv")
-        if (CanreJujue.isFit() || CanreJujueFail.isFit()) {
+        //failCount = 0 可以认为是 胜利。
+        if ((CanreJujue.isFit() || CanreJujueFail.isFit()) && (failCount == 0 || Config.viewFailAdv.value)) {
 //            CanreJujue.click()
             Config.adv_point.click()
             delay(33000)
@@ -133,7 +189,7 @@ class LongQuanGameLaunch : IGameLaunch {
     }
 
     private suspend fun startOneGame() {
-        val renji = failCount>=2
+        val renji = failCount >= 2
         heroDoing = LongQuanHeroDoing(renji)
         heroDoing!!.init()
         heroDoing!!.start()
@@ -141,5 +197,6 @@ class LongQuanGameLaunch : IGameLaunch {
 
     private fun stopOneGame() {
         heroDoing?.stop()
+        heroDoing = null
     }
 }

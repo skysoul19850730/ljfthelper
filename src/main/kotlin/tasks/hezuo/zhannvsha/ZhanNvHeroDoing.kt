@@ -1,19 +1,17 @@
 package tasks.hezuo.zhannvsha
 
-import App
-import data.Config
 import data.Config.delayLong
 import data.Config.delayNor
 import data.HeroBean
 import data.Recognize
-import getImage
 import kotlinx.coroutines.*
 import log
 import logOnly
+import model.CarDoing
 import tasks.*
 import tasks.guankatask.GuankaTask
 
-class ZhanNvHeroDoing : HeroDoing(0) {//默认赋值0，左边，借用左边第一个position得点击，去识别车位置后再更改
+class ZhanNvHeroDoing : HeroDoing(0, FLAG_GUANKA) {//默认赋值0，左边，借用左边第一个position得点击，去识别车位置后再更改
 
     var guanka = 0
 
@@ -22,19 +20,11 @@ class ZhanNvHeroDoing : HeroDoing(0) {//默认赋值0，左边，借用左边第
     val saman = HeroBean("saman2", 80)
     val jiaonv = HeroBean("jiaonv", 70)
     val shahuang = HeroBean("shahuang", 60)
-    val houzi = HeroBean("houzi", 50)
+    val houzi = HeroBean("houzi3", 50)
     val maomi = HeroBean("maomi", 40)
     val kuangjiang = HeroBean("kuangjiang", 30)
     val huanqiu = HeroBean("huanqiu", 20, needCar = false)
     val guangqiu = HeroBean("guangqiu", 0, needCar = false)
-
-    var guankaTask = GuankaTask().apply {
-        changeListener = object : GuankaTask.ChangeListener {
-            override fun onGuanChange(guan: Int) {
-
-            }
-        }
-    }
 
     companion object {
         var che300Name: String? = null
@@ -58,17 +48,15 @@ class ZhanNvHeroDoing : HeroDoing(0) {//默认赋值0，左边，借用左边第
     var startTime = 0L
     override fun onStart() {
         super.onStart()
-        guankaTask.start()
         startTime = System.currentTimeMillis()
     }
 
     override fun onStop() {
+        var gk = guankaTask?.currentGuanIndex ?: 0
         super.onStop()
-        var gk = guankaTask.currentGuanIndex
-        guankaTask.stop()
         val endTime = System.currentTimeMillis()
-        val cost = (endTime - startTime)/1000
-        var time ="合作完毕：$gk 关，用时： ${cost/60}分${cost%60}秒"
+        val cost = (endTime - startTime) / 1000
+        var time = "合作完毕：$gk 关，用时： ${cost / 60}分${cost % 60}秒"
         log(time)
     }
 
@@ -81,78 +69,18 @@ class ZhanNvHeroDoing : HeroDoing(0) {//默认赋值0，左边，借用左边第
                 && nvwang.isFull())
     }
 
-    var needCheckStar = false
-    private suspend fun checkStars() {
-        carDoing.checkStars()
-        needCheckStar = false
+    override suspend fun onHuanQiuPost() {
+        super.onHuanQiuPost()
+        if (guanka == 21 && Zhuangbei.isYandou()) {
+            guanka = 2
+        }
     }
 
-    var mChePos = -1
-    var kuojianguo = false
     override suspend fun afterHeroClick(heroBean: HeroBean) {
-
-        if (mChePos == -1 && heroBean.needCar) {//未识别车时,并且 这个hero是上阵得英雄
-            log("开始检测车")
-            carDoing.carps.get(0).click()
-            delay(1000)
-            if (Recognize.saleRect.isFit()) {//是自己，啥也不用干，开始初始化得位置就是对得
-                mChePos = 0//
-            } else {
-                //我在右边
-                mChePos = 1
-                chePosition = 1
-                carDoing.chePosition = 1
-                carDoing.initPositions()
-            }
-            log("识别车位结果：$mChePos")
-            CarDoing.cardClosePoint.click()
-        }
-        if (heroCountInCar() > 1) {
-            kuojianguo = true
-        }
-
-        if (needCheckStar && heroBean.needCar && kuojianguo) {//等再次上英雄时 再查
-            checkStars()
-        }
-
-        if (heroBean == guangqiu) {
-
-            var checked = carDoing.checkStarsWithoutCard()
-            if (!checked) {//1.5秒没有check到的话，再使用弹窗识别
-                if (kuojianguo) {//扩建过开启检查，否则车位不准，先不检查,等上英雄时再检查
-//                    delay(1500)
-                    checkStars()
-                } else {
-                    needCheckStar = true
-                }
-            }
-        } else if (heroBean == huanqiu) {
-            //扔幻时 记录当前  发生改变后就可以结束（因为主卡幻一定成功）否则这里逻辑就不可以了
-            curZhuangBei = Zhuangbei.getZhuangBei()
-            delay(delayNor)
-            try {
-                withTimeout(1500) {//加个超时保险一些，防止死循环
-                    while (Zhuangbei.getZhuangBei() == curZhuangBei && Zhuangbei.getZhuangBei() != 0) {
-                        delay(delayNor)
-                    }
-                }
-            } catch (e: Exception) {
-
-            }
-
-            if (guanka == 21 && Zhuangbei.isYandou()) {
-                guanka = 2
-            }
-        }
-
-        if(App.reCheckStar){
-            carDoing.reCheckStars()
-            App.reCheckStar = false
-        }
+        super.afterHeroClick(heroBean)
 
     }
 
-    var curZhuangBei: Int = 0
     var needZhuangbei300: String? = null
     override suspend fun dealHero(heros: List<HeroBean?>): Int {
         if (guanka == 0) {
@@ -220,7 +148,7 @@ class ZhanNvHeroDoing : HeroDoing(0) {//默认赋值0，左边，借用左边第
                     if (index > -1) return index
                 }
 
-                var index = defaultDealHero(heros, arrayListOf(jiaonv,saman,shahuang,nvwang))
+                var index = defaultDealHero(heros, arrayListOf(jiaonv, saman, shahuang, nvwang))
 
                 if (index > -1) return index
 
@@ -245,7 +173,7 @@ class ZhanNvHeroDoing : HeroDoing(0) {//默认赋值0，左边，借用左边第
         } else if (guanka == 1) {//279 孤星和289上狂将
             //在之前基础上 先刷龙心
 
-            while (guankaTask.currentGuanIndex < 250) {
+            while ((guankaTask?.currentGuanIndex ?: 0) < 250) {
                 delay(delayLong)
             }
             //250后幻龙心
@@ -261,12 +189,12 @@ class ZhanNvHeroDoing : HeroDoing(0) {//默认赋值0，左边，借用左边第
             if (index > -1) {
                 //如果有狂将  卡住 等
                 while (guanka == 1) {
-                    if (guankaTask.currentGuanIndex > 275 && Boss.isGuxing()) {
+                    if ((guankaTask?.currentGuanIndex ?: 0) > 275 && Boss.isGuxing()) {
                         log("孤星下猴子")
                         carDoing.downHero(houzi)
                     }
                     var guanUp = if (houzi.isInCar()) 286 else 281
-                    if (guankaTask.currentGuanIndex > guanUp) {
+                    if ((guankaTask?.currentGuanIndex ?: 0) > guanUp) {
 //                        log("识别到乌龟和神龙")
 //                        if(!houzi.isInCar()){//如果猴子275已下,这里就直接上了
 //                            guanka = 20
@@ -283,7 +211,7 @@ class ZhanNvHeroDoing : HeroDoing(0) {//默认赋值0，左边，借用左边第
                 }
             }
         } else if (guanka == 20) {
-            while (guankaTask.currentGuanIndex < 291) {
+            while ((guankaTask?.currentGuanIndex ?: 0) < 291) {
                 delay(delayNor)
             }
             //打印一下当前的boss，检测是不是有伤害数字飘上来的情况
@@ -296,9 +224,9 @@ class ZhanNvHeroDoing : HeroDoing(0) {//默认赋值0，左边，借用左边第
 
                         if (Boss.isNvwangChe()) {
                             log("女王车")
-                            if(ZhanNvGameLaunch.model == 3){//如果是世界的。女王车还是要幻烟斗
+                            if (ZhanNvGameLaunch.model == 3) {//如果是世界的。女王车还是要幻烟斗
                                 needZhuangbei300 = "yandou"
-                            }else {//自己人打的阵容，直接龙心就过了，因为不再卡钱了，大家都直接挂机到最后了
+                            } else {//自己人打的阵容，直接龙心就过了，因为不再卡钱了，大家都直接挂机到最后了
                                 needZhuangbei300 = "longxin"
                             }
                         } else if (Boss.isLongwangChe()) {
@@ -367,7 +295,7 @@ class ZhanNvHeroDoing : HeroDoing(0) {//默认赋值0，左边，借用左边第
             }
             index = heros.indexOf(guangqiu)
             if (index > -1) {
-                if (!maomi.isFull()||!nvwang.isFull()) {//猫咪没满 下女王用光
+                if (!maomi.isFull() || !nvwang.isFull()) {//猫咪没满 下女王用光
                     return index
                 }
             }
@@ -411,7 +339,14 @@ class ZhanNvHeroDoing : HeroDoing(0) {//默认赋值0，左边，借用左边第
 
     override fun changeHeroWhenNoSpace(heroBean: HeroBean): HeroBean? {
         if (heroBean == zhanjiang) {
-            if (jiaonv.isInCar() && !jiaonv.isFull()) {
+            if (jiaonv.isInCar()) {
+                return jiaonv
+            }
+            if (houzi.isInCar()) {
+                return houzi
+            }
+        } else if (heroBean == houzi) {
+            if (jiaonv.isInCar()) {
                 return jiaonv
             }
         }

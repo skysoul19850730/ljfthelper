@@ -113,9 +113,9 @@ class ZhanNvGameLaunch : IGameLaunch {
         }
     }
 
-    private suspend fun stopOneGame(){
+    private fun stopOneGame(){
         heroDoing?.stop()
-
+        heroDoing = null
     }
 
 
@@ -123,6 +123,7 @@ class ZhanNvGameLaunch : IGameLaunch {
         isRunning = false
         isHezuoIng = false
         mJob?.cancel()
-        heroDoing?.stop()
+        stopOneGame()
+
     }
 }

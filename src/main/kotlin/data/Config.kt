@@ -8,6 +8,10 @@ object Config {
 
     val debug = false
 
+    var viewFailAdv = mutableStateOf(true)
+    var touxiangAuto = mutableStateOf(false)
+    var touxiangAll = mutableStateOf(false)
+
     var appRootPath = ""
 
     val platform_moniqi = 0
@@ -86,8 +90,10 @@ object Config {
     var zhandou_kuojianPoint = MPoint(300, 500 + topbarHeight)
 
     val hezuo_startPoint = MPoint(610, 550)
+
     //和好友一起
     val hezuo_friend = MPoint(330, 490)
+
     //加入房间
     val hezuo_Join = MPoint(600, 420)
     val hezuo_Join_Sure = MPoint(460, 420, Color(35, 147, 255))
@@ -101,23 +107,32 @@ object Config {
     val hezuo_0tip_ok = MPoint(620, 450)
 
 
-    val adv_close = MPoint(956,73)
-    val adv_point = MPoint(500,510)
+    val adv_close = MPoint(956, 73)
+    val adv_point = MPoint(500, 510)
 
-    val Color_ChuangZhang = Color(0,255,213)
+    val Color_ChuangZhang = Color(0, 255, 213)
 
 
-    val point7p_houche =MPoint(118,220)
-    val point7p_qianche =MPoint(216,220)
+    val point7p_houche = MPoint(118, 220)
+    val point7p_qianche = MPoint(216, 220)
 
-    val rectKuojian = MRect.createWH(292,570,57,21)
-    val rectShuaxin = MRect.createWH(690,570,40,22)
+    val rectKuojian = MRect.createWH(292, 570, 57, 21)
+    val rectShuaxin = MRect.createWH(690, 570, 40, 22)
 //es8  es4 ye5   6e0 y80  y50 y56 e04
 
-    val hbMSCloud = MPoint(610,180,Color(238,234,125))
-    val hbFSCloud = MPoint(610,180,Color(150,156,204))
+    val hbMSCloud = MPoint(610, 180, Color(238, 234, 125))
+    val hbFSCloud = MPoint(610, 180, Color(150, 156, 204))
 
 
-    val rect4ShuakaColor = MRect.createWH(693,574,20,15)
-    val rect4KuojianColor = MRect.createWH(288,574,25,15)
+    val rect4ShuakaColor = MRect.createWH(693, 574, 20, 15)
+    val rect4KuojianColor = MRect.createWH(288, 574, 25, 15)
+
+    val pointHeroChoose = MPoint(940, 320)
+    val pointHeroChooseBack = MPoint(42, 83)
+    val pointHeroDuiZhan = MPoint(700,85)
+    val pointHeroDuiZhanFail = MPoint(780,85)
+    val pointDuiZhanRenshu = MPoint(43,161)
+    val pointDuiZhanRenshuOk = MPoint(620, 450)
+
+
 }

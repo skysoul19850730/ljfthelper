@@ -11,7 +11,6 @@ import tasks.duizhan.longquan.LongQuanGameLaunch
 import tasks.gameUtils.GameUtil
 import tasks.hanbing.mengyan.MengyanGameLaunch
 import tasks.hanbing.zhanjiang.HBZhanNvGameLaunch
-import tasks.tiankong.wufa.TK5fNvGameLaunch
 import tasks.hezuo.zhannvsha.ZhanNvGameLaunch
 import tasks.hezuo.zhannvsha.ZhanNvHeroDoing
 import tesshelper.Tess
@@ -48,7 +47,7 @@ object App {
     val model_hanbing_zhannv = model_hanbing or 0x00000001
     val model_hanbing_mengyan = model_hanbing or 0x00000002
 
-    val model_tiankong_5f = model_tiankong or 0x00000001
+//    val model_tiankong_5f = model_tiankong or 0x00000001
 
     var mLaunchModel: Int = 0
 
@@ -65,13 +64,15 @@ object App {
         suspend fun onKeyDown(code: Int): Boolean
     }
 
-    fun initPath() {
+    var closeCallBack: (() -> Unit)? = null
+    fun initPath(callback: () -> Unit) {
+        this.closeCallBack = callback
         var s = File(javaClass.getResource("")?.path ?: "").path
         s = s.substring(0, s.indexOf("build"))
-        println(s)
+        logOnly(s)
         Config.appRootPath = s
-        println("caiji path  ${Config.caiji_main_path}")
-        println("resPath ${Tess.resPath}")
+        logOnly("caiji path  ${Config.caiji_main_path}")
+        logOnly("resPath ${Tess.resPath}")
     }
 
     fun init() {
@@ -125,10 +126,6 @@ object App {
                 MengyanGameLaunch()
             }
 
-            //临时活动
-            model_tiankong_5f -> {
-                TK5fNvGameLaunch()
-            }
 
             else -> null
         }
@@ -153,6 +150,27 @@ object App {
     fun save() {
         rectWindow.saveImgTo(File(caijiPath, "${System.currentTimeMillis()}.png"))
     }
+
+
+    var autoSaving = false
+    var autoSaveJob:Job?=null
+    fun startAutoSave(time:Long = 3000){
+        if(autoSaving)return
+        autoSaving = true
+        autoSaveJob = GlobalScope.launch {
+            while (autoSaving){
+                log("自动保存一张图片")
+                save()
+                delay(time)
+            }
+        }
+    }
+    fun stopAutoSave(){
+        autoSaveJob?.cancel()
+        autoSaveJob = null
+        autoSaving = false
+    }
+
 
     private fun findTfAndMoveTo00(): Boolean {
         log("检测微信塔防窗口...")
@@ -278,7 +296,7 @@ object App {
                     log("按键未被拦截处理，继续处理")
                     when (msg.wParam.toInt()) {
                         WindowClose -> {
-                            App.windowClose.value = 1
+                            closeApp()
                         }
 
                         WindowOpen -> {
@@ -358,19 +376,26 @@ object App {
 
     }
 
-    fun closeApp() {
-        log("removeKey")
+    fun closeApp(timeOver:Boolean = false) {
+        log("closeApp")
         stop()
+        testing = false
         doRemoveKey()
         GlobalScope.launch {
             MRobot.singleClickPc(pointClose)
+            if(timeOver){
+                delay(3000)
+            }
+            closeCallBack?.invoke()
         }
+
 //        MRobot.norClick(pointClose)
 
         timeJob?.cancel()
-        if (windowClose.value == 2) {//=2 时 是自动关闭
+        if (timeOver) {//=2 时 是自动关闭
             sleepPc()
         }
+
     }
 
     private fun doRemoveKey() {
@@ -391,7 +416,9 @@ object App {
                 timerText.value = ("${(times - it)} 秒")
                 delay(1000)
             }
-            windowClose.value = 2
+            log("倒计时结束，windowClose = 2")
+//            windowClose.value = 2
+            closeApp(true)
         }
 
     }

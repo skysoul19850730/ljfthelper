@@ -1,24 +1,37 @@
 package tasks
 
-import MainData
 import data.*
 import data.Config.delayLong
 import data.Config.delayNor
+import doDebug
 import getImage
 import kotlinx.coroutines.*
 import log
 import logOnly
+import model.CarDoing
+import tasks.guankatask.GuankaTask
 import utils.LogUtil
 import utils.MRobot
 import kotlin.coroutines.resume
 
-abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
+abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing, GuankaTask.ChangeListener,
+    App.KeyListener {
+
+    companion object {
+        val FLAG_GUANKA = 0x00000001
+        val FLAG_KEYEVENT = 0x00000010
+    }
 
     lateinit var heros: ArrayList<HeroBean>
     lateinit var carDoing: CarDoing
+    lateinit var otherCarDoing: CarDoing
+    private var carChecked = false
 
     var running = false
     private var mainJob: Job? = null
+    var waiting = false
+
+    var guankaTask: GuankaTask? = null
 
 
     abstract fun initHeroes()
@@ -31,6 +44,79 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
 
     //点了英雄后，比如光 魔等，需要延迟
     open suspend fun afterHeroClick(heroBean: HeroBean) {
+        //-1 为单车，不用check
+        if (chePosition != -1 && !carChecked && heroBean.position == 0) {
+            checkCar()
+//            if(carDoing.chePosition==1){//变换了
+//                heroBean.reset()
+//                carDoing.addHero(heroBean)
+//            }
+        }
+
+        if (needCheckStar && carDoing.openCount() > 1) {
+            carDoing.checkStars()
+            needCheckStar = false
+        }
+
+        if (heroBean.heroName == "guangqiu") {
+            onGuangqiuPost()
+        } else if (heroBean.heroName == "huanqiu") {
+            onHuanQiuPost()
+        }
+
+        doAfterHeroBeforeWaiting(heroBean)
+
+        if (App.reCheckStar) {
+            carDoing.reCheckStars()
+            App.reCheckStar = false
+        }
+
+        while (waiting) {//卡住 不再刷卡，幻的原因是，之前先预选了卡，比如第一个是木球，但过程中使用幻或者其他操作已经改变了预选卡的组成，比如第一个变成了幻。导致小翼无限刷卡时第一个判断上木，结果就上成了幻！！！
+            delay(100)
+        }
+    }
+
+    open suspend fun doAfterHeroBeforeWaiting(heroBean: HeroBean) {
+
+    }
+
+    var curZhuangBei: Int = 0
+    open suspend fun onHuanQiuPost() {
+        curZhuangBei = Zhuangbei.getZhuangBei()
+        delay(Config.delayNor)
+        try {
+            withTimeout(1500) {//加个超时保险一些，防止死循环
+                while (Zhuangbei.getZhuangBei() == curZhuangBei && Zhuangbei.getZhuangBei() != 0) {
+                    delay(Config.delayNor)
+                }
+            }
+        } catch (e: Exception) {
+
+        }
+    }
+
+    var needCheckStar = false
+    open suspend fun onGuangqiuPost() {
+        var noFullCount = carDoing.carps.count {
+            !(it.mHeroBean?.isFull() ?: true)
+        }
+        if (noFullCount == 1) {//只有一个英雄就直接长星，15光了
+            carDoing.carps.find {
+                !(it.mHeroBean?.isFull() ?: true)
+            }?.addHero()
+        } else if (noFullCount < 1) {//都满着就不用验了
+            return
+        } else {
+            var checked = carDoing.checkStarsWithoutCard()
+            if (!checked) {//1.5秒没有check到的话，再使用弹窗识别
+                if (carDoing.openCount() > 1 || chePosition == 0) {//前车或开格子多余1个
+                    carDoing.checkStars()
+                } else {
+                    needCheckStar = true
+                }
+            }
+        }
+
 
     }
 
@@ -40,13 +126,41 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
             initPositions()
             attchToMain()
         }
+        if (flags and FLAG_GUANKA != 0) {
+            guankaTask = GuankaTask().apply {
+                changeListener = this@HeroDoing
+            }
+        }
+        if (flags and FLAG_KEYEVENT != 0) {
+            App.keyListeners.add(this)
+        }
     }
 
     fun heroCountInCar() = heros.filter { it.isInCar() && !it.isGongCheng }.size
 
 
     open fun onStart() {
+        guankaTask?.start()
+    }
 
+    private suspend fun checkCar() {
+        log("开始检测车")
+        carDoing.carps.get(0).click()
+        delay(1000)
+        if (Recognize.saleRect.isFit()) {//是自己，啥也不用干，开始初始化得位置就是对得
+            chePosition = 0//
+        } else {
+            //我在右边
+            chePosition = 1
+            carDoing.chePosition = 1
+            carDoing.reInitPositions()
+        }
+        log("识别车位结果：$chePosition")
+        CarDoing.cardClosePoint.click()
+        otherCarDoing = CarDoing((chePosition + 1) % 2).apply {
+            initPositions()
+        }
+        carChecked = true
     }
 
     override fun start() {
@@ -64,7 +178,9 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
 
 
     open fun onStop() {
-        MainData.heros.value = arrayListOf()
+        guankaTask?.stop()
+        App.keyListeners.remove(this)
+        MainData.carPositions.clear()
         LogUtil.saveAndClear()
     }
 
@@ -83,7 +199,7 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
 //                CarDoing.cardClosePoint.click()
 //            }
             if (needShuaxin) {
-                while(!Config.rect4ShuakaColor.hasWhiteColor()){//有白色（钱够）再点击刷新
+                while (!Config.rect4ShuakaColor.hasWhiteColor()) {//有白色（钱够）再点击刷新
                     delay(50)
                 }
                 MRobot.singleClick(Config.zhandou_shuaxinPoint)
@@ -92,7 +208,7 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
             hs = getPreHeros(if (needShuaxin) delayLong else 10000)
         }
         log("识别到英雄 ${hs?.getOrNull(0)?.heroName}  ${hs?.getOrNull(1)?.heroName}  ${hs?.getOrNull(2)?.heroName}")
-        if(Config.debug) {
+        doDebug {
             log(
                 getImage(
                     MRect.create4P(
@@ -108,6 +224,9 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
     }
 
     private suspend fun shangka(hs: List<HeroBean?>) {
+        while (waiting) {
+            delay(100)
+        }
         val heroChoose = dealHero(hs)
         logOnly("上卡的index 是 ${heroChoose}")
         if (heroChoose > -1) {
@@ -125,7 +244,7 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
         MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
         delay(Config.delayNor)
         //如果正在下卡，弹窗会挡住，识别不到英雄，就等于认为已经上卡了
-        while(carDoing.downing){
+        while (carDoing.downing) {
             delay(50)
         }
         var hs = doGetPreHeros()
@@ -136,12 +255,12 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
             afterHeroClick(heroBean)
         } else {//上不去，没格子了(如何是换卡，在这之前已经下了卡了，下了卡就能上去，所以这里只会因为没有格子而上不去，所以点扩建再尝试上卡
             logOnly("英雄未上阵")
-            if(Config.rect4KuojianColor.hasWhiteColor() && !hasKuoJianClicked){
+            if (Config.rect4KuojianColor.hasWhiteColor()) {
                 logOnly("尝试点击一次扩建")
                 MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
                 delay(Config.delayNor)
                 doUpHero(heroBean, position, true)
-            }else{
+            } else {
                 var changeOne = changeHeroWhenNoSpace(heroBean)
                 if (changeOne != null) {
                     logOnly("没钱扩建，替换英雄")
@@ -150,7 +269,7 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
                     doUpHero(heroBean, position)
                 } else {
                     logOnly("再次尝试点击扩建")
-                    while(!Config.rect4KuojianColor.hasWhiteColor()){
+                    while (!Config.rect4KuojianColor.hasWhiteColor()) {
                         delay(50)
                     }
                     MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
@@ -268,18 +387,25 @@ abstract class HeroDoing(var chePosition: Int = -1) : IDoing {
         }
         if (hero != null) {
             logOnly("getHeroAtRect ${hero?.heroName ?: "无结果"}")
-        }else logOnly("getHeroAtRect null")
+        } else logOnly("getHeroAtRect null")
         it.resume(hero)
 
     }
 
-    suspend fun defaultDealHero(heros: List<HeroBean?>, heroSorted:List<HeroBean>):Int{
+    suspend fun defaultDealHero(heros: List<HeroBean?>, heroSorted: List<HeroBean>): Int {
         heroSorted.forEach {
             var index = heros.indexOf(it)
-            if(index>-1){
+            if (index > -1) {
                 return index
             }
         }
         return -1
+    }
+
+    open override fun onGuanChange(guan: Int) {
+    }
+
+    override suspend fun onKeyDown(code: Int): Boolean {
+        return false
     }
 }

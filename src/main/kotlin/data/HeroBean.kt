@@ -1,21 +1,19 @@
 package data
 
 import data.Config.delayNor
-import data.Config.platform
 import getImageFromRes
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withTimeout
 import log
-import logOnly
 import resFile
-import tasks.CarDoing
+import model.CarDoing
 import utils.ImgUtil
 import java.awt.image.BufferedImage
 import java.io.File
 
 //weightModel 0有就行，1 优先满金,2不满星
 //heroname取文件夹名字，但文件夹名字就是取得英雄名字
-data class HeroBean(
+class HeroBean(
     val heroName: String,
     var weight: Int = 0,
     val weightModel: Int = 1,
@@ -61,7 +59,7 @@ data class HeroBean(
         try {
             withTimeout(300) {
                 while (!checked) {
-                    var level = carDoing.carps.get(position).getStarLevel()
+                    var level = carDoing.carps.get(position).getStarLevelDirect()
 //                    if (level > 0 && level-currentLevel==1) {//检测星,按升星1.其它的检测到就不算了
                     if (level > 0 ) {
                         currentLevel = level
@@ -84,7 +82,6 @@ data class HeroBean(
     suspend fun checkStarLevelUseCard(carDoing: CarDoing): Boolean {
         if (isInCar()) {
             delay(delayNor)
-            logOnly("$heroName is check star")
             carDoing.carps.get(position).click()
             delay(delayNor)
             var level = 0

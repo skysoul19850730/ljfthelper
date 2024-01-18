@@ -3,7 +3,6 @@
 package data
 
 import getImage
-import simTo
 import sun.awt.Win32GraphicsDevice
 import utils.ImgUtil.forEach
 import utils.MRobot
@@ -42,7 +41,7 @@ class MRect {
         var img = getImage(this)
         forEach { i, i2 ->
             val color = img.getRGB(i-left,i2-top)
-            if(Color(color).simTo(Color.WHITE)){
+            if(color == Color.WHITE.rgb){
                 return true
             }
         }

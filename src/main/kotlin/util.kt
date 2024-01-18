@@ -1,19 +1,25 @@
 import com.sun.jna.platform.win32.GDI32Util
 import com.sun.jna.platform.win32.WinDef
+import data.Config
 import data.MRect
 import tasks.WxUtil
 import utils.MRobot
 import utils.MRobot.houtai
-import java.awt.Color
 import java.awt.Rectangle
 import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 import kotlin.math.abs
 
-fun getImage(rect: MRect,window: WinDef.HWND? = App.tfWindow!!): BufferedImage {
+fun colorCompare(c1: java.awt.Color, c2: java.awt.Color, sim: Int = 10): Boolean {
+    return (abs(c1.red - c2.red) <= sim
+            && abs(c1.green - c2.green) <= sim
+            && abs(c1.blue - c2.blue) <= sim)
+}
+
+fun getImage(rect: MRect,window: WinDef.HWND? = App.tfWindow): BufferedImage {
     var img2 =
-        if (houtai && window == WxUtil.wxWindow) {
+        if (houtai && window!=null && window == WxUtil.wxWindow) {
             GDI32Util.getScreenshot(window).getSubImage(rect)
         } else
             MRobot.robot.createScreenCapture(Rectangle().apply {
@@ -23,12 +29,6 @@ fun getImage(rect: MRect,window: WinDef.HWND? = App.tfWindow!!): BufferedImage {
                 height = rect.bottom - rect.top + 1
             })
     return img2
-}
-
-fun Color.simTo(c1: java.awt.Color, sim: Int = 20): Boolean {
-    return (abs(c1.red - red) <= sim
-            && abs(c1.green - green) <= sim
-            && abs(c1.blue - blue) <= sim)
 }
 
 fun BufferedImage.foreach(back:(Int,Int)->Boolean){
@@ -55,9 +55,10 @@ fun BufferedImage.saveTo(file: File) {
     ImageIO.write(this, "png", file)
     log(this)
 }
-
-fun BufferedImage.saveToApp(){
-    saveTo(File(App.caijiPath, "${System.currentTimeMillis()}.png"))
+fun doDebug(call:()->Unit){
+    if(Config.debug){
+        call.invoke()
+    }
 }
 
 fun BufferedImage.saveSubTo(subRect: MRect, file: File) {

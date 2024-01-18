@@ -12,6 +12,7 @@ import data.MRect
 import getImage
 import kotlinx.coroutines.*
 import log
+import logOnly
 import utils.ImgUtil
 import utils.MRobot
 import java.awt.image.BufferedImage
@@ -54,7 +55,7 @@ object Hero : Guanka.ChangeListener {
     fun save() {
         var img = getImage(Config.zhandou_hero1CheckRect)
         if (isImgExist(img)) {
-            println("已有该hero position: 1")
+            logOnly("已有该hero position: 1")
         } else {
             caijiList.add(img)
             ImageIO.write(img, "png", File(file1, "${System.currentTimeMillis()}_1.png"))
@@ -62,7 +63,7 @@ object Hero : Guanka.ChangeListener {
         }
         img = getImage(Config.zhandou_hero2CheckRect)
         if (isImgExist(img)) {
-            println("已有该hero position: 2")
+            logOnly("已有该hero position: 2")
         } else {
             caijiList.add(img)
             ImageIO.write(img, "png", File(file2, "${System.currentTimeMillis()}_2.png"))
@@ -71,7 +72,7 @@ object Hero : Guanka.ChangeListener {
 
         img = getImage(Config.zhandou_hero3CheckRect)
         if (isImgExist(img)) {
-            println("已有该hero position: 3")
+            logOnly("已有该hero position: 3")
         } else {
             caijiList.add(img)
             ImageIO.write(img, "png", File(file3, "${System.currentTimeMillis()}_3.png"))

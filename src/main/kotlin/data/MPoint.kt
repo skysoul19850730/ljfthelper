@@ -30,14 +30,14 @@ class MPoint {
 
     constructor()
 
-    suspend fun click(window: WinDef.HWND? = App.tfWindow!!) {
+    suspend fun click(window: WinDef.HWND? = App.tfWindow) {
         MRobot.singleClick(this,window)
     }
-    suspend fun clickPc(window: WinDef.HWND? = App.tfWindow!!){
+    suspend fun clickPc(window: WinDef.HWND? = App.tfWindow){
         MRobot.singleClickPc(this,window)
     }
 
-    fun isFit(window: WinDef.HWND? = App.tfWindow!!): Boolean {
+    fun isFit(window: WinDef.HWND? = App.tfWindow): Boolean {
 //        if(houtai){
 //            return GDI32Util.getScreenshot(window).getRGB(x,y) == mColorCaiji?.rgb
 //        }
