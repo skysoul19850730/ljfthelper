@@ -125,7 +125,7 @@ object Config {
 
 
     val rect4ShuakaColor = MRect.createWH(693, 574, 20, 15)
-    val rect4KuojianColor = MRect.createWH(288, 574, 25, 15)
+    val rect4KuojianColor = MRect.createWH(288, 574, 35, 15)
 
     val pointHeroChoose = MPoint(940, 320)
     val pointHeroChooseBack = MPoint(42, 83)

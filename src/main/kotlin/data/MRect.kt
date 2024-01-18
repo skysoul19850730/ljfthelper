@@ -2,6 +2,7 @@
 
 package data
 
+import colorCompare
 import getImage
 import sun.awt.Win32GraphicsDevice
 import utils.ImgUtil.forEach
@@ -41,9 +42,12 @@ class MRect {
         var img = getImage(this)
         forEach { i, i2 ->
             val color = img.getRGB(i-left,i2-top)
-            if(color == Color.WHITE.rgb){
-                return true
-            }
+//            if(color == Color.WHITE.rgb){
+//                return true
+//            }
+          if( colorCompare(Color.WHITE,Color(color))){
+              return true
+          }
         }
         return false
     }

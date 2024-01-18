@@ -90,14 +90,16 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
             return
         }
 
-        if (guan > 139 && guanka != Guan.g139) {
-            App.stopAutoSave()
+//        if (guan > 139 ) {
+//            App.stopAutoSave()
+//
+//            return
+//        }
+        if (guan == 139 && guanka != Guan.g139) {
+//            App.startAutoSave()
             guanka = Guan.g139
             waiting = false
             return
-        }
-        if (guan == 139) {
-            App.startAutoSave()
         }
 
         if (guan > 129 && guanka != Guan.g131) {
@@ -147,6 +149,10 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
         }
     }
 
+    override fun onHeroPointByChuanzhang(hero: HeroBean): Boolean {
+        return hero!=zhanjiang
+    }
+
     override suspend fun onLongwangPoint(point: MPoint, downed: (Boolean) -> Unit) {
         when (point) {
             Config.hbFSCloud -> {
@@ -168,7 +174,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
     fun isGkOver(g: Guan): Boolean {
 
         if (g == Guan.g139) return false
-        if (g == Guan.g140) return Zhuangbei.isYandou()
+        if (g == Guan.g140) return Zhuangbei.isYandou()&&saman.isInCar()
         if (g == Guan.g1) return zhanjiang.isFull() && jiaonv.isFull() && sishen.isFull() && saman.isFull() && Zhuangbei.isLongxin()
 
         var heroOk = zhanjiang.isFull() && jiaonv.isFull() && sishen.isFull()
@@ -203,8 +209,9 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
             }
 
             Guan.g131 -> {
-                Zhuangbei.isLongxin() && nvwang.isInCar() && shahuang.isFull() && saman.isInCar()
+                Zhuangbei.isLongxin() && nvwang.isInCar() && shahuang.isFull() && saman.isFull()
             }
+
 
             else -> false
         }
@@ -437,12 +444,10 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
             if (nvwang.isFull()) {
                 carDoing.downHero(nvwang)
             }
-            if (saman.isFull()) {
-                carDoing.downHero(saman)//主卡萨满16 ，低星有加成
-            }
+
 
             //防止船长点完卡没补满
-            var fullList = arrayListOf(zhanjiang, shahuang, jiaonv, sishen)
+            var fullList = arrayListOf(zhanjiang, shahuang, jiaonv, sishen,saman)
             if (baoku.heroName == "baoku") {
                 fullList.add(baoku)
             }
@@ -474,7 +479,15 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
 //            }
             return heros.indexOf(muqiu)
         } else if (guanka == Guan.g140) {
-            var index = heros.indexOf(huanqiu)
+            if (saman.isFull()) {
+                carDoing.downHero(saman)//主卡萨满16 ，低星有加成
+            }
+            var index = heros.indexOf(saman)
+            if (index > -1 && !saman.isInCar()) {//换一星女王，副卡满（副卡18）
+                return index
+            }
+
+             index = heros.indexOf(huanqiu)
             if (index > -1 && !Zhuangbei.isYandou() && Zhuangbei.hasZhuangbei()) {//小翼 烟斗
                 return index
             }

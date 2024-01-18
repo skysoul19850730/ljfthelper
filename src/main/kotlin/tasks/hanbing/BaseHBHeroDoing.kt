@@ -1,6 +1,7 @@
 package tasks.hanbing
 
 import data.Config
+import data.HeroBean
 import data.MPoint
 import data.MRect
 import getImage
@@ -152,7 +153,7 @@ abstract class BaseHBHeroDoing() : HeroDoing(0, FLAG_GUANKA or FLAG_KEYEVENT) {
                         if (index != null && (index2 == null || index.second > index2.second)) {
                             var hero = carDoing.carps.get(index.first).mHeroBean
                             log("检测到被标记  位置：$index  英雄：${hero?.heroName}")
-                            if (hero != null) {
+                            if (hero != null && onHeroPointByChuanzhang(hero)) {
                                 carDoing.downHero(hero)
                                 waiting = false
                             }
@@ -174,6 +175,9 @@ abstract class BaseHBHeroDoing() : HeroDoing(0, FLAG_GUANKA or FLAG_KEYEVENT) {
             }
         }
     }
+    open fun onHeroPointByChuanzhang(hero:HeroBean):Boolean{
+        return true
+    }
 
     private suspend fun onChuanZhangPoint(img2: BufferedImage? = null) {
         var img = img2 ?: getImage(App.rectWindow)
@@ -190,6 +194,7 @@ abstract class BaseHBHeroDoing() : HeroDoing(0, FLAG_GUANKA or FLAG_KEYEVENT) {
 //                            delay(10000)
                 log("第二次点名,刷卡7.5秒后，然后暂停刷卡")
                 beimu = true
+                waiting = false
                 delay(7500)
                 waiting = true
                 log("第二次点名,已经刷卡7.5秒，暂停刷卡，10.5秒开启监听")
