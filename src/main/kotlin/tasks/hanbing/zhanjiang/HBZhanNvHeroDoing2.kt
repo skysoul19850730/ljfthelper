@@ -59,6 +59,11 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
          */
         g140,
 
+        /**
+         * 熊猫关，改装备
+         */
+        g159,
+
     }
 
     var guanka = Guan.g1
@@ -74,17 +79,52 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
     val huanqiu = HeroBean("huanqiu", 20, needCar = false, compareRate = 0.95)
     val guangqiu = HeroBean("guangqiu", 0, needCar = false)
 
+
+    var needZhuangbei = Zhuangbei.YANDOU//目前熊猫用，打完雷神时是烟斗，默认值用烟斗
+
+    override fun onLeiShenSixBallOver() {
+        super.onLeiShenSixBallOver()
+        GlobalScope.launch {
+            //因为识别到第6个球就回调了。所以这里再延迟5秒再刷木
+            delay(5000)
+            guanka = Guan.g139
+            waiting = false
+        }
+    }
+
+    override fun onXiongMaoQiuGot(qiu: String) {
+        super.onXiongMaoQiuGot(qiu)
+        if (qiu == "fs") {
+            needZhuangbei = Zhuangbei.YANDOU
+        } else if (qiu == "gj") {
+            needZhuangbei = Zhuangbei.QIANGXI
+        }
+        waiting = false
+    }
+
     override fun doOnGuanChanged(guan: Int) {
 
+        if (guan == 159) {
+            guanka = Guan.g159
+            startXiongMaoOberser()
+            App.startAutoSave()
+            return
+        }
+
         if (guan == 150) {
-            App.stopAutoSave()
+//            App.stopAutoSave()
+            leishenOberser = false
             return
         }
 
         if (guan == 149) {
-            App.startAutoSave()
-            guanka = Guan.g139
-            waiting = false
+//            App.startAutoSave()
+            startLeishenOberserver()
+            GlobalScope.launch {
+                delay(60000)
+                guanka = Guan.g139
+                waiting = false
+            }
             return
         }
 
@@ -94,30 +134,29 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
             return
         }
 
-//        if (guan > 139 ) {
-//            App.stopAutoSave()
-//
-//            return
-//        }
         if (guan == 139) {
-//            App.startAutoSave()
+//            App.stopAutoSave()
             guanka = Guan.g139
             waiting = false
             return
         }
+//        if (guan == 139) {
+//            App.startAutoSave()
+//        }
 
-        if (guan == 130) {
+        if (guan == 131 || guan == 130) {
+            beimu = false
             chuanZhangObeserver = false
             guanka = Guan.g131
             waiting = false
             return
         }
 
-        if (guan == 129) {
+        if (guan == 128) {
             startChuanZhangOberserver()
             return
         }
-        if (guan == 110) {
+        if (guan == 111) {
             guanka = Guan.g110
             waiting = false
             return
@@ -129,7 +168,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
             return
         }
 
-        if (guan == 100) {
+        if (guan == 101) {
             longwangObserver = false
             guanka = Guan.g101
             waiting = false
@@ -154,6 +193,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
     }
 
     override fun onHeroPointByChuanzhang(hero: HeroBean): Boolean {
+        //船长不会点战将，这里除非是识别错了，如果识别错了，肯定也不下战将（目前只有另一个车中了，主车会偶尔识别到战将，这种就不下战将，其他都先不处理）
         return hero != zhanjiang
     }
 
@@ -176,7 +216,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
     }
 
     fun isGkOver(g: Guan): Boolean {
-
+        if (g == Guan.g159) return Zhuangbei.getZhuangBei() == needZhuangbei
         if (g == Guan.g139) return false
         if (g == Guan.g140) return Zhuangbei.isYandou() && saman.isInCar()
         if (g == Guan.g1) return zhanjiang.isFull() && jiaonv.isFull() && sishen.isFull() && saman.isFull() && Zhuangbei.isLongxin()
@@ -215,7 +255,6 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
             Guan.g131 -> {
                 Zhuangbei.isLongxin() && nvwang.isInCar() && shahuang.isFull() && saman.isFull()
             }
-
 
             else -> false
         }
@@ -281,7 +320,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
     var recheckStarFor110 = false
 
     override suspend fun dealHero(heros: List<HeroBean?>): Int {
-        log("cur guanka ${guanka.name}")
+
         while (waiting) {
             delay(100)
         }
@@ -440,7 +479,9 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
 
             index = heros.indexOf(huanqiu)
             if (index > -1 && !Zhuangbei.isQiangxi() && Zhuangbei.hasZhuangbei()) {//小翼 烟斗
-                return index
+                if(guankaTask?.currentGuanIndex !=129) {//129 有次识别错了，然后幻了装备,所以129就不用幻
+                    return index
+                }
             }
 
 
@@ -464,11 +505,6 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
             if (index > -1 && !nvwang.isInCar()) {//换一星女王，副卡满（副卡18）
                 return index
             }
-            index = heros.indexOf(saman)
-            if (index > -1 && !saman.isInCar()) {//换一星女王，副卡满（副卡18）
-                return index
-            }
-
 
             index = heros.indexOf(huanqiu)
             if (index > -1 && !Zhuangbei.isLongxin() && Zhuangbei.hasZhuangbei()) {//小翼 烟斗
@@ -483,6 +519,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
 //            }
             return heros.indexOf(muqiu)
         } else if (guanka == Guan.g140) {
+
             if (saman.isFull()) {
                 carDoing.downHero(saman)//主卡萨满16 ，低星有加成
             }
@@ -493,6 +530,11 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
 
             index = heros.indexOf(huanqiu)
             if (index > -1 && !Zhuangbei.isYandou() && Zhuangbei.hasZhuangbei()) {//小翼 烟斗
+                return index
+            }
+        } else if (guanka == Guan.g159) {
+            var index = heros.indexOf(huanqiu)
+            if (index > -1 && Zhuangbei.getZhuangBei() != needZhuangbei) {//小翼 烟斗
                 return index
             }
         }

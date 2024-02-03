@@ -1,9 +1,11 @@
 package tasks.hanbing.mengyan
 
+import getImage
 import getImageFromFile
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import log
+import loges
 import model.CarDoing
 import model.CarDoing.Companion.CheType_MaChe
 import model.CarDoing.Companion.CheType_YangChe
@@ -16,15 +18,18 @@ object ChuanZhangTest {
     fun startChuanZhangOberserver() {
         GlobalScope.launch {
 
-            var car0 = CarDoing(0, CheType_MaChe).apply {
+            var car0 = CarDoing(0, CheType_YangChe).apply {
                 initPositions()
             }
-            var car1 = CarDoing(1, CheType_YangChe).apply {
+            var car1 = CarDoing(0, CheType_YangChe).apply {
                 initPositions()
+                chePosition=1
+                reInitPositions()
             }
-            File(App.caijiPath, "chuanzhang").listFiles().forEach {
+//            File(App.caijiPath, "chuanzhang").listFiles().forEach {
 //                if(it.name.startsWith("1699936572466")) {
-                    var img = getImageFromFile(it)
+//                    var img = getImageFromFile(it)
+                   var img = getImage(App.rectWindow, null)
                     log(img)
 //                var count1 = 0
 //                var count2 = 0
@@ -43,12 +48,12 @@ object ChuanZhangTest {
                     var index = car0.getChuanZhangMax(img)
                     var index2 = car1.getChuanZhangMax(img)
                     if (index != null && (index2 == null || index.second > index2.second)) {
-                        log("检测结果 车位 0  位置 ${index.first} rate  ${index.second}")
+                        loges("检测结果 车位 0  位置 ${index.first} rate  ${index.second}")
                     } else if (index2 != null && (index == null || index2.second > index.second)) {
-                        log("检测结果 车位 1 位置 ${index2.first} rate ${index2.second}")
+                        loges("检测结果 车位 1 位置 ${index2.first} rate ${index2.second}")
                     }
 //                }
-            }
+//            }
 
 
 //            var p = 0

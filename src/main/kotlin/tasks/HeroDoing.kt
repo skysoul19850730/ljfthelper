@@ -12,6 +12,7 @@ import model.CarDoing
 import tasks.guankatask.GuankaTask
 import utils.LogUtil
 import utils.MRobot
+import java.awt.Color
 import kotlin.coroutines.resume
 
 abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing, GuankaTask.ChangeListener,
@@ -208,14 +209,14 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
 //            }
             if (needShuaxin) {
 //                withTimeoutOrNull(2000) {//超时就点一下，这里没有问题
-                    while (!Config.rect4ShuakaColor.hasWhiteColor()) {//有白色（钱够）再点击刷新
+                    while (Config.rect4ShuakaColor.hasColor(Color.RED)) {//有白色（钱够）再点击刷新
                         delay(50)
                     }
 //                }
                 MRobot.singleClick(Config.zhandou_shuaxinPoint)
             }
             delay(200)
-            hs = getPreHeros(if (needShuaxin) 1000 else 10000)//点完刷新如果1秒中识别不出来应该就是识别不出来了，这里不需要2秒
+            hs = getPreHeros(if (needShuaxin) 600 else 10000)//点完刷新如果1秒中识别不出来应该就是识别不出来了，这里不需要2秒
         }
         log("识别到英雄 ${hs?.getOrNull(0)?.heroName}  ${hs?.getOrNull(1)?.heroName}  ${hs?.getOrNull(2)?.heroName}")
         doDebug {
@@ -255,9 +256,10 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
             MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
         } else {
             //需要开格子
-            if (Config.rect4KuojianColor.hasWhiteColor()) {//可以开格子
+            if (!Config.rect4KuojianColor.hasColor(Color.RED)) {//可以开格子
                 log("点击扩建")
                 MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
+//                MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
                 delay(50)
                 MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
             } else {
@@ -268,11 +270,12 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
                     delay(50)
                     MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
                 } else {//不替换就等钱够
-                    while (!Config.rect4KuojianColor.hasWhiteColor()) {
+                    while (Config.rect4KuojianColor.hasColor(Color.RED)) {
                         delay(50)
                     }
                     log("点击扩建")
                     MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
+//                    MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
                     delay(50)
                     MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
                 }
@@ -405,9 +408,9 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
 //                        if(h2!=null)i++
 //                        if(h3!=null)i++
 //                        if(i>=2)break
-                        if (h1 == null || h2 == null || h3 == null) {//省去最后的100ms
-                            delay(50)
-                        }
+//                        if (h1 == null || h2 == null || h3 == null) {//省去最后的100ms
+//                            delay(50)
+//                        }
                     }
                     logOnly("getPreHeros cost time:${System.currentTimeMillis() - startTime}")
                     it.resume(arrayListOf(h1, h2, h3))

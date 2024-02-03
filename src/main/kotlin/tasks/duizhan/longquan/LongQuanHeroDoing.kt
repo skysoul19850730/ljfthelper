@@ -45,7 +45,7 @@ class LongQuanHeroDoing(val renji: Boolean = false) : HeroDoing(-1) {
         guangqiu = HeroBean("guangqiu", 60, needCar = false, compareRate = 0.99)
         moqiu = HeroBean("moqiu", 50, needCar = false, compareRate = 0.95)
         bingnv = HeroBean("bingnv", 40)
-        dijing = HeroBean("muqiu", 30, compareRate = 0.95)
+        dijing = HeroBean("longwang", 30, compareRate = 0.95)
         xiaochou = HeroBean("xiaochou", 0)
         xiaolu = HeroBean("xiaolu", 0)
     }

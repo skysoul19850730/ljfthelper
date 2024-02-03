@@ -77,6 +77,13 @@ class ZhanNvGameLaunch : IGameLaunch {
         }
     }
     suspend fun startOneHezuo(){
+
+        if(!App.checkTimer()){
+            log("剩余时间不够开场")
+            stop()
+            return
+        }
+
         isHezuoIng = true
 //        log("开始识别车辆位置")
 //        var chePosition = -1

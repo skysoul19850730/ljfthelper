@@ -55,6 +55,16 @@ class MRect {
         }
         return false
     }
+    fun hasColor(tColor: Color): Boolean {
+        var img = getImage(this)
+        forEach { i, i2 ->
+            val color = img.getRGB(i - left, i2 - top)
+            if (colorCompare(Color(color),tColor,10)) {
+                return true
+            }
+        }
+        return false
+    }
 
     fun hasColorCount(toColor: Color, sim: Int = 20, testImg: BufferedImage? = null): Int {
         var img = testImg?.getSubImage(this) ?: getImage(this)

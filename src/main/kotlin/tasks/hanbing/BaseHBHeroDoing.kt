@@ -43,45 +43,74 @@ abstract class BaseHBHeroDoing() : HeroDoing(0, FLAG_GUANKA or FLAG_KEYEVENT) {
         longwangObserver = true
         GlobalScope.launch {
             while (longwangObserver) {
-                var needDown = false
-                if (Config.hbFSCloud.isFit()) {
-                    onLongwangPoint(Config.hbFSCloud) {
-                        waiting = it
-                        needDown = it
+
+                if (longWangDownLoadPositionFromKey > -1 && chuanzhangDownLoadPositionFromKey < 100) {
+                    //如果龙王识别出错可以按快捷下对应卡牌，但不知道快捷键按下得时间，所以不能延时进行上卡，只能快捷键9来恢复上卡
+                    var hero = carDoing.carps[chuanzhangDownLoadPositionFromKey].mHeroBean
+                    if (hero != null && onHeroPointByChuanzhang(hero)) {
+                        carDoing.downHero(hero)
+                        waiting = true
                     }
-                } else if (Config.hbMSCloud.isFit()) {
-                    onLongwangPoint(Config.hbMSCloud) {
-                        waiting = it
-                        needDown = it
+                    longWangDownLoadPositionFromKey = -1
+                    while (waiting){
+                        delay(100)
                     }
+//                    waiting = false
+
                 } else {
-                    needDown = false
+                    var needDown = false
+
+                    if (Config.hbFSCloud.isFit()) {
+                        onLongwangPoint(Config.hbFSCloud) {
+                            if(it) {//只需要处理true。默认Needdown是false，waiting默认打龙王也是true得（如果之前是false，比如点了次名没上满，又点，那赋值还是false，所以只处理true）。如果返回false，waiting变false没有意义
+                                waiting = it
+                                needDown = it
+                            }
+                        }
+                    } else if (Config.hbMSCloud.isFit()) {
+                        onLongwangPoint(Config.hbMSCloud) {
+                            if(it) {
+                                waiting = it
+                                needDown = it
+                            }
+                        }
+                    } else {
+                        needDown = false
+                    }
+                    if (needDown) {
+                        delay(10000)
+                        waiting = false
+                    }
                 }
 
-
-                if (needDown) {
-                    delay(10000)
-                    waiting = false
-                }
                 delay(100)
             }
         }
     }
 
     var chuanzhangDownLoadPositionFromKey = -1
+    var longWangDownLoadPositionFromKey = -1
+
 
     override suspend fun onKeyDown(code: Int): Boolean {
-        if(guankaTask?.currentGuanIndex == 129){//船长
+        //如果龙王识别出错可以按快捷下对应卡牌，但不知道快捷键按下得时间，所以不能延时进行上卡，只能快捷键9来恢复上卡
+
+        if (code == KeyEvent.VK_NUMPAD9) {//9强制改变waitting，防止waiting有逻辑错误不上卡
+            waiting = !waiting
+            return true
+        }
+
+        if (guankaTask?.currentGuanIndex == 129 || guankaTask?.currentGuanIndex == 99) {//船长
             chuanzhangDownLoadPositionFromKey = -1
-            chuanzhangDownLoadPositionFromKey = when(code){
-                KeyEvent.VK_NUMPAD2->0
-                KeyEvent.VK_NUMPAD1->1
-                KeyEvent.VK_NUMPAD5->2
-                KeyEvent.VK_NUMPAD4->3
-                KeyEvent.VK_NUMPAD8->4
-                KeyEvent.VK_NUMPAD7->5
-                KeyEvent.VK_NUMPAD0->6
-                KeyEvent.VK_NUMPAD3->100
+            chuanzhangDownLoadPositionFromKey = when (code) {
+                KeyEvent.VK_NUMPAD2 -> 0
+                KeyEvent.VK_NUMPAD1 -> 1
+                KeyEvent.VK_NUMPAD5 -> 2
+                KeyEvent.VK_NUMPAD4 -> 3
+                KeyEvent.VK_NUMPAD8 -> 4
+                KeyEvent.VK_NUMPAD7 -> 5
+                KeyEvent.VK_NUMPAD0 -> 6
+                KeyEvent.VK_NUMPAD3 -> 100
                 else -> {
                     return false
                 }
@@ -93,6 +122,11 @@ abstract class BaseHBHeroDoing() : HeroDoing(0, FLAG_GUANKA or FLAG_KEYEVENT) {
 
     var chuanZhangObeserver = false
     var chuanzhangDownCount = 0
+
+
+    open fun onHeroPointByChuanzhang(hero: HeroBean): Boolean {
+        return true
+    }
 
     var time1 = 0L
     var time2 = 0L
@@ -134,21 +168,24 @@ abstract class BaseHBHeroDoing() : HeroDoing(0, FLAG_GUANKA or FLAG_KEYEVENT) {
                 //4 100 300 370
 
 
-                var img = getImage(App.rectWindow,null)
+                var img = getImage(App.rectWindow, null)
 
-                if(chuanzhangDownLoadPositionFromKey>-1){
+                if (chuanzhangDownLoadPositionFromKey > -1) {
                     log("船长 ：接收到快捷键事件")
-                    if(chuanzhangDownLoadPositionFromKey<100){//100代表对面车
-                        carDoing.downPosition(chuanzhangDownLoadPositionFromKey)
-                        waiting = false
+                    if (chuanzhangDownLoadPositionFromKey < 100) {//100代表对面车
+                        var hero = carDoing.carps[chuanzhangDownLoadPositionFromKey].mHeroBean
+                        if (hero != null && onHeroPointByChuanzhang(hero)) {
+                            carDoing.downHero(hero)
+                            waiting = false
+                        }
                     }
                     onChuanZhangPoint(img)
                     chuanzhangDownLoadPositionFromKey = -1
-                }else {
+                } else {
 
                     var index = carDoing.getChuanZhangMax(img)
-//                    var index2 = otherCarDoing.getChuanZhangMax(img)
-                    var index2:Pair<Int, Float>? = null
+                    var index2 = otherCarDoing.getChuanZhangMax(img)
+//                    var index2:Pair<Int, Float>? = null
                     if (index != null || index2 != null) {
                         if (index != null && (index2 == null || index.second > index2.second)) {
                             var hero = carDoing.carps.get(index.first).mHeroBean
@@ -174,9 +211,6 @@ abstract class BaseHBHeroDoing() : HeroDoing(0, FLAG_GUANKA or FLAG_KEYEVENT) {
                 }
             }
         }
-    }
-    open fun onHeroPointByChuanzhang(hero:HeroBean):Boolean{
-        return true
     }
 
     private suspend fun onChuanZhangPoint(img2: BufferedImage? = null) {
@@ -210,12 +244,115 @@ abstract class BaseHBHeroDoing() : HeroDoing(0, FLAG_GUANKA or FLAG_KEYEVENT) {
             }
         }
     }
+    open fun onLeiShenSixBallOver(){
+
+    }
+    open fun onLeiShenRedBallShow(){
+
+    }
+    open fun onLeiShenBlueBallShow(){
+
+    }
+    var leishenOberser = false
+    fun startLeishenOberserver() {
+        if (leishenOberser) return
+        leishenOberser = true
+        var leishenStart = System.currentTimeMillis()
+        var checkCount = 0
+        GlobalScope.launch {
+            delay(5000)//5秒左右才出球
+            //按截图算，大约10秒一个球（9.5）
+            while (leishenOberser) {
+
+                var img = getImage(App.rectWindow)
+
+                if (Config.leishenqiuXueTiaoRect.hasColorCount(
+                        Config.leishenqiuXueTiao, testImg = img
+                    ) > 50 || Config.leishenqiuXueTiaoRect.hasColorCount(Config.leishenqiuXueTiao2, testImg = img) > 50
+                ) {
+
+                    var count = Config.rectCheckOfLeishen.hasColorCount(Config.colorLeishenHongqiu, testImg = img)
+                    if (count > 300) {
+                        onLeiShenRedBallShow()
+                        log("检测到红球")
+                        log(img)
+                        checkCount++
+                        if (checkCount == 6) {
+                            onLeiShenSixBallOver()
+                            leishenOberser = false
+                            var time = System.currentTimeMillis()
+                            log("识别完6个球，耗时：${time - leishenStart} ms")
+                        }
+                        delay(3000)
+                    } else {
+                        //其实如果外层的血条逻辑足够准的话（因为不知道血条会不会被挡死，但挡死也就进不来了）.这里就不用再判断了，毕竟蓝色判断不准
+                        //即：如果有血条那么一定有球，如果不是红球，则就是蓝球。（经过实验，红球的判断相对很准，无非就是调下数值，如果被挡的厉害,反正如果不是红球，待检测区域redcount基本都是0)
+                        var count2 = Config.rectCheckOfLeishen.hasColorCount(Config.colorLeishenLanqiu, testImg = img)
+                        if (count2 > 2000) {
+                            onLeiShenBlueBallShow()
+                            log("检测到蓝球")
+                            log(img)
+                            checkCount++
+                            if (checkCount == 6) {
+                                onLeiShenSixBallOver()
+                                leishenOberser = false
+                                var time = System.currentTimeMillis()
+                                log("识别完6个球，耗时：${time - leishenStart} ms")
+                            }
+                            delay(3000)
+                        } else {
+                            delay(20)
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+    open fun onXiongMaoQiuGot(qiu:String){
+        log("熊猫识别到球：$qiu")
+        hasQiu = true
+    }
+    var xiongmaoOberserver = false
+    var hasQiu = false
+    fun startXiongMaoOberser(){
+        if (xiongmaoOberserver) return
+        xiongmaoOberserver = true
+        var leishenStart = System.currentTimeMillis()
+        var checkCount = 0
+        GlobalScope.launch {
+            //按截图算，大约10秒一个球（9.5）
+            while (xiongmaoOberserver) {
+
+                var img = getImage(App.rectWindow)
+                hasQiu = false
+                if (Config.xiongmaoQiuRect.hasColorCount(
+                        Config.xiongmaoFS, testImg = img
+                    ) > 50){
+                    onXiongMaoQiuGot("fs")
+                }else  if (Config.xiongmaoQiuRect.hasColorCount(
+                        Config.xiongmaoGJ, testImg = img
+                    ) > 50){
+                    onXiongMaoQiuGot("gj")
+                }
+
+                if(hasQiu){//识别到一个球后，延迟5秒再识别，节省
+                    delay(5000)
+                }
+            }
+        }
+    }
 
     override fun onStart() {
         super.onStart()
     }
+
     override fun onStop() {
         super.onStop()
         chuanZhangObeserver = false
+        longwangObserver = false
+        leishenOberser = false
+        xiongmaoOberserver = false
+        App.stopAutoSave()
     }
 }

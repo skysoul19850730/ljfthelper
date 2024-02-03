@@ -80,11 +80,15 @@ data class CarPosition(
         if (mHeroBean != null) {
             withContext(Dispatchers.Main) {
                 logOnly("车位:$mPos 下卡开始 ${mHeroBean?.heroName}")
-                click()
-                withTimeoutOrNull(2000) {
-                    while (!Recognize.saleRect.isFit()) {//下卡时 被结束的弹窗挡住，这里一直不fit（挡住了就检测不到出售按钮）。然后也不会执行 结束的按钮点击。所以这里加个超时
-                        delay(10)//妈的，这里不加delay就检测不会timeout，fuck
-                    }
+                var heroDialogShow = false
+                while(!heroDialogShow) {
+                    click()
+                   heroDialogShow = withTimeoutOrNull(1000) {
+                        while (!Recognize.saleRect.isFit()) {//下卡时 被结束的弹窗挡住，这里一直不fit（挡住了就检测不到出售按钮）。然后也不会执行 结束的按钮点击。所以这里加个超时
+                            delay(10)//妈的，这里不加delay就检测不会timeout，fuck
+                        }
+                       true
+                    }?:false
                 }
 
                 MRobot.singleClick(salePoint)
