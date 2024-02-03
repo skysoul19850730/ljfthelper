@@ -2,6 +2,7 @@ package utils
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.ui.graphics.Color
 import data.Config
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -69,5 +70,6 @@ object LogUtil {
     class LogData {
         var time: String = ""
         var data: Any? = null
+        var color:Color?=null
     }
 }

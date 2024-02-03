@@ -4,38 +4,119 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eb7aa5ff-a60c-44e7-9b56-eaa9b9270de9" name="Changes" comment="同步">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/huodong/EasyHeroDoing.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou0.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou7.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou0.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou7.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou8.png" afterDir="false" />
+    <list default="true" id="eb7aa5ff-a60c-44e7-9b56-eaa9b9270de9" name="Changes" comment="临时">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/DebugData.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/huodong/XiePaoHeroDoing.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/emo/emo0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/emo/emo1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/emo/emo2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/emo/emo3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/emo/emo4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/emo/emo5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/emo/emo6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/emo/emo7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/emo/emo8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/emo/emo9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/longwang/longwang0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/longwang/longwang1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/longwang/longwang2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/longwang/longwang3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/longwang/longwang4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/longwang/longwang5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/longwang/longwang6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/longwang/longwang7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/longwang/longwang8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/longwang/longwang9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/nvyao/nvyao0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/nvyao/nvyao1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/nvyao/nvyao2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/nvyao/nvyao3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/nvyao/nvyao4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/nvyao/nvyao5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/nvyao/nvyao6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/nvyao/nvyao7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/nvyao/nvyao8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/wangjiang/wangjiang0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/wangjiang/wangjiang1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/wangjiang/wangjiang2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/wangjiang/wangjiang3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/wangjiang/wangjiang4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/wangjiang/wangjiang5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/wangjiang/wangjiang6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/wangjiang/wangjiang7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/wangjiang/wangjiang8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/xiongmao/xiongmao0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/xiongmao/xiongmao1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/xiongmao/xiongmao2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/xiongmao/xiongmao3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/xiongmao/xiongmao4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/xiongmao/xiongmao5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/xiongmao/xiongmao6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/xiongmao/xiongmao7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/xiongmao/xiongmao8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/xiongmao/xiongmao9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/emo/emo0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/emo/emo1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/emo/emo2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/emo/emo3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/emo/emo4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/emo/emo5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/emo/emo6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/emo/emo7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/emo/emo8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/emo/emo9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/longwang/longwang0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/longwang/longwang1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/longwang/longwang2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/longwang/longwang3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/longwang/longwang4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/longwang/longwang5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/longwang/longwang6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/longwang/longwang7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/longwang/longwang8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/longwang/longwang9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/nvyao/nvyao0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/nvyao/nvyao1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/nvyao/nvyao2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/nvyao/nvyao3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/nvyao/nvyao4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/nvyao/nvyao5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/nvyao/nvyao6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/nvyao/nvyao7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/nvyao/nvyao8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/wangjiang/wangjiang0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/wangjiang/wangjiang1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/wangjiang/wangjiang2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/wangjiang/wangjiang3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/wangjiang/wangjiang4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/wangjiang/wangjiang5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/wangjiang/wangjiang6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/wangjiang/wangjiang7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/wangjiang/wangjiang8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/xiongmao/xiongmao0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/xiongmao/xiongmao1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/xiongmao/xiongmao2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/xiongmao/xiongmao3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/xiongmao/xiongmao4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/xiongmao/xiongmao5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/xiongmao/xiongmao6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/xiongmao/xiongmao7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/xiongmao/xiongmao8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/xiongmao/xiongmao9.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/App.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Config.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Config.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/HeroBean.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/HeroBean.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/MPoint.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/MPoint.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/MRect.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/MRect.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/main.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/model/CarDoing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/model/CarDoing.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/model/CarPosition.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/model/CarPosition.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/HeroDoing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/HeroDoing.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/gameUtils/DaMoHeroDoing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/gameUtils/DaMoHeroDoing.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/gameUtils/GameUtil.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/gameUtils/GameUtil.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/hanbing/zhanjiang/HBZhanNvHeroDoing2.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/hanbing/zhanjiang/HBZhanNvHeroDoing2.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/huodong/EasyHeroDoing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/huodong/EasyHeroDoing.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/huodong/HuodongUtil.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/huodong/HuodongUtil.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tesshelper/Tess.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tesshelper/Tess.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tfres/hero/1704461742588f1/1704461742611_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/util.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/util.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/utils/LogUtil.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/utils/LogUtil.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +141,11 @@
     </system>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
@@ -75,27 +161,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build demo1.executor&quot;: &quot;Run&quot;,
-    &quot;Kotlin.MainKt (1).executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/85963/IdeaProjects/demo1/src/main/resources&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.41724136&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build demo1.executor": "Run",
+    "Kotlin.MainKt (1).executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/85963/IdeaProjects/demo1/src/main",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.41724136",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\85963\IdeaProjects\demo1\src\main" />
+      <recent name="C:\Users\85963\IdeaProjects\demo1\src\main\kotlin\tasks\huodong" />
       <recent name="C:\Users\85963\IdeaProjects\demo1\src\main\resources" />
       <recent name="C:\Users\85963\IdeaProjects\demo1\src\main\resources\moniqi\heros" />
       <recent name="C:\Users\85963\IdeaProjects\demo1\src\main\resources\xiaochengxu\heros" />
-      <recent name="C:\Users\85963\IdeaProjects\demo1\src\main\kotlin\data" />
-      <recent name="C:\Users\85963\IdeaProjects\demo1\src\main" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\85963\IdeaProjects\demo1\src\jvmMain\resources\moniqi\boss" />
@@ -181,7 +267,15 @@
       <option name="project" value="LOCAL" />
       <updated>1705572471677</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="临时">
+      <option name="closed" value="true" />
+      <created>1706920946789</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1706920946789</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -198,43 +292,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first" />
     <MESSAGE value="同步" />
-    <option name="LAST_COMMIT_MESSAGE" value="同步" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/tasks/HeroDoing.kt</url>
-          <line>128</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/model/CarPosition.kt</url>
-          <line>28</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/tasks/HeroDoing.kt</url>
-          <line>127</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/model/CarDoing.kt</url>
-          <line>134</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/model/CarPosition.kt</url>
-          <line>34</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/model/CarPosition.kt</url>
-          <line>52</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="临时" />
+    <option name="LAST_COMMIT_MESSAGE" value="临时" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

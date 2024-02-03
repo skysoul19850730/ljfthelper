@@ -26,7 +26,14 @@ class HeroBean(
 //    val img: BufferedImage = getImageFromRes(imgPath + ".png")
 //    val img: BufferedImage = ImageIO.read(File(imgPath+".png"))
 
-    var currentLevel = 0//0也未上，绿-》金为1234
+    var currentLevel = 0
+        //0也未上，绿-》金为1234
+        set(value) {
+            field = value
+            if (field > 4) {
+                field = 4
+            }
+        }
 
     val imgList = arrayListOf<BufferedImage>().apply {
         var subFoler = "${Config.platName}/heros/${heroName}"
@@ -61,7 +68,7 @@ class HeroBean(
                 while (!checked) {
                     var level = carDoing.carps.get(position).getStarLevelDirect()
 //                    if (level > 0 && level-currentLevel==1) {//检测星,按升星1.其它的检测到就不算了
-                    if (level > 0 ) {
+                    if (level > 0) {
                         currentLevel = level
                         checked = true
                     } else {

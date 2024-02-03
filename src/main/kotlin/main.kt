@@ -39,14 +39,12 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import com.sun.jna.platform.win32.*
 import data.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import model.CarDoing
 import model.CarPosition
 import tasks.*
 import tasks.gameUtils.GameUtil
+import tasks.hanbing.mengyan.ChuanZhangTest
 import tasks.hanbing.zhanjiang.HBZhanNvHeroDoing
 import tasks.hezuo.zhannvsha.ZhanNvGameLaunch
 import utils.LogUtil
@@ -60,6 +58,7 @@ import kotlin.math.min
 import tasks.huodong.HuodongUtil
 import utils.ImgUtil
 import java.text.SimpleDateFormat
+import kotlin.math.log
 
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -106,7 +105,7 @@ fun App() {
 //                    HSpace(6)
 //                    MRadioBUtton("QQ", Config.platform_qq, Config.platform)
 
-                    button((if (GameUtil.ShuaMoValue.value) "停魔" else "开魔")) {
+                    button((if (GameUtil.ShuaMoValue.value) "停木" else "开木")) {
                         GameUtil.ShuaMoValue.value = !GameUtil.ShuaMoValue.value
                         if (GameUtil.ShuaMoValue.value) {
                             GameUtil.startShuaMo(1)
@@ -139,7 +138,7 @@ fun App() {
                                     Text(time)
 
                                     if (item.data is String) {
-                                        Text(item.data as String)
+                                        Text(item.data as String, color = item.color?:Color.Unspecified)
                                     } else if (item.data is BufferedImage) {
                                         var item = item.data as BufferedImage
                                         var ww = item.width
@@ -994,21 +993,118 @@ fun testHerosUI() {
     }
 }
 
-private fun testChuanZhang(){
+private fun testChuanZhang() {
     var hd = HBZhanNvHeroDoing()
     hd.init()
-    hd.start()
+//    hd.start()
     hd.startChuanZhangOberserver()
 }
-private fun testZhuangbei(){
-    Zhuangbei.getZhuangBei()
+
+private fun testLeishen() {
+
+    var ttt1 = System.currentTimeMillis()
+    getImage(App.rectWindow,null)
+    var tttt2 = System.currentTimeMillis()
+    getImage(Config.leishenqiuXueTiaoRect,null)
+    var ttt3 = System.currentTimeMillis()
+    println("大图:${tttt2 - ttt1} 小图：${ttt3-tttt2}")
+
+
+    var file = File(App.caijiPath, "leishen")
+
+    file.listFiles().forEach {
+        var img = getImageFromFile(it)
+        var time = System.currentTimeMillis()
+        if (Config.leishenqiuXueTiaoRect.hasColorCount(
+                Config.leishenqiuXueTiao,
+                testImg = img
+            ) > 50 || Config.leishenqiuXueTiaoRect.hasColorCount(Config.leishenqiuXueTiao2, testImg = img) > 50
+        ) {
+
+            var count = Config.rectCheckOfLeishen.hasColorCount(Config.colorLeishenHongqiu, testImg = img)
+            if (count > 300) {
+                img.log(img)
+                count.log("${it.name} is HongQiu has hong count:$count")
+            } else {
+                var count2 = Config.rectCheckOfLeishen.hasColorCount(Config.colorLeishenLanqiu, testImg = img)
+                if (count2 > 2000) {
+                    img.log(img)
+                    count2.log("${it.name} is LanQiu has lan count:$count2  hongqiucount:$count")
+                }
+            }
+            var tt = System.currentTimeMillis()
+            if (time > 0) {
+                var coast = (tt - time) / 1000f
+                coast.log("一个图，花费 $coast")
+                time = -1
+            }
+        }
+    }
+}
+fun testXiongMao(){
+    var file = File(App.caijiPath, "xiongmao")
+
+    file.listFiles().forEach {
+        var img = getImageFromFile(it)
+        if (Config.xiongmaoQiuRect.hasColorCount(
+                Config.xiongmaoFS, testImg = img
+            ) > 50){
+            "fs".log("识别到法师球")
+        }else  if (Config.xiongmaoQiuRect.hasColorCount(
+                Config.xiongmaoGJ, testImg = img
+            ) > 50){
+            "fs".log("识别到弓箭球")
+        }
+    }
+}
+private fun testFit(){
+    GlobalScope.launch {
+        var t1 = System.currentTimeMillis()
+//        var a = async {
+//            delay(2000)
+//        }
+//        var b = async {
+//            delay(3000)
+//        }
+//        var c = async {
+//            delay(4000)
+//        }
+//        a.await()
+//        b.await()
+//        c.await()
+        getImage(Config.zhandou_hero1CheckRect)
+        var tend = System.currentTimeMillis()
+        log("time1 ${tend- t1}")
+    }
+}
+fun testClick(){
+    //3152 52
+    //784,561 不含tapbar
+    GlobalScope.launch {
+//        WxUtil.findWindowAndMove()
+//       var wxWindow = utils.Window.findWindowWithName("中國同盟会")
+
+       var wxWindow = utils.Window.findWindowWithName("塔防助手")
+        //550,640
+        delay(1000)
+        MPoint(704,35).clickPc(wxWindow)
+//        MRobot.singleClickPc(MPoint(100,32),wxWindow)
+//        MRobot.singleClickPc(MPoint(784-70,52),wxWindow)
+//        MRobot.singleClickPc(MPoint(100,52),wxWindow)
+//        MRobot.singleClickPc(MPoint(3152-1920,52),null)
+//        MRobot.singleClickPc(MPoint(3152-1920,52),null)
+    }
+
 }
 fun test() {
-    testZhuangbei()
 //    autoMoveMouse()
-//testChuanZhang()
+    testClick()
+//    testFit()
+//    testXiongMao()
+//    testLeishen()
 
 //testHerosUI()
+//    testChuanZhang()
 //    ChuanZhangTest.startChuanZhangOberserver()
 //    saveImgTest(File(App.caijiPath,"1701233714591.png"),Recognize.IcAdv4Hezuo.rectFinal)
 //    testKaiJi()
@@ -1060,7 +1156,7 @@ private fun testSim(hero: HeroBean, hero2: HeroBean) {
 
 fun Any.toLogData(): LogUtil.LogData {
     return LogUtil.LogData().apply {
-        time = SimpleDateFormat("hh:mm:ss").format(System.currentTimeMillis())
+        time = SimpleDateFormat("hh:mm:ss SSS").format(System.currentTimeMillis())
         data = this@toLogData
     }
 }
@@ -1073,6 +1169,19 @@ fun Any.log(msg: Any, onlyPrint: Boolean = false) {
             LogUtil.messages.add(0, logData)
         }
     }
+}
+
+fun loges(msg:String){
+    var logData = LogUtil.LogData().apply {
+        time = SimpleDateFormat("hh:mm:ss SSS").format(System.currentTimeMillis())
+        data = msg
+        color = Color.Red
+    }
+    println(logData.time + " " + logData.data.toString())
+    MainScope().launch {
+        LogUtil.messages.add(0, logData)
+    }
+
 }
 
 fun Any.logOnly(msg: Any) {
@@ -1093,7 +1202,7 @@ fun logWin(win: WinDef.HWND) {
 
 
 fun main() = application {
-    App.initPath{
+    App.initPath {
         testing = false
         exitApplication()
     }

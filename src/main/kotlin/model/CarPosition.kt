@@ -10,6 +10,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 import log
 import logOnly
+import loges
 import model.CarDoing.Companion.salePoint
 import utils.MRobot
 import java.awt.Color
@@ -24,18 +25,6 @@ data class CarPosition(
     var starPoint: MPoint,
     val carDoing: CarDoing
 ) {
-    init {
-        mRect.apply {
-            left += carDoing.offset
-            log("position:$mPos left is ${left}")
-            right += carDoing.offset
-        }
-        starPoint.apply {
-
-            x += carDoing.offset
-        }
-        mRect.freshClickPoint()
-    }
 
     override fun equals(other: Any?): Boolean {
         return this === other
@@ -45,14 +34,8 @@ data class CarPosition(
         mRect: MRect,
         starPoint: MPoint
     ) {
-        this.mRect = mRect.apply {
-            left += carDoing.offset
-            right += carDoing.offset
-        }
-        this.starPoint = starPoint.apply {
-            x += carDoing.offset
-        }
-        this.mRect.freshClickPoint()
+        this.mRect = mRect
+        this.starPoint = starPoint
     }
 
     companion object {
@@ -122,8 +105,14 @@ data class CarPosition(
 //            var resultImg = BufferedImage(testImg.width, testImg.height, TYPE_INT_RGB)
 //            resultImg.graphics.drawImage(testImg, 0, 0, testImg.width, testImg.height, null)
         for (y in mRect.top..mRect.bottom) {
-            if (colorCompare(Color(testImg.getRGB(mRect.clickPoint.x, y)), Config.Color_ChuangZhang, 10)
-            ) {
+            var fit = try {
+                colorCompare(Color(testImg.getRGB(mRect.clickPoint.x, y)), Config.Color_ChuangZhang, 10)
+            } catch (e: Exception) {
+                loges(e.toString())
+                loges("mRect : ${mRect.toString()}, y is $y")
+                false
+            }
+            if (fit) {
                 simCount++
 //                    resultImg.setRGB(mRect.clickPoint.x,y,Color.RED.rgb)
 //                    resultImg.setRGB(mRect.clickPoint.x-1,y,Color.RED.rgb)
@@ -140,7 +129,7 @@ data class CarPosition(
         }
         var rate = (simCount * 1f) / (mHeight)
 //            log(resultImg)
-        logOnly("rectSize:${mRect.width}X${mRect.height} ${mRect.width * mRect.height} totalCount $mHeight       okCount:$simCount   rate:$rate")
+        logOnly("compareHeight:${mRect.width}X${mRect.height} ${mRect.width * mRect.height} totalCount $mHeight       okCount:$simCount   rate:$rate")
 
         return rate
     }

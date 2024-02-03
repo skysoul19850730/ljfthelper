@@ -4,12 +4,14 @@ package data
 
 import colorCompare
 import getImage
+import getSubImage
 import sun.awt.Win32GraphicsDevice
 import utils.ImgUtil.forEach
 import utils.MRobot
 import java.awt.Color
 import java.awt.GraphicsEnvironment
 import java.awt.Point
+import java.awt.image.BufferedImage
 
 class MRect {
     var top = 0
@@ -38,25 +40,32 @@ class MRect {
 //      return  (ge.defaultScreenDevice.defaultConfiguration.device as Win32GraphicsDevice).defaultScaleX
 //    }
 
-    fun freshClickPoint(){
-        clickPoint.apply {
-            x = (right + left) / 2
-            y = (bottom + top) / 2
-        }
+    override fun toString(): String {
+
+        return "mRect :${super.toString()}.  top is $top,left is $left bottom is $bottom ,right is $right,clickPoint is ${clickPoint.toString()}"
     }
 
-    fun hasWhiteColor():Boolean{
+    fun hasWhiteColor(): Boolean {
         var img = getImage(this)
         forEach { i, i2 ->
-            val color = img.getRGB(i-left,i2-top)
-//            if(color == Color.WHITE.rgb){
-//                return true
-//            }
-          if( colorCompare(Color.WHITE,Color(color))){
-              return true
-          }
+            val color = img.getRGB(i - left, i2 - top)
+            if (color == Color.WHITE.rgb) {
+                return true
+            }
         }
         return false
+    }
+
+    fun hasColorCount(toColor: Color, sim: Int = 20, testImg: BufferedImage? = null): Int {
+        var img = testImg?.getSubImage(this) ?: getImage(this)
+        var count = 0
+        forEach { i, i2 ->
+            val color = img.getRGB(i - left, i2 - top)
+            if (colorCompare(Color(color), toColor, sim)) {
+                count++
+            }
+        }
+        return count
     }
 
     constructor()
@@ -79,8 +88,8 @@ class MRect {
             return MRect().apply {
                 this.left = left
                 this.top = top
-                this.right = left + width-1
-                this.bottom = top + height-1
+                this.right = left + width - 1
+                this.bottom = top + height - 1
                 clickPoint.apply {
                     x = left + width / 2
                     y = top + height / 2
@@ -88,13 +97,13 @@ class MRect {
             }
         }
 
-        fun createPointR(centerPoint:MPoint,r:Int):MRect{
+        fun createPointR(centerPoint: MPoint, r: Int): MRect {
             return MRect().apply {
                 clickPoint = centerPoint
-                this.left = clickPoint.x-r
-                this.right = clickPoint.x+r
-                this.top = clickPoint.y -r
-                this.bottom = clickPoint.y+r
+                this.left = clickPoint.x - r
+                this.right = clickPoint.x + r
+                this.top = clickPoint.y - r
+                this.bottom = clickPoint.y + r
             }
         }
     }

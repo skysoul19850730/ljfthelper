@@ -153,19 +153,20 @@ object App {
 
 
     var autoSaving = false
-    var autoSaveJob:Job?=null
-    fun startAutoSave(time:Long = 3000){
-        if(autoSaving)return
+    var autoSaveJob: Job? = null
+    fun startAutoSave(time: Long = 300) {
+        if (autoSaving) return
         autoSaving = true
         autoSaveJob = GlobalScope.launch {
-            while (autoSaving){
+            while (autoSaving) {
                 log("自动保存一张图片")
                 save()
                 delay(time)
             }
         }
     }
-    fun stopAutoSave(){
+
+    fun stopAutoSave() {
         autoSaveJob?.cancel()
         autoSaveJob = null
         autoSaving = false
@@ -376,14 +377,14 @@ object App {
 
     }
 
-    fun closeApp(timeOver:Boolean = false) {
+    fun closeApp(timeOver: Boolean = false) {
         log("closeApp")
         stop()
         testing = false
         doRemoveKey()
         GlobalScope.launch {
             MRobot.singleClickPc(pointClose)
-            if(timeOver){
+            if (timeOver) {
                 delay(3000)
             }
             closeCallBack?.invoke()
@@ -407,14 +408,22 @@ object App {
 
     var timeJob: Job? = null
 
+    var leftTime = -1
+
     fun startTimerDown(time: Float) {
 
         var times: Int = (time * 60).toInt() //秒
 
         timeJob = GlobalScope.launch {
             repeat(times) {
-                timerText.value = ("${(times - it)} 秒")
-                delay(1000)
+                leftTime = times - it
+                timerText.value = ("${leftTime} 秒")
+                if (checkTimer()) {
+                    delay(1000)
+                } else {
+                    timeJob?.cancel("剩余时间不足")
+//                    delay(1000)
+                }
             }
             log("倒计时结束，windowClose = 2")
 //            windowClose.value = 2
@@ -423,15 +432,23 @@ object App {
 
     }
 
+    fun checkTimer(): Boolean {
+        //如果不足18分钟，且不在合作中,就结束
+        if (leftTime < 19 * 60 && leftTime>0 && gameLaunch is ZhanNvGameLaunch && !(gameLaunch as ZhanNvGameLaunch).isHezuoIng) {
+            return false
+        }
+        return true
+    }
+
     fun sleepPc() {
         if (!Config.isHome) {
             log("sleeppc")
             GlobalScope.launch {
-                MRobot.singleClickPc(MPoint(10, 1055),null)
+                MRobot.singleClickPc(MPoint(10, 1055), null)
                 MRobot.robot.delay(1000)
-                MRobot.singleClickPc(MPoint(10, 1022),null)
+                MRobot.singleClickPc(MPoint(10, 1022), null)
                 MRobot.robot.delay(1000)
-                MRobot.singleClickPc(MPoint(10, 931),null)
+                MRobot.singleClickPc(MPoint(10, 931), null)
             }
 
         }

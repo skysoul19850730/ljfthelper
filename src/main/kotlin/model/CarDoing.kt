@@ -14,7 +14,6 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
 
 
     var carps = arrayListOf<CarPosition>()
-    var offset:Int = 0
 
     companion object {
 
@@ -34,13 +33,13 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
     }
 
     fun hasOpenSpace() = carps.take(6).count {
-        it.mIsOpen && it.mHeroBean==null
-    }>0
+        it.mIsOpen && it.mHeroBean == null
+    } > 0
 
     fun hasNotFull() = carps.count {
-        var isfull = it.mHeroBean?.isFull()?:true
+        var isfull = it.mHeroBean?.isFull() ?: true
         !isfull
-    }>0
+    } > 0
 
     fun openCount() = carps.take(6).count {
         it.mIsOpen
@@ -108,30 +107,32 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
         return checkHasChanged
     }
 
-    fun reInitPositions() {
+    fun reInitPositions(offset: Int = 0) {
         var r = 123//影响船长识别，不要乱调，目前为止123合适
         if (cheType == CheType_YangChe) {
-            carps.get(0).reInitRectAndPoint(MRect.createPointR(MPoint(260, 430), r), MPoint(260, 450))
-            carps.get(1).reInitRectAndPoint(MRect.createPointR(MPoint(226, 430), r), MPoint(226, 450))
-            carps.get(2).reInitRectAndPoint(MRect.createPointR(MPoint(260, 360), r), MPoint(260, 380))
-            carps.get(3).reInitRectAndPoint(MRect.createPointR(MPoint(226, 360), r), MPoint(226, 380))
-            carps.get(4).reInitRectAndPoint(MRect.createPointR(MPoint(260, 286), r), MPoint(260, 312))
-            carps.get(5).reInitRectAndPoint(MRect.createPointR(MPoint(226, 286), r), MPoint(226, 311))
+            carps.get(0).reInitRectAndPoint(MRect.createPointR(MPoint(260 + offset, 430), r), MPoint(260 + offset, 450))
+            carps.get(1).reInitRectAndPoint(MRect.createPointR(MPoint(226 + offset, 430), r), MPoint(226 + offset, 450))
+            carps.get(2).reInitRectAndPoint(MRect.createPointR(MPoint(260 + offset, 360), r), MPoint(260 + offset, 380))
+            carps.get(3).reInitRectAndPoint(MRect.createPointR(MPoint(226 + offset, 360), r), MPoint(226 + offset, 380))
+            carps.get(4).reInitRectAndPoint(MRect.createPointR(MPoint(260 + offset, 286), r), MPoint(260 + offset, 312))
+            carps.get(5).reInitRectAndPoint(MRect.createPointR(MPoint(226 + offset, 286), r), MPoint(226 + offset, 311))
         } else if (cheType == CheType_MaChe) {
-            carps.get(0).reInitRectAndPoint(MRect.createPointR(MPoint(260, 425), r), MPoint(260, 448))
-            carps.get(1).reInitRectAndPoint(MRect.createPointR(MPoint(226, 425), r), MPoint(226, 449))
-            carps.get(2).reInitRectAndPoint(MRect.createPointR(MPoint(260, 355), r), MPoint(260, 377))
-            carps.get(3).reInitRectAndPoint(MRect.createPointR(MPoint(226, 355), r), MPoint(226, 378))
-            carps.get(4).reInitRectAndPoint(MRect.createPointR(MPoint(260, 286), r), MPoint(260, 312))
-            carps.get(5).reInitRectAndPoint(MRect.createPointR(MPoint(226, 286), r), MPoint(226, 313))
+            carps.get(0).reInitRectAndPoint(MRect.createPointR(MPoint(260 + offset, 425), r), MPoint(260 + offset, 448))
+            carps.get(1).reInitRectAndPoint(MRect.createPointR(MPoint(226 + offset, 425), r), MPoint(226 + offset, 449))
+            carps.get(2).reInitRectAndPoint(MRect.createPointR(MPoint(260 + offset, 355), r), MPoint(260 + offset, 377))
+            carps.get(3).reInitRectAndPoint(MRect.createPointR(MPoint(226 + offset, 355), r), MPoint(226 + offset, 378))
+            carps.get(4).reInitRectAndPoint(MRect.createPointR(MPoint(260 + offset, 286), r), MPoint(260 + offset, 312))
+            carps.get(5).reInitRectAndPoint(MRect.createPointR(MPoint(226 + offset, 286), r), MPoint(226 + offset, 313))
         }
-        carps.get(6).reInitRectAndPoint(MRect.createPointR(Config.point7p_houche, r), MPoint(118, 236))
+        carps.get(6).reInitRectAndPoint(MRect.createPointR(Config.point7p_qianche.apply {
+            x += offset
+        }, r),  MPoint(216 + offset, 236),)
     }
 
     /**
      * 暂时不考虑工程位的中间态（车开格子不同，高度不同。工程位置是变化的，如果想处理，就要看不同层数的时候，工程位都记录下来，然后工程位单独管理，不放在这个list中）
      */
-    fun initPositions() {
+    fun initPositions(offset: Int = 0) {
         var r = 123//影响船长识别，不要乱调，目前为止123合适
         if (chePosition == -1) {//单车模式
             carps.apply {
@@ -156,48 +157,58 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(139, 430), r),
-                                MPoint(138, 450),
+                                MRect.createPointR(MPoint(139 + offset, 430), r),
+                                MPoint(138 + offset, 450),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(101, 430), r),
-                                MPoint(100, 450),
+                                MRect.createPointR(MPoint(101 + offset, 430), r),
+                                MPoint(100 + offset, 450),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(139, 360), r),
-                                MPoint(138, 380),
+                                MRect.createPointR(MPoint(139 + offset, 360), r),
+                                MPoint(138 + offset, 380),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(101, 360), r),
-                                MPoint(100, 380),
+                                MRect.createPointR(MPoint(101 + offset, 360), r),
+                                MPoint(100 + offset, 380),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(139, 286), r),
-                                MPoint(138, 312),
+                                MRect.createPointR(MPoint(139 + offset, 286), r),
+                                MPoint(138 + offset, 312),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(101, 286), r),
-                                MPoint(100, 311),
+                                MRect.createPointR(MPoint(101 + offset, 286), r),
+                                MPoint(100 + offset, 311),
+                                this@CarDoing
+                            )
+                        )
+                        add(
+                            CarPosition(
+                                carps.size,
+                                MRect.createPointR(Config.point7p_houche.apply {
+                                    x += offset
+                                }, r),
+                                MPoint(118 + offset, 236),
                                 this@CarDoing
                             )
                         )
@@ -205,61 +216,65 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(138, 425), r),
-                                MPoint(138, 448),
+                                MRect.createPointR(MPoint(138 + offset, 425), r),
+                                MPoint(138 + offset, 448),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(101, 425), r),
-                                MPoint(100, 449),
+                                MRect.createPointR(MPoint(101 + offset, 425), r),
+                                MPoint(100 + offset, 449),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(138, 355), r),
-                                MPoint(138, 377),
+                                MRect.createPointR(MPoint(138 + offset, 355), r),
+                                MPoint(138 + offset, 377),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(101, 355), r),
-                                MPoint(100, 378),
+                                MRect.createPointR(MPoint(101 + offset, 355), r),
+                                MPoint(100 + offset, 378),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(138, 286), r),
-                                MPoint(138, 312),
+                                MRect.createPointR(MPoint(138 + offset, 286), r),
+                                MPoint(138 + offset, 312),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(101, 286), r),
-                                MPoint(100, 313),
+                                MRect.createPointR(MPoint(101 + offset, 286), r),
+                                MPoint(100 + offset, 313),
+                                this@CarDoing
+                            )
+                        )
+
+                        add(
+                            CarPosition(
+                                carps.size,
+                                MRect.createPointR(Config.point7p_houche.apply {
+                                    x += offset
+                                }, r),
+                                MPoint(118 + offset, 240),
                                 this@CarDoing
                             )
                         )
                     }
 
-                    add(
-                        CarPosition(
-                            carps.size,
-                            MRect.createPointR(Config.point7p_houche, r),
-                            MPoint(118, 236),
-                            this@CarDoing
-                        )
-                    )
+
                 }
             } else {
                 carps.apply {
@@ -268,48 +283,58 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(260, 430), r),
-                                MPoint(260, 450),
+                                MRect.createPointR(MPoint(260 + offset, 430), r),
+                                MPoint(260 + offset, 450),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(226, 430), r),
-                                MPoint(226, 450),
+                                MRect.createPointR(MPoint(226 + offset, 430), r),
+                                MPoint(226 + offset, 450),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(260, 360), r),
-                                MPoint(260, 380),
+                                MRect.createPointR(MPoint(260 + offset, 360), r),
+                                MPoint(260 + offset, 380),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(226, 360), r),
-                                MPoint(226, 380),
+                                MRect.createPointR(MPoint(226 + offset, 360), r),
+                                MPoint(226 + offset, 380),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(260, 286), r),
-                                MPoint(260, 312),
+                                MRect.createPointR(MPoint(260 + offset, 286), r),
+                                MPoint(260 + offset, 312),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(226, 286), r),
-                                MPoint(226, 311),
+                                MRect.createPointR(MPoint(226 + offset, 286), r),
+                                MPoint(226 + offset, 311),
+                                this@CarDoing
+                            )
+                        )
+                        add(
+                            CarPosition(
+                                carps.size,
+                                MRect.createPointR(Config.point7p_qianche.apply {
+                                    x += offset
+                                }, r),
+                                MPoint(216 + offset, 236),
                                 this@CarDoing
                             )
                         )
@@ -317,61 +342,64 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(260, 425), r),
-                                MPoint(260, 448),
+                                MRect.createPointR(MPoint(260 + offset, 425), r),
+                                MPoint(260 + offset, 448),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(226, 425), r),
-                                MPoint(226, 449),
+                                MRect.createPointR(MPoint(226 + offset, 425), r),
+                                MPoint(226 + offset, 449),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(260, 355), r),
-                                MPoint(260, 377),
+                                MRect.createPointR(MPoint(260 + offset, 355), r),
+                                MPoint(260 + offset, 377),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(226, 355), r),
-                                MPoint(226, 378),
+                                MRect.createPointR(MPoint(226 + offset, 355), r),
+                                MPoint(226 + offset, 378),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(260, 286), r),
-                                MPoint(260, 312),
+                                MRect.createPointR(MPoint(260 + offset, 286), r),
+                                MPoint(260 + offset, 312),
                                 this@CarDoing
                             )
                         )
                         add(
                             CarPosition(
                                 carps.size,
-                                MRect.createPointR(MPoint(226, 286), r),
-                                MPoint(226, 313),
+                                MRect.createPointR(MPoint(226 + offset, 286), r),
+                                MPoint(226 + offset, 313),
+                                this@CarDoing
+                            )
+                        )
+                        add(
+                            CarPosition(
+                                carps.size,
+                                MRect.createPointR(Config.point7p_qianche.apply {
+                                    x += offset
+                                }, r),
+                                MPoint(216 + offset, 240),
                                 this@CarDoing
                             )
                         )
                     }
 
-                    add(
-                        CarPosition(
-                            carps.size,
-                            MRect.createPointR(Config.point7p_qianche, r),
-                            MPoint(216, 236),
-                            this@CarDoing
-                        )
-                    )
+
                 }
             }
         }

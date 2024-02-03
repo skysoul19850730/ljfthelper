@@ -53,7 +53,7 @@ fun BufferedImage.saveTo(file: File) {
         file.parentFile.mkdirs()
     }
     ImageIO.write(this, "png", file)
-    log(this)
+//    log(this)
 }
 fun doDebug(call:()->Unit){
     if(Config.debug){

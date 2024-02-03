@@ -22,6 +22,9 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
         val FLAG_KEYEVENT = 0x00000010
     }
 
+    //在InitHero里更改吧。这个就是天空的时候发现车有偏移，与合作和寒冰的车的坐标有出入，但大小没变，所以暂时只改偏移就行
+    var carPosOffset = 0
+
     lateinit var heros: ArrayList<HeroBean>
     lateinit var carDoing: CarDoing
     lateinit var otherCarDoing: CarDoing
@@ -97,6 +100,11 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
 
     var needCheckStar = false
     open suspend fun onGuangqiuPost() {
+        if(App.mLaunchModel and App.model_duizhan !=0){
+            carDoing.checkStars()
+            return
+        }
+
         var noFullCount = carDoing.carps.count {
             !(it.mHeroBean?.isFull() ?: true)
         }
@@ -120,12 +128,10 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
 
     }
 
-    var mOffset: Int = 0
     override fun init() {
         initHeroes()
         carDoing = CarDoing(chePosition).apply {
-            this.offset = mOffset
-            initPositions()
+            initPositions(carPosOffset)
             attchToMain()
         }
         if (flags and FLAG_GUANKA != 0) {
@@ -155,7 +161,7 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
             //我在右边
             chePosition = 1
             carDoing.chePosition = 1
-            carDoing.reInitPositions()
+            carDoing.reInitPositions(carPosOffset)
         }
         log("识别车位结果：$chePosition")
         CarDoing.cardClosePoint.click()
@@ -201,13 +207,15 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
 //                CarDoing.cardClosePoint.click()
 //            }
             if (needShuaxin) {
-                while (!Config.rect4ShuakaColor.hasWhiteColor()) {//有白色（钱够）再点击刷新
-                    delay(50)
-                }
+//                withTimeoutOrNull(2000) {//超时就点一下，这里没有问题
+                    while (!Config.rect4ShuakaColor.hasWhiteColor()) {//有白色（钱够）再点击刷新
+                        delay(50)
+                    }
+//                }
                 MRobot.singleClick(Config.zhandou_shuaxinPoint)
             }
-            delay(100)
-            hs = getPreHeros(if (needShuaxin) delayLong else 10000)
+            delay(200)
+            hs = getPreHeros(if (needShuaxin) 600 else 10000)//点完刷新如果1秒中识别不出来应该就是识别不出来了，这里不需要2秒
         }
         log("识别到英雄 ${hs?.getOrNull(0)?.heroName}  ${hs?.getOrNull(1)?.heroName}  ${hs?.getOrNull(2)?.heroName}")
         doDebug {
@@ -242,44 +250,59 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
             1 -> Config.zhandou_hero2CheckRect
             else -> Config.zhandou_hero3CheckRect
         }
-//        MRobot.singleClick(rect.clickPoint)//点击卡片 //这里点击卡片可能刚好点中end得确定按钮，导致检测不到结束
-        MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
-        delay(Config.delayNor)
-        //如果正在下卡，弹窗会挡住，识别不到英雄，就等于认为已经上卡了
-        while (carDoing.downing) {
-            delay(50)
-        }
-        var hs = doGetPreHeros()
-
-        if (hs == null) {//上车了(点击后再检验，目标区域不含英雄了）
-            carDoing.addHero(heroBean)
-            log("英雄上阵:${heroBean.heroName} 位置:${heroBean.position} 等级:${heroBean.currentLevel}")
-            afterHeroClick(heroBean)
-        } else {//上不去，没格子了(如何是换卡，在这之前已经下了卡了，下了卡就能上去，所以这里只会因为没有格子而上不去，所以点扩建再尝试上卡
-            logOnly("英雄未上阵")
-            if (Config.rect4KuojianColor.hasWhiteColor()) {
-                logOnly("尝试点击一次扩建")
+        if (heroBean.isInCar() || !heroBean.needCar || heroBean.isGongCheng || carDoing.hasOpenSpace()) {
+            //英雄在车上，或者此卡不需要车位,或者该卡是工程卡（暂时一套阵容不会有带两个工程），或者车上有空位
+            MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
+        } else {
+            //需要开格子
+            if (Config.rect4KuojianColor.hasWhiteColor()) {//可以开格子
+                log("点击扩建")
                 MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
-                delay(Config.delayNor)
-                doUpHero(heroBean, position, true)
+                delay(50)
+                MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
             } else {
                 var changeOne = changeHeroWhenNoSpace(heroBean)
-                if (changeOne != null) {
-                    logOnly("没钱扩建，替换英雄")
+                if (changeOne != null) {//钱不够扩建时，是否需要替换已在车上的卡
+                    log("没钱扩建，替换英雄")
                     carDoing.downHero(changeOne)
-                    delay(delayNor)
-                    doUpHero(heroBean, position)
-                } else {
-                    logOnly("再次尝试点击扩建")
+                    delay(50)
+                    MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
+                } else {//不替换就等钱够
                     while (!Config.rect4KuojianColor.hasWhiteColor()) {
                         delay(50)
                     }
+                    log("点击扩建")
                     MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
-                    delay(Config.delayNor)
-                    doUpHero(heroBean, position, true)
+                    delay(50)
+                    MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
                 }
             }
-//            if (!hasKuoJianClicked) {//有钱扩建就先不替换
+        }
+        carDoing.addHero(heroBean)
+        log("英雄上阵:${heroBean.heroName} 位置:${heroBean.position} 等级:${heroBean.currentLevel}")
+//        delay(100)//这里略微等待一下，否则点完上卡，立马点刷新可能还会识别到
+        delay(100)//这里略微等待一下，否则点完上卡，立马点刷新可能还会识别到,而且这里如果不延迟，可能点刷新太快了，几乎是点了上卡马上点刷新，可能没点上刷新（因为日志体现了好几组点完刷新后1秒超时无法识别的，大概率就是 点刷新没有效果）
+        //这里还有一组日志是 上了猫咪点刷新然后识别到了猫咪，其他两个都是null。推测：点了猫咪 去点刷新（没点出效果）所以没有立即触发刷新卡牌，点击猫咪 猫咪自己有个动画，其他两个就消失了，所以这个时候会再次识别到猫咪，导致310猫咪不满
+        //如果这里还有问题，就延迟加大一点，但50后点刷新不出问题应该就不会有问题了，因为以前刷不出需要的卡，然后去点刷新，也没有被残影破坏过识别，点了刷新还会延迟100毫秒才开始识别呢
+        afterHeroClick(heroBean)
+
+
+////        MRobot.singleClick(rect.clickPoint)//点击卡片 //这里点击卡片可能刚好点中end得确定按钮，导致检测不到结束
+//        MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
+//        delay(Config.delayNor)
+//        //如果正在下卡，弹窗会挡住，识别不到英雄，就等于认为已经上卡了
+//        while (carDoing.downing) {
+//            delay(50)
+//        }
+//        var hs = doGetPreHeros()
+//
+//        if (hs == null) {//上车了(点击后再检验，目标区域不含英雄了）
+//            carDoing.addHero(heroBean)
+//            log("英雄上阵:${heroBean.heroName} 位置:${heroBean.position} 等级:${heroBean.currentLevel}")
+//            afterHeroClick(heroBean)
+//        } else {//上不去，没格子了(如何是换卡，在这之前已经下了卡了，下了卡就能上去，所以这里只会因为没有格子而上不去，所以点扩建再尝试上卡
+//            logOnly("英雄未上阵")
+//            if (Config.rect4KuojianColor.hasWhiteColor()) {
 //                logOnly("尝试点击一次扩建")
 //                MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
 //                delay(Config.delayNor)
@@ -287,41 +310,63 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
 //            } else {
 //                var changeOne = changeHeroWhenNoSpace(heroBean)
 //                if (changeOne != null) {
-//                    logOnly("没钱扩建，试试要不要替换英雄")
+//                    logOnly("没钱扩建，替换英雄")
 //                    carDoing.downHero(changeOne)
 //                    delay(delayNor)
 //                    doUpHero(heroBean, position)
 //                } else {
 //                    logOnly("再次尝试点击扩建")
+//                    while (!Config.rect4KuojianColor.hasWhiteColor()) {
+//                        delay(50)
+//                    }
 //                    MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
 //                    delay(Config.delayNor)
 //                    doUpHero(heroBean, position, true)
 //                }
 //            }
-        }
+////            if (!hasKuoJianClicked) {//有钱扩建就先不替换
+////                logOnly("尝试点击一次扩建")
+////                MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
+////                delay(Config.delayNor)
+////                doUpHero(heroBean, position, true)
+////            } else {
+////                var changeOne = changeHeroWhenNoSpace(heroBean)
+////                if (changeOne != null) {
+////                    logOnly("没钱扩建，试试要不要替换英雄")
+////                    carDoing.downHero(changeOne)
+////                    delay(delayNor)
+////                    doUpHero(heroBean, position)
+////                } else {
+////                    logOnly("再次尝试点击扩建")
+////                    MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
+////                    delay(Config.delayNor)
+////                    doUpHero(heroBean, position, true)
+////                }
+////            }
+//        }
 
     }
 
-    private suspend fun doGetPreHeros() = suspendCancellableCoroutine<List<HeroBean?>?> {
-        GlobalScope.launch {
-            val hero1 =
-                async { getHeroAtRect(Config.zhandou_hero1CheckRect) }
-
-            val hero2 =
-                async { getHeroAtRect(Config.zhandou_hero2CheckRect) }
-            val hero3 =
-                async { getHeroAtRect(Config.zhandou_hero3CheckRect) }
-
-            val h1 = hero1.await()
-            val h2 = hero2.await()
-            val h3 = hero3.await()
-            if (h1 == null && h2 == null && h3 == null) {
-                it.resume(null)
-            } else {
-                it.resume(arrayListOf(h1, h2, h3))
-            }
-        }
-    }
+//    private suspend fun doGetPreHeros() = suspendCancellableCoroutine<List<HeroBean?>?> {
+//        GlobalScope.launch {
+//            val hero1 =
+//                async { getHeroAtRect(Config.zhandou_hero1CheckRect) }
+//
+//            val hero2 =
+//                async { getHeroAtRect(Config.zhandou_hero2CheckRect) }
+//            val hero3 =
+//                async { getHeroAtRect(Config.zhandou_hero3CheckRect) }
+//
+//            val h1 = hero1.await()
+//            val h2 = hero2.await()
+//            val h3 = hero3.await()
+//            if (h1 == null && h2 == null && h3 == null) {
+//                it.resume(null)
+//            } else {
+//                it.resume(arrayListOf(h1, h2, h3))
+//            }
+//        }
+//    }
 
     open suspend fun getPreHeros(timeout: Long = 2300) = suspendCancellableCoroutine<List<HeroBean?>?> {
         val startTime = System.currentTimeMillis()
@@ -360,9 +405,9 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
 //                        if(h2!=null)i++
 //                        if(h3!=null)i++
 //                        if(i>=2)break
-                        if (h1 == null || h2 == null || h3 == null) {//省去最后的100ms
-                            delay(100)
-                        }
+//                        if (h1 == null || h2 == null || h3 == null) {//省去最后的100ms
+//                            delay(50)
+//                        }
                     }
                     logOnly("getPreHeros cost time:${System.currentTimeMillis() - startTime}")
                     it.resume(arrayListOf(h1, h2, h3))
@@ -377,7 +422,7 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
         }
     }
 
-    suspend fun getHeroAtRect(rect: MRect) = suspendCancellableCoroutine<HeroBean?> {
+    open suspend fun getHeroAtRect(rect: MRect) = suspendCancellableCoroutine<HeroBean?> {
         val img = getImage(rect)
         val hero = heros.firstOrNull {
 //            ImgUtil.isImageSim(img, it.img)

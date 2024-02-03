@@ -17,6 +17,10 @@ class MPoint {
 
     var mColorCaiji: Color? = null
 
+    override fun toString(): String {
+        return "point:${super.toString()}  x is $x ,y is $y"
+    }
+
     constructor(x: Int, y: Int) {
         this.x = x
         this.y = y
@@ -31,10 +35,11 @@ class MPoint {
     constructor()
 
     suspend fun click(window: WinDef.HWND? = App.tfWindow) {
-        MRobot.singleClick(this,window)
+        MRobot.singleClick(this, window)
     }
-    suspend fun clickPc(window: WinDef.HWND? = App.tfWindow){
-        MRobot.singleClickPc(this,window)
+
+    suspend fun clickPc(window: WinDef.HWND? = App.tfWindow) {
+        MRobot.singleClickPc(this, window)
     }
 
     fun isFit(window: WinDef.HWND? = App.tfWindow): Boolean {

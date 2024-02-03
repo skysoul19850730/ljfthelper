@@ -19,7 +19,7 @@ object Config {
     val platform_qq = 2
 
 
-    var isHome4Setting = mutableStateOf(true)
+    var isHome4Setting = mutableStateOf(false)
     var platform = mutableStateOf(platform_wx)
     val platName: String
         get() = if (isHome) "moniqi" else "xiaochengxu"
@@ -122,10 +122,11 @@ object Config {
 
     val hbMSCloud = MPoint(610, 180, Color(238, 234, 125))
     val hbFSCloud = MPoint(610, 180, Color(150, 156, 204))
+    val hbSSCloud = MPoint(610, 180, Color(81, 81, 81))
 
 
     val rect4ShuakaColor = MRect.createWH(693, 574, 20, 15)
-    val rect4KuojianColor = MRect.createWH(288, 574, 35, 15)
+    val rect4KuojianColor = MRect.createWH(288, 574, 25, 15)
 
     val pointHeroChoose = MPoint(940, 320)
     val pointHeroChooseBack = MPoint(42, 83)
@@ -134,5 +135,20 @@ object Config {
     val pointDuiZhanRenshu = MPoint(43,161)
     val pointDuiZhanRenshuOk = MPoint(620, 450)
 
+    //600 270 200 130
+    val colorLeishenLanqiu = Color(255,255,255)
+    val colorLeishenHongqiu = Color(255,45,85)
+//    val rectCheckOfLeishen = MRect.createWH(700,270,50,25)
+    val rectCheckOfLeishen = MRect.createWH(666,273,120,120)
+    val count4SureLeishen = 30
 
+    val leishenqiuXueTiao = Color(211,71,71)
+    val leishenqiuXueTiao2 = Color(225,150,130)
+    val leishenqiuXueTiaoRect = MRect.createWH(730,244,70,10)
+
+
+    val xiongmaoFS = Color(186,71,231)
+    val xiongmaoGJ = Color(10,180,100)
+    val xiongmaoZS = Color(225,110,48)
+    val xiongmaoQiuRect = MRect.createWH(700,300,50,50)
 }
