@@ -24,6 +24,18 @@ data class CarPosition(
     var starPoint: MPoint,
     val carDoing: CarDoing
 ) {
+    init {
+        mRect.apply {
+            left += carDoing.offset
+            log("position:$mPos left is ${left}")
+            right += carDoing.offset
+        }
+        starPoint.apply {
+
+            x += carDoing.offset
+        }
+        mRect.freshClickPoint()
+    }
 
     override fun equals(other: Any?): Boolean {
         return this === other
@@ -33,8 +45,14 @@ data class CarPosition(
         mRect: MRect,
         starPoint: MPoint
     ) {
-        this.mRect = mRect
-        this.starPoint = starPoint
+        this.mRect = mRect.apply {
+            left += carDoing.offset
+            right += carDoing.offset
+        }
+        this.starPoint = starPoint.apply {
+            x += carDoing.offset
+        }
+        this.mRect.freshClickPoint()
     }
 
     companion object {

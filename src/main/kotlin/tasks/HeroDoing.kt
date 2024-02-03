@@ -120,9 +120,11 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
 
     }
 
+    var mOffset: Int = 0
     override fun init() {
         initHeroes()
         carDoing = CarDoing(chePosition).apply {
+            this.offset = mOffset
             initPositions()
             attchToMain()
         }

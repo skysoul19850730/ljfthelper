@@ -38,6 +38,13 @@ class MRect {
 //      return  (ge.defaultScreenDevice.defaultConfiguration.device as Win32GraphicsDevice).defaultScaleX
 //    }
 
+    fun freshClickPoint(){
+        clickPoint.apply {
+            x = (right + left) / 2
+            y = (bottom + top) / 2
+        }
+    }
+
     fun hasWhiteColor():Boolean{
         var img = getImage(this)
         forEach { i, i2 ->

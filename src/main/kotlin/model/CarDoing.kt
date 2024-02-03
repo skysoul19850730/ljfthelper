@@ -14,6 +14,7 @@ class CarDoing(var chePosition: Int = -1, var cheType: Int = CheType_YangChe) {
 
 
     var carps = arrayListOf<CarPosition>()
+    var offset:Int = 0
 
     companion object {
 

@@ -73,7 +73,7 @@ class DaMoHeroDoing(val type: Int) : HeroDoing() {
                             h3 = hero3?.await()
                         }
                         if (h1 != moqiu && h2 != moqiu && h3 != moqiu) {//省去最后的100ms
-                            delay(100)
+                            delay(50)
                         }
                     }
                     log("getPreHeros cost time:${System.currentTimeMillis() - startTime}")

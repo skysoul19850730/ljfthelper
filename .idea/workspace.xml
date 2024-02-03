@@ -5,11 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eb7aa5ff-a60c-44e7-9b56-eaa9b9270de9" name="Changes" comment="同步">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/huodong/EasyHeroDoing.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/moniqi/heros/niutou/niutou8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xiaochengxu/heros/niutou/niutou8.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/Config.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/Config.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/data/MRect.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/data/MRect.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/hanbing/BaseHBHeroDoing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/hanbing/BaseHBHeroDoing.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/model/CarDoing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/model/CarDoing.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/model/CarPosition.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/model/CarPosition.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/HeroDoing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/HeroDoing.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/gameUtils/DaMoHeroDoing.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/gameUtils/DaMoHeroDoing.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/gameUtils/GameUtil.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/gameUtils/GameUtil.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/hanbing/zhanjiang/HBZhanNvHeroDoing2.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/hanbing/zhanjiang/HBZhanNvHeroDoing2.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tasks/huodong/HuodongUtil.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tasks/huodong/HuodongUtil.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/tesshelper/Tess.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/tesshelper/Tess.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tfres/hero/1704461742588f1/1704461742611_1.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,32 +75,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build demo1.executor": "Run",
-    "Kotlin.MainKt (1).executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/85963/IdeaProjects/demo1/src/main/kotlin/data",
-    "project.structure.last.edited": "SDKs",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.41724136",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build demo1.executor&quot;: &quot;Run&quot;,
+    &quot;Kotlin.MainKt (1).executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/85963/IdeaProjects/demo1/src/main/resources&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.41724136&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\85963\IdeaProjects\demo1\src\main\resources" />
+      <recent name="C:\Users\85963\IdeaProjects\demo1\src\main\resources\moniqi\heros" />
+      <recent name="C:\Users\85963\IdeaProjects\demo1\src\main\resources\xiaochengxu\heros" />
       <recent name="C:\Users\85963\IdeaProjects\demo1\src\main\kotlin\data" />
       <recent name="C:\Users\85963\IdeaProjects\demo1\src\main" />
-      <recent name="C:\Users\85963\IdeaProjects\demo1\src\main\resources\moniqi\heros\sishen" />
-      <recent name="C:\Users\85963\IdeaProjects\demo1" />
-      <recent name="C:\Users\85963\IdeaProjects\demo1\src\jvmMain" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\85963\IdeaProjects\demo1\src\jvmMain\resources\moniqi\boss" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="tasks.huodong" />
       <recent name="tasks.hanbing.zhanjiang" />
     </key>
   </component>
@@ -157,10 +184,57 @@
     <option name="localTasksCounter" value="5" />
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first" />
     <MESSAGE value="同步" />
     <option name="LAST_COMMIT_MESSAGE" value="同步" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/tasks/HeroDoing.kt</url>
+          <line>128</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/model/CarPosition.kt</url>
+          <line>28</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/tasks/HeroDoing.kt</url>
+          <line>127</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/model/CarDoing.kt</url>
+          <line>134</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/model/CarPosition.kt</url>
+          <line>34</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/model/CarPosition.kt</url>
+          <line>52</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

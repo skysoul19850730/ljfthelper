@@ -46,6 +46,7 @@ import kotlinx.coroutines.launch
 import model.CarDoing
 import model.CarPosition
 import tasks.*
+import tasks.gameUtils.GameUtil
 import tasks.hanbing.zhanjiang.HBZhanNvHeroDoing
 import tasks.hezuo.zhannvsha.ZhanNvGameLaunch
 import utils.LogUtil
@@ -105,14 +106,14 @@ fun App() {
 //                    HSpace(6)
 //                    MRadioBUtton("QQ", Config.platform_qq, Config.platform)
 
-//                    button((if (GameUtil.ShuaMoValue.value) "停魔" else "开魔")) {
-//                        GameUtil.ShuaMoValue.value = !GameUtil.ShuaMoValue.value
-//                        if (GameUtil.ShuaMoValue.value) {
-//                            GameUtil.startShuaMo()
-//                        } else {
-//                            GameUtil.stopShuaMo()
-//                        }
-//                    }
+                    button((if (GameUtil.ShuaMoValue.value) "停魔" else "开魔")) {
+                        GameUtil.ShuaMoValue.value = !GameUtil.ShuaMoValue.value
+                        if (GameUtil.ShuaMoValue.value) {
+                            GameUtil.startShuaMo(1)
+                        } else {
+                            GameUtil.stopShuaMo()
+                        }
+                    }
 //                    button((if (ChuanZhangTest.chuanZhangObeserver.value) "监听中" else "开启")) {
 //                        if (ChuanZhangTest.chuanZhangObeserver.value) {
 //                            ChuanZhangTest.chuanZhangObeserver.value = false
@@ -999,9 +1000,12 @@ private fun testChuanZhang(){
     hd.start()
     hd.startChuanZhangOberserver()
 }
-
+private fun testZhuangbei(){
+    Zhuangbei.getZhuangBei()
+}
 fun test() {
-    autoMoveMouse()
+    testZhuangbei()
+//    autoMoveMouse()
 //testChuanZhang()
 
 //testHerosUI()

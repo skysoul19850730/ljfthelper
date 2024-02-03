@@ -10,7 +10,7 @@ object HuodongUtil {
     fun start(model:Int) {
         state.value = true
         shuamoHeroDoing?.stop()
-        shuamoHeroDoing =if(model==1) HuodongHeroDoing() else HuodongHeroDoing2()
+        shuamoHeroDoing =if(model==1) HuodongHeroDoing() else EasyHeroDoing()
         shuamoHeroDoing?.init()
         shuamoHeroDoing?.start()
     }

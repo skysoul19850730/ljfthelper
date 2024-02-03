@@ -76,15 +76,19 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
 
     override fun doOnGuanChanged(guan: Int) {
 
-        if (guan > 149) {
-            App.startAutoSave()
+        if (guan == 150) {
+            App.stopAutoSave()
+            return
         }
 
         if (guan == 149) {
             App.startAutoSave()
+            guanka = Guan.g139
+            waiting = false
+            return
         }
 
-        if (guan > 140 && guanka != Guan.g140) {
+        if (guan == 141) {
             guanka = Guan.g140
             waiting = false
             return
@@ -95,54 +99,54 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
 //
 //            return
 //        }
-        if (guan == 139 && guanka != Guan.g139) {
+        if (guan == 139) {
 //            App.startAutoSave()
             guanka = Guan.g139
             waiting = false
             return
         }
 
-        if (guan > 129 && guanka != Guan.g131) {
+        if (guan == 130) {
             chuanZhangObeserver = false
             guanka = Guan.g131
             waiting = false
             return
         }
 
-        if (guan in 128..129 && guanka == Guan.g110) {
+        if (guan == 129) {
             startChuanZhangOberserver()
             return
         }
-        if (guan > 109 && guanka == Guan.g108) {
+        if (guan == 110) {
             guanka = Guan.g110
             waiting = false
             return
         }
 
-        if (guan in 108..109 && guanka == Guan.g101) {
+        if (guan == 109) {
             guanka = Guan.g108
             waiting = false
             return
         }
 
-        if (guan > 99 && guanka == Guan.g41) {
+        if (guan == 100) {
             longwangObserver = false
             guanka = Guan.g101
             waiting = false
             return
         }
-        if (guan in 98..99) {
+        if (guan == 98) {
             startLongWangOberserver()
             return
         }
 
-        if (guan >= 38 && guanka == Guan.g26) {
+        if (guan == 38) {
             guanka = Guan.g41
             waiting = false
             return
         }
 
-        if (guan > 25 && guanka == Guan.g1) {
+        if (guan == 21) {
             guanka = Guan.g26
             waiting = false
             return
@@ -150,7 +154,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
     }
 
     override fun onHeroPointByChuanzhang(hero: HeroBean): Boolean {
-        return hero!=zhanjiang
+        return hero != zhanjiang
     }
 
     override suspend fun onLongwangPoint(point: MPoint, downed: (Boolean) -> Unit) {
@@ -174,7 +178,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
     fun isGkOver(g: Guan): Boolean {
 
         if (g == Guan.g139) return false
-        if (g == Guan.g140) return Zhuangbei.isYandou()&&saman.isInCar()
+        if (g == Guan.g140) return Zhuangbei.isYandou() && saman.isInCar()
         if (g == Guan.g1) return zhanjiang.isFull() && jiaonv.isFull() && sishen.isFull() && saman.isFull() && Zhuangbei.isLongxin()
 
         var heroOk = zhanjiang.isFull() && jiaonv.isFull() && sishen.isFull()
@@ -277,7 +281,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
     var recheckStarFor110 = false
 
     override suspend fun dealHero(heros: List<HeroBean?>): Int {
-
+        log("cur guanka ${guanka.name}")
         while (waiting) {
             delay(100)
         }
@@ -447,7 +451,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
 
 
             //防止船长点完卡没补满
-            var fullList = arrayListOf(zhanjiang, shahuang, jiaonv, sishen,saman)
+            var fullList = arrayListOf(zhanjiang, shahuang, jiaonv, sishen, saman)
             if (baoku.heroName == "baoku") {
                 fullList.add(baoku)
             }
@@ -487,7 +491,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
                 return index
             }
 
-             index = heros.indexOf(huanqiu)
+            index = heros.indexOf(huanqiu)
             if (index > -1 && !Zhuangbei.isYandou() && Zhuangbei.hasZhuangbei()) {//小翼 烟斗
                 return index
             }
