@@ -215,7 +215,7 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
                 MRobot.singleClick(Config.zhandou_shuaxinPoint)
             }
             delay(200)
-            hs = getPreHeros(if (needShuaxin) 600 else 10000)//点完刷新如果1秒中识别不出来应该就是识别不出来了，这里不需要2秒
+            hs = getPreHeros(if (needShuaxin) 1000 else 10000)//点完刷新如果1秒中识别不出来应该就是识别不出来了，这里不需要2秒
         }
         log("识别到英雄 ${hs?.getOrNull(0)?.heroName}  ${hs?.getOrNull(1)?.heroName}  ${hs?.getOrNull(2)?.heroName}")
         doDebug {
@@ -405,9 +405,9 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
 //                        if(h2!=null)i++
 //                        if(h3!=null)i++
 //                        if(i>=2)break
-//                        if (h1 == null || h2 == null || h3 == null) {//省去最后的100ms
-//                            delay(50)
-//                        }
+                        if (h1 == null || h2 == null || h3 == null) {//省去最后的100ms
+                            delay(50)
+                        }
                     }
                     logOnly("getPreHeros cost time:${System.currentTimeMillis() - startTime}")
                     it.resume(arrayListOf(h1, h2, h3))
