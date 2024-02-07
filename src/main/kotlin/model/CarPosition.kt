@@ -80,19 +80,31 @@ data class CarPosition(
         if (mHeroBean != null) {
             withContext(Dispatchers.Main) {
                 logOnly("车位:$mPos 下卡开始 ${mHeroBean?.heroName}")
-                var heroDialogShow = false
-                while(!heroDialogShow) {
-                    click()
-                   heroDialogShow = withTimeoutOrNull(1000) {
-                        while (!Recognize.saleRect.isFit()) {//下卡时 被结束的弹窗挡住，这里一直不fit（挡住了就检测不到出售按钮）。然后也不会执行 结束的按钮点击。所以这里加个超时
-                            delay(10)//妈的，这里不加delay就检测不会timeout，fuck
-                        }
-                       true
-                    }?:false
+                var start = System.currentTimeMillis()
+                var cardShow = false
+                withTimeoutOrNull(2000) {
+                    while (!cardShow) {
+                        click()
+                        cardShow = withTimeoutOrNull(500) {
+                            while (!Recognize.saleRect.isFit()) {//下卡时 被结束的弹窗挡住，这里一直不fit（挡住了就检测不到出售按钮）。然后也不会执行 结束的按钮点击。所以这里加个超时
+                                delay(10)//妈的，这里不加delay就检测不会timeout，fuck
+                            }
+                            true
+                        } ?: false
+                    }
                 }
 
-                MRobot.singleClick(salePoint)
-                log("下卡完成：${mHeroBean?.heroName} position:${mHeroBean?.position}")
+                var cardMiss = false
+                while (!cardMiss) {
+                    MRobot.singleClick(salePoint)
+                    cardMiss = withTimeoutOrNull(500){
+                        while (Recognize.saleRect.isFit()) {//下卡时 被结束的弹窗挡住，这里一直不fit（挡住了就检测不到出售按钮）。然后也不会执行 结束的按钮点击。所以这里加个超时
+                            delay(10)//妈的，这里不加delay就检测不会timeout，fuck
+                        }
+                        true
+                    } ?: false
+                }
+                log("下卡完成：${mHeroBean?.heroName} position:${mHeroBean?.position} coast:${System.currentTimeMillis() - start}")
                 mHeroBean?.reset()
                 mHeroBean = null
             }

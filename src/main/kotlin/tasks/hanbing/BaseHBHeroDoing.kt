@@ -6,6 +6,7 @@ import data.MPoint
 import data.MRect
 import getImage
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import log
@@ -52,7 +53,7 @@ abstract class BaseHBHeroDoing() : HeroDoing(0, FLAG_GUANKA or FLAG_KEYEVENT) {
                         waiting = true
                     }
                     longWangDownLoadPositionFromKey = -1
-                    while (waiting){
+                    while (waiting) {
                         delay(100)
                     }
 //                    waiting = false
@@ -62,14 +63,14 @@ abstract class BaseHBHeroDoing() : HeroDoing(0, FLAG_GUANKA or FLAG_KEYEVENT) {
 
                     if (Config.hbFSCloud.isFit()) {
                         onLongwangPoint(Config.hbFSCloud) {
-                            if(it) {//只需要处理true。默认Needdown是false，waiting默认打龙王也是true得（如果之前是false，比如点了次名没上满，又点，那赋值还是false，所以只处理true）。如果返回false，waiting变false没有意义
+                            if (it) {//只需要处理true。默认Needdown是false，waiting默认打龙王也是true得（如果之前是false，比如点了次名没上满，又点，那赋值还是false，所以只处理true）。如果返回false，waiting变false没有意义
                                 waiting = it
                                 needDown = it
                             }
                         }
                     } else if (Config.hbMSCloud.isFit()) {
                         onLongwangPoint(Config.hbMSCloud) {
-                            if(it) {
+                            if (it) {
                                 waiting = it
                                 needDown = it
                             }
@@ -131,39 +132,17 @@ abstract class BaseHBHeroDoing() : HeroDoing(0, FLAG_GUANKA or FLAG_KEYEVENT) {
     var time1 = 0L
     var time2 = 0L
     var time3 = 0L
+    var mChuanZhangJob:Job?=null
+    fun stopChuanZhangOberserver(){
+        chuanZhangObeserver= false
+        mChuanZhangJob?.cancel()
+        mChuanZhangJob = null
+    }
     fun startChuanZhangOberserver() {
         if (chuanZhangObeserver) return
         chuanZhangObeserver = true
 
-//        GlobalScope.launch {
-//            var shibiedao = false
-//            var firstttt = 0L
-//            while (chuanZhangObeserver){
-//                var img = getImage(MRect.createWH(4,100,300,370))
-//                var count =0
-//                img.foreach { i, i2 ->
-//                    if(img.getRGB(i,i2) == Config.Color_ChuangZhang.rgb){
-//                        count++
-//                    }
-//                    false
-//                }
-//                if(count>0) {
-//                    if(!shibiedao) {//首次识别到
-//                        firstttt = System.currentTimeMillis()
-//                        shibiedao = true
-//                        img.log("数量：$count   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx船长识别到关键颜色 ")
-//                    }
-//                }else{
-//                    if(shibiedao) {//首次识别到   到  识别不到.可以代表本次的持续时间,排查有没有特殊的和船长颜色一样的颜色被错误识别成，以便后续逻辑优化
-//                        shibiedao = false
-//                        img.logOnly("本次未识别到船长颜色 持续时间 ${System.currentTimeMillis() - firstttt}")
-//                        firstttt = 0L
-//                    }
-//                }
-//            }
-//        }
-
-        GlobalScope.launch {
+        mChuanZhangJob = GlobalScope.launch {
             while (chuanZhangObeserver) {
                 //4 100 300 370
 
@@ -244,15 +223,19 @@ abstract class BaseHBHeroDoing() : HeroDoing(0, FLAG_GUANKA or FLAG_KEYEVENT) {
             }
         }
     }
-    open fun onLeiShenSixBallOver(){
+
+    open fun onLeiShenSixBallOver() {
 
     }
-    open fun onLeiShenRedBallShow(){
+
+    open fun onLeiShenRedBallShow() {
 
     }
-    open fun onLeiShenBlueBallShow(){
+
+    open fun onLeiShenBlueBallShow() {
 
     }
+
     var leishenOberser = false
     fun startLeishenOberserver() {
         if (leishenOberser) return
@@ -309,13 +292,15 @@ abstract class BaseHBHeroDoing() : HeroDoing(0, FLAG_GUANKA or FLAG_KEYEVENT) {
             }
         }
     }
-    open fun onXiongMaoQiuGot(qiu:String){
+
+    open fun onXiongMaoQiuGot(qiu: String) {
         log("熊猫识别到球：$qiu")
         hasQiu = true
     }
+
     var xiongmaoOberserver = false
     var hasQiu = false
-    fun startXiongMaoOberser(){
+    fun startXiongMaoOberser() {
         if (xiongmaoOberserver) return
         xiongmaoOberserver = true
         var leishenStart = System.currentTimeMillis()
@@ -328,15 +313,27 @@ abstract class BaseHBHeroDoing() : HeroDoing(0, FLAG_GUANKA or FLAG_KEYEVENT) {
                 hasQiu = false
                 if (Config.xiongmaoQiuRect.hasColorCount(
                         Config.xiongmaoFS, testImg = img
-                    ) > 50){
+                    ) > 50
+                ) {
                     onXiongMaoQiuGot("fs")
-                }else  if (Config.xiongmaoQiuRect.hasColorCount(
+                } else if (Config.xiongmaoQiuRect.hasColorCount(
                         Config.xiongmaoGJ, testImg = img
-                    ) > 50){
+                    ) > 50
+                ) {
                     onXiongMaoQiuGot("gj")
+                } else if (Config.xiongmaoQiuRect.hasColorCount(
+                        Config.xiongmaoZS, testImg = img
+                    ) > 50
+                ) {
+                    onXiongMaoQiuGot("zs")
+                } else if (Config.xiongmaoQiuRect.hasColorCount(
+                        Config.xiongmaoSS, testImg = img
+                    ) > 50
+                ) {
+                    onXiongMaoQiuGot("ss")
                 }
 
-                if(hasQiu){//识别到一个球后，延迟5秒再识别，节省
+                if (hasQiu) {//识别到一个球后，延迟5秒再识别，节省
                     delay(5000)
                 }
             }

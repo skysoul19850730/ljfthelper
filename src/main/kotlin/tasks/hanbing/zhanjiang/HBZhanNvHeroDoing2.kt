@@ -11,6 +11,18 @@ import java.awt.event.KeyEvent.*
 class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用左边第一个position得点击，去识别车位置后再更改
 //es8  es4 ye5   6e0 y80  y50 y56 e04
 
+    val zhanjiang = HeroBean("zhanjiang", 100)
+    val nvwang = HeroBean("nvwang", 90)
+    val saman = HeroBean("saman2", 80)
+    val jiaonv = HeroBean("jiaonv", 70)
+    val shahuang = HeroBean("shahuang", 60, compareRate = 0.9)
+    val sishen = HeroBean("sishen", 50)
+    val muqiu = HeroBean("muqiu", 40, needCar = false, compareRate = 0.95)
+    val baoku = HeroBean("longwang", 30, needCar = true, isGongCheng = true, compareRate = 0.9)
+    val huanqiu = HeroBean("huanqiu", 20, needCar = false, compareRate = 0.95)
+    val guangqiu = HeroBean("guangqiu", 0, needCar = false)
+
+
     enum class Guan {
         /**
          * 1-25g zhanjiang jiaonv xiaoye saman 装备龙心
@@ -68,16 +80,6 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
 
     var guanka = Guan.g1
 
-    val zhanjiang = HeroBean("zhanjiang", 100)
-    val nvwang = HeroBean("nvwang", 90)
-    val saman = HeroBean("saman2", 80)
-    val jiaonv = HeroBean("jiaonv", 70)
-    val shahuang = HeroBean("shahuang", 60, compareRate = 0.9)
-    val sishen = HeroBean("sishen", 50)
-    val muqiu = HeroBean("muqiu", 40, needCar = false, compareRate = 0.95)
-    val baoku = HeroBean("baoku", 30, needCar = true, isGongCheng = true, compareRate = 0.9)
-    val huanqiu = HeroBean("huanqiu", 20, needCar = false, compareRate = 0.95)
-    val guangqiu = HeroBean("guangqiu", 0, needCar = false)
 
 
     var needZhuangbei = Zhuangbei.YANDOU//目前熊猫用，打完雷神时是烟斗，默认值用烟斗
@@ -98,6 +100,8 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
             needZhuangbei = Zhuangbei.YANDOU
         } else if (qiu == "gj") {
             needZhuangbei = Zhuangbei.QIANGXI
+        }else if (qiu == "zs" || qiu =="ss") {//展示术士都用龙心
+            needZhuangbei = Zhuangbei.LONGXIN
         }
         waiting = false
     }
@@ -108,12 +112,16 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
             guanka = Guan.g159
             startXiongMaoOberser()
             App.startAutoSave()
+            waiting = false
             return
         }
 
-        if (guan == 150) {
+        if (guan == 151) {
 //            App.stopAutoSave()
             leishenOberser = false
+            guanka = Guan.g159
+            needZhuangbei = Zhuangbei.LONGXIN
+            waiting = true
             return
         }
 
@@ -145,8 +153,8 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
 //        }
 
         if (guan == 131 || guan == 130) {
+            stopChuanZhangOberserver()
             beimu = false
-            chuanZhangObeserver = false
             guanka = Guan.g131
             waiting = false
             return
@@ -304,6 +312,9 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
 
 
     override suspend fun doAfterHeroBeforeWaiting(heroBean: HeroBean) {
+        if(heroBean.heroName == "muqiu"){
+            return
+        }
         if (!waiting && isGkOver(guanka)) {
             if (guanka == Guan.g110 && beimu) {//如果beimu时，不waiting，去dealhero里去卡住
                 waiting = false
@@ -320,10 +331,13 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
     var recheckStarFor110 = false
 
     override suspend fun dealHero(heros: List<HeroBean?>): Int {
-
         while (waiting) {
             delay(100)
         }
+//        if(!waiting&&isGkOver(guanka)){
+//            waiting = true
+//        }
+
 
         if (guanka == Guan.g1) {//第一阶段
             if (!zhanjiang.isFull()) {//直上战将

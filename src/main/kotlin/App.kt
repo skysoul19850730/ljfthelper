@@ -14,10 +14,13 @@ import tasks.hanbing.zhanjiang.HBZhanNvGameLaunch
 import tasks.hezuo.zhannvsha.ZhanNvGameLaunch
 import tasks.hezuo.zhannvsha.ZhanNvHeroDoing
 import tesshelper.Tess
+import utils.ImgUtil
 import utils.MRobot
 import utils.Window
 import java.awt.event.KeyEvent.*
+import java.awt.image.BufferedImage
 import java.io.File
+import javax.imageio.ImageIO
 
 object App {
     var reCheckStar = false
@@ -80,6 +83,62 @@ object App {
         findTfAndMoveTo00()
 //        thisWindow = Window.findWindowWithName("塔防助手")
         addKeyListener()
+    }
+
+    fun restartGame(){
+        GlobalScope.launch {
+            pointClose.click()
+            delay(1000)
+            autoStartGame()
+        }
+    }
+
+    var faceList = arrayListOf<BufferedImage>()
+    fun caijiBiaoqing(){
+        faceList.clear()
+        GlobalScope.launch {
+            while(true) {
+                var img = getImage(Config.rectOfCryFace)
+                if (!isImgExist(img)) {
+                    faceList.add(img)
+                    ImageIO.write(img, "png", File(caijiPath, "${System.currentTimeMillis()}_${faceList.size}.png"))
+                }
+            }
+        }
+    }
+    private fun isImgExist(img: BufferedImage): Boolean {
+        faceList.forEach {
+            if (ImgUtil.isImageSim(img, it)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    fun autoStartGame() {
+        GlobalScope.launch {
+            if(mLaunchModel and model_hezuo !=0  || mLaunchModel and model_hanbing !=0){
+                //如果是合作模式，等10s，给对方退出的机会
+                delay(10000)
+            }
+            Config.pointOfLApp.click(null)
+            delay(50)
+            Config.pointOfLApp.click(null)
+
+            delay(1000)
+            init()
+            withTimeoutOrNull(5000) {
+                while (!ImgUtil.isImageInRect("appstart.png", Config.rectOfStartApp)) {
+                    delay(500)
+                }
+            }
+//            delay(5000)
+
+            Config.rectOfStartApp.clickPoint.clickPc()
+
+            delay(5000)
+            start()
+        }
     }
 
     private fun doSomeTest() {
@@ -385,7 +444,7 @@ object App {
         GlobalScope.launch {
             MRobot.singleClickPc(pointClose)
             if (timeOver) {
-                delay(3000)
+                delay(4000)
             }
             closeCallBack?.invoke()
         }
@@ -434,7 +493,7 @@ object App {
 
     fun checkTimer(): Boolean {
         //如果不足18分钟，且不在合作中,就结束
-        if (leftTime < 19 * 60 && leftTime>0 && gameLaunch is ZhanNvGameLaunch && !(gameLaunch as ZhanNvGameLaunch).isHezuoIng) {
+        if (leftTime < 19 * 60 && leftTime > 0 && gameLaunch is ZhanNvGameLaunch && !(gameLaunch as ZhanNvGameLaunch).isHezuoIng) {
             return false
         }
         return true
@@ -444,6 +503,7 @@ object App {
         if (!Config.isHome) {
             log("sleeppc")
             GlobalScope.launch {
+                delay(200)
                 MRobot.singleClickPc(MPoint(10, 1055), null)
                 MRobot.robot.delay(1000)
                 MRobot.singleClickPc(MPoint(10, 1022), null)

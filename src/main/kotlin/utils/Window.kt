@@ -3,6 +3,7 @@ package utils
 import com.sun.jna.Pointer
 import com.sun.jna.platform.win32.User32
 import com.sun.jna.platform.win32.WinDef
+import com.sun.jna.platform.win32.WinDef.POINT
 import com.sun.jna.platform.win32.WinUser
 import log
 import java.lang.Exception
@@ -10,15 +11,20 @@ import java.lang.Exception
 object Window {
 
 
-    fun getCursorPos(): Long? {
-        val pos = longArrayOf(1)
-//        User321.instance.GetCursorPos(pos)
-        return pos.firstOrNull()
+    fun getCursorPos(): POINT? {
+        val pos = POINT()
+        var p = User321.instance.GetCursorPos(pos)
+        if(p){
+            return pos
+        }
+        return null
+//        return pos.firstOrNull()
     }
 
     fun getWindowAtCursor(ip: Long): WinDef.HWND? {
-//        return User321.instance.WindowFromPoint(ip)
-        return null
+        return  User32.INSTANCE.GetForegroundWindow()
+//        return User32.INSTANCE.WindowFromPoint(ip)
+//        return null
     }
 
     fun getWindowText(win: WinDef.HWND): String {
@@ -40,7 +46,7 @@ object Window {
         User32.INSTANCE.EnumChildWindows(wp, object : WinUser.WNDENUMPROC {
             override fun callback(p0: WinDef.HWND, p1: Pointer?): Boolean {
                 val length = User32.INSTANCE.GetWindowTextLength(p0)
-                if (length == name.length) {
+//                if (length == name.length) {
                     var text = CharArray(length+10)
                     val max = length + 11
                     log("检测到 length $length")
@@ -51,7 +57,7 @@ object Window {
                         tfWp = p0
                         return false
                     }
-                }
+//                }
                 return true
             }
 

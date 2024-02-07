@@ -59,11 +59,12 @@ class DaMoHeroDoing(val type: Int) : HeroDoing() {
             else -> Config.zhandou_hero3CheckRect
         }
         MRobot.singleClick(rect.clickPoint)//点击卡片
+        MRobot.singleClick(rect.clickPoint)//点击卡片,多点下，防止点不到，就不验证是否上成功了
         count++
     }
 
     override suspend fun shuaka(needShuaxin: Boolean): List<HeroBean?> {
-        var hs: List<HeroBean?>? = getPreHeros(if (needShuaxin) Config.delayLong else Long.MAX_VALUE)
+        var hs: List<HeroBean?>? = null
         while (hs == null && running) {
             log("未识别到英雄")
             MRobot.singleClick(Config.zhandou_shuaxinPoint)

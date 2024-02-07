@@ -19,7 +19,7 @@ object Config {
     val platform_qq = 2
 
 
-    var isHome4Setting = mutableStateOf(true)
+    var isHome4Setting = mutableStateOf(false)
     var platform = mutableStateOf(platform_wx)
     val platName: String
         get() = if (isHome) "moniqi" else "xiaochengxu"
@@ -130,25 +130,43 @@ object Config {
 
     val pointHeroChoose = MPoint(940, 320)
     val pointHeroChooseBack = MPoint(42, 83)
-    val pointHeroDuiZhan = MPoint(700,85)
-    val pointHeroDuiZhanFail = MPoint(780,85)
-    val pointDuiZhanRenshu = MPoint(43,161)
+    val pointHeroDuiZhan = MPoint(700, 85)
+    val pointHeroDuiZhanFail = MPoint(780, 85)
+    val pointDuiZhanRenshu = MPoint(43, 161)
     val pointDuiZhanRenshuOk = MPoint(620, 450)
 
     //600 270 200 130
-    val colorLeishenLanqiu = Color(255,255,255)
-    val colorLeishenHongqiu = Color(255,45,85)
-//    val rectCheckOfLeishen = MRect.createWH(700,270,50,25)
-    val rectCheckOfLeishen = MRect.createWH(666,273,120,120)
+    val colorLeishenLanqiu = Color(255, 255, 255)
+    val colorLeishenHongqiu = Color(255, 45, 85)
+
+    //    val rectCheckOfLeishen = MRect.createWH(700,270,50,25)
+    val rectCheckOfLeishen = MRect.createWH(666, 273, 120, 120)
     val count4SureLeishen = 30
 
-    val leishenqiuXueTiao = Color(211,71,71)
-    val leishenqiuXueTiao2 = Color(225,150,130)
-    val leishenqiuXueTiaoRect = MRect.createWH(730,244,70,10)
+    val leishenqiuXueTiao = Color(211, 71, 71)
+    val leishenqiuXueTiao2 = Color(225, 150, 130)
+    val leishenqiuXueTiaoRect = MRect.createWH(730, 244, 70, 10)
 
 
-    val xiongmaoFS = Color(186,71,231)
-    val xiongmaoGJ = Color(10,180,100)
-    val xiongmaoZS = Color(225,110,48)
-    val xiongmaoQiuRect = MRect.createWH(700,300,50,50)
+    val xiongmaoFS = Color(186, 71, 231)
+    val xiongmaoGJ = Color(10, 180, 100)
+    val xiongmaoZS = Color(225, 110, 48)
+    val xiongmaoSS = Color(251, 74, 74)
+    val xiongmaoQiuRect = MRect.createWH(700, 300, 50, 50)
+
+    /**
+     * 小程序图标位置
+     */
+    val pointOfLApp = MPoint(3788 - 1920, 950)
+
+    /**
+     * 打开小程序 loading结束时的按钮位置，可以设置比如超时10s后点击。正常不可能loading10s，这里暂时不处理 游戏升级的情况
+     * custom_481_453_537_495
+     */
+    val rectOfStartApp = MRect.create4P(481,453,537,495)
+
+    /**
+     * 哭脸表情custom_102_140_166_202
+     */
+    val rectOfCryFace = MRect.create4P(102,140,166,202)
 }

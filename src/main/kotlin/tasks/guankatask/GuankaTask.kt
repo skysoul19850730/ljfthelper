@@ -46,7 +46,7 @@ class GuankaTask {
 
                 var curImg = getImage(Config.zhandou_hezuo_guankaRect)
                 var has = false
-                for(i in currentGuanIndex..min(currentGuanIndex+50,imgList.size-1)){
+                for(i in currentGuanIndex..imgList.size-1){
                     if(ImgUtil.isImageSim(curImg,imgList.get(i),0.98)){
                         if(currentGuanIndex != i){
                             currentGuanIndex = i

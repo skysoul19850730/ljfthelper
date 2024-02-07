@@ -55,11 +55,11 @@ class MRect {
         }
         return false
     }
-    fun hasColor(tColor: Color): Boolean {
+    fun hasColor(tColor: Color):Boolean{
         var img = getImage(this)
         forEach { i, i2 ->
             val color = img.getRGB(i - left, i2 - top)
-            if (colorCompare(Color(color),tColor,10)) {
+            if (color == tColor.rgb) {
                 return true
             }
         }

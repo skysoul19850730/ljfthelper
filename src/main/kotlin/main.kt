@@ -22,6 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.awt.ComposeWindow
 import androidx.compose.ui.awt.awtEvent
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusProperties
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.toPainter
@@ -57,6 +60,7 @@ import kotlin.math.max
 import kotlin.math.min
 import tasks.huodong.HuodongUtil
 import utils.ImgUtil
+import utils.Window
 import java.text.SimpleDateFormat
 import kotlin.math.log
 
@@ -138,7 +142,7 @@ fun App() {
                                     Text(time)
 
                                     if (item.data is String) {
-                                        Text(item.data as String, color = item.color?:Color.Unspecified)
+                                        Text(item.data as String, color = item.color ?: Color.Unspecified)
                                     } else if (item.data is BufferedImage) {
                                         var item = item.data as BufferedImage
                                         var ww = item.width
@@ -163,6 +167,9 @@ fun App() {
                 }
             }
             Column(Modifier.fillMaxHeight().background(Color.LightGray).padding(12.dp, 0.dp)) {
+                button("自动开始"){
+                    App.autoStartGame()
+                }
                 button("初始化") {
                     App.init()
                 }
@@ -183,6 +190,7 @@ fun App() {
 
                 button("output") {
                     Hero.aotuCaiji()
+//                    App.caijiBiaoqing()
                 }
                 button("解析英雄") {
                     Hero.caijianIng = false
@@ -195,31 +203,28 @@ fun App() {
                         timeInputDialog.value = true
                     }
                 }
-                button("活动") {
-                    if (HuodongUtil.state.value) {
-                        HuodongUtil.stop()
-                    } else {
-                        HuodongUtil.start(1)
-                    }
-                }
-                button("天空") {
-                    if (HuodongUtil.state.value) {
-                        HuodongUtil.stop()
-                    } else {
-                        HuodongUtil.start(2)
-                    }
-                }
+//                button("活动") {
+//                    if (HuodongUtil.state.value) {
+//                        HuodongUtil.stop()
+//                    } else {
+//                        HuodongUtil.start(1)
+//                    }
+//                }
+//                button("天空") {
+//                    if (HuodongUtil.state.value) {
+//                        HuodongUtil.stop()
+//                    } else {
+//                        HuodongUtil.start(2)
+//                    }
+//                }
                 button("测试") {
                     test()
                 }
 
-                if (selectModel.value == -2) {
-                    button("自定义裁剪") {
-                        customScreen.value = true
-                    }
-                    App.subButtons()
-
+                button("自定义裁剪") {
+                    customScreen.value = true
                 }
+//                App.subButtons()
                 hezuocaiji()
 
             }
@@ -598,6 +603,7 @@ private fun showInputDialog(
 ) {
     if (showState.value) {
         var text = remember { mutableStateOf("") }
+        var focusRequester = remember { FocusRequester() }
         with(PopupAlertDialogProvider) {
             AlertDialog({
                 showState.value = false
@@ -618,7 +624,7 @@ private fun showInputDialog(
                         VSpace(12)
                         OutlinedTextField(text.value, {
                             text.value = it
-                        }, placeholder = { Text(hint) })
+                        }, placeholder = { Text(hint) }, modifier = Modifier.focusRequester(focusRequester))
                         VSpace(12)
                         Row {
 
@@ -636,6 +642,10 @@ private fun showInputDialog(
 
                         }
 
+                    }
+                    DisposableEffect(Unit){
+                        focusRequester.requestFocus()
+                        onDispose {  }
                     }
                 }
             }
@@ -1003,11 +1013,11 @@ private fun testChuanZhang() {
 private fun testLeishen() {
 
     var ttt1 = System.currentTimeMillis()
-    getImage(App.rectWindow,null)
+    getImage(App.rectWindow, null)
     var tttt2 = System.currentTimeMillis()
-    getImage(Config.leishenqiuXueTiaoRect,null)
+    getImage(Config.leishenqiuXueTiaoRect, null)
     var ttt3 = System.currentTimeMillis()
-    println("大图:${tttt2 - ttt1} 小图：${ttt3-tttt2}")
+    println("大图:${tttt2 - ttt1} 小图：${ttt3 - tttt2}")
 
 
     var file = File(App.caijiPath, "leishen")
@@ -1041,23 +1051,27 @@ private fun testLeishen() {
         }
     }
 }
-fun testXiongMao(){
+
+fun testXiongMao() {
     var file = File(App.caijiPath, "xiongmao")
 
     file.listFiles().forEach {
         var img = getImageFromFile(it)
         if (Config.xiongmaoQiuRect.hasColorCount(
                 Config.xiongmaoFS, testImg = img
-            ) > 50){
+            ) > 50
+        ) {
             "fs".log("识别到法师球")
-        }else  if (Config.xiongmaoQiuRect.hasColorCount(
+        } else if (Config.xiongmaoQiuRect.hasColorCount(
                 Config.xiongmaoGJ, testImg = img
-            ) > 50){
+            ) > 50
+        ) {
             "fs".log("识别到弓箭球")
         }
     }
 }
-private fun testFit(){
+
+private fun testFit() {
     GlobalScope.launch {
         var t1 = System.currentTimeMillis()
 //        var a = async {
@@ -1074,20 +1088,21 @@ private fun testFit(){
 //        c.await()
         getImage(Config.zhandou_hero1CheckRect)
         var tend = System.currentTimeMillis()
-        log("time1 ${tend- t1}")
+        log("time1 ${tend - t1}")
     }
 }
-fun testClick(){
+
+fun testClick() {
     //3152 52
     //784,561 不含tapbar
     GlobalScope.launch {
 //        WxUtil.findWindowAndMove()
 //       var wxWindow = utils.Window.findWindowWithName("中國同盟会")
 
-       var wxWindow = utils.Window.findWindowWithName("塔防助手")
+        var wxWindow = utils.Window.findWindowWithName("小程序")
         //550,640
-        delay(1000)
-        MPoint(704,35).clickPc(wxWindow)
+//        delay(1000)
+//        MPoint(704,35).clickPc(wxWindow)
 //        MRobot.singleClickPc(MPoint(100,32),wxWindow)
 //        MRobot.singleClickPc(MPoint(784-70,52),wxWindow)
 //        MRobot.singleClickPc(MPoint(100,52),wxWindow)
@@ -1096,9 +1111,10 @@ fun testClick(){
     }
 
 }
+
 fun test() {
-//    autoMoveMouse()
-    testClick()
+    autoMoveMouse()
+//    testClick()
 //    testFit()
 //    testXiongMao()
 //    testLeishen()
@@ -1171,7 +1187,7 @@ fun Any.log(msg: Any, onlyPrint: Boolean = false) {
     }
 }
 
-fun loges(msg:String){
+fun loges(msg: String) {
     var logData = LogUtil.LogData().apply {
         time = SimpleDateFormat("hh:mm:ss SSS").format(System.currentTimeMillis())
         data = msg

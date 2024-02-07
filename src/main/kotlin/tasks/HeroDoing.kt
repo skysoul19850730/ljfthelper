@@ -14,6 +14,8 @@ import utils.LogUtil
 import utils.MRobot
 import java.awt.Color
 import kotlin.coroutines.resume
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
 
 abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing, GuankaTask.ChangeListener,
     App.KeyListener {
@@ -101,7 +103,7 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
 
     var needCheckStar = false
     open suspend fun onGuangqiuPost() {
-        if(App.mLaunchModel and App.model_duizhan !=0){
+        if (App.mLaunchModel and App.model_duizhan != 0) {
             carDoing.checkStars()
             return
         }
@@ -209,9 +211,9 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
 //            }
             if (needShuaxin) {
 //                withTimeoutOrNull(2000) {//超时就点一下，这里没有问题
-                    while (Config.rect4ShuakaColor.hasColor(Color.RED)) {//有白色（钱够）再点击刷新
-                        delay(50)
-                    }
+                while (Config.rect4ShuakaColor.hasColor(Color.RED)) {//有白色（钱够）再点击刷新->改成如果有红色
+                    delay(50)
+                }
 //                }
                 MRobot.singleClick(Config.zhandou_shuaxinPoint)
             }
@@ -245,48 +247,77 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
         }
     }
 
+    private suspend fun doUpHeroDeal(rect: MRect,incluedKuojian:Boolean = false) {
+        var start = System.currentTimeMillis()
+        var uped = false
+        while (!uped) {
+            if(incluedKuojian){
+                MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
+                delay(50)
+            }
+            MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
+            //点击上卡后，如果都空了，代表确实上去了
+            uped = withTimeoutOrNull(500) {
+                while (doGetPreHeros() != null) {
+                    delay(30)
+                }
+                true
+            } ?: false
+        }
+
+        log("上卡花费时间：${System.currentTimeMillis() - start}")
+    }
+
     open suspend fun doUpHero(heroBean: HeroBean, position: Int, hasKuoJianClicked: Boolean = false) {
         var rect = when (position) {
             0 -> Config.zhandou_hero1CheckRect
             1 -> Config.zhandou_hero2CheckRect
             else -> Config.zhandou_hero3CheckRect
         }
+        if(heroBean.heroName == "muqiu"){//木球不走检测逻辑，提升速度
+            MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
+            afterHeroClick(heroBean)
+            return
+        }
+
         if (heroBean.isInCar() || !heroBean.needCar || heroBean.isGongCheng || carDoing.hasOpenSpace()) {
             //英雄在车上，或者此卡不需要车位,或者该卡是工程卡（暂时一套阵容不会有带两个工程），或者车上有空位
-            MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
+//            MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
+            doUpHeroDeal(rect)
         } else {
             //需要开格子
             if (!Config.rect4KuojianColor.hasColor(Color.RED)) {//可以开格子
                 log("点击扩建")
-                MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
+                doUpHeroDeal(rect,true)
 //                MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
-                delay(50)
-                MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
+//                delay(50)
+//                MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
             } else {
                 var changeOne = changeHeroWhenNoSpace(heroBean)
                 if (changeOne != null) {//钱不够扩建时，是否需要替换已在车上的卡
                     log("没钱扩建，替换英雄")
                     carDoing.downHero(changeOne)
                     delay(50)
-                    MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
+                    doUpHeroDeal(rect)
+//                    MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
                 } else {//不替换就等钱够
                     while (Config.rect4KuojianColor.hasColor(Color.RED)) {
                         delay(50)
                     }
                     log("点击扩建")
-                    MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
+                    doUpHeroDeal(rect,true)
 //                    MRobot.singleClick(Config.zhandou_kuojianPoint)//点扩建
-                    delay(50)
-                    MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
+//                    delay(50)
+//                    MRobot.singleClick(MPoint(rect.clickPoint.x, rect.clickPoint.y + 25))
                 }
             }
         }
         carDoing.addHero(heroBean)
         log("英雄上阵:${heroBean.heroName} 位置:${heroBean.position} 等级:${heroBean.currentLevel}")
 //        delay(100)//这里略微等待一下，否则点完上卡，立马点刷新可能还会识别到
-        delay(100)//这里略微等待一下，否则点完上卡，立马点刷新可能还会识别到,而且这里如果不延迟，可能点刷新太快了，几乎是点了上卡马上点刷新，可能没点上刷新（因为日志体现了好几组点完刷新后1秒超时无法识别的，大概率就是 点刷新没有效果）
-        //这里还有一组日志是 上了猫咪点刷新然后识别到了猫咪，其他两个都是null。推测：点了猫咪 去点刷新（没点出效果）所以没有立即触发刷新卡牌，点击猫咪 猫咪自己有个动画，其他两个就消失了，所以这个时候会再次识别到猫咪，导致310猫咪不满
-        //如果这里还有问题，就延迟加大一点，但50后点刷新不出问题应该就不会有问题了，因为以前刷不出需要的卡，然后去点刷新，也没有被残影破坏过识别，点了刷新还会延迟100毫秒才开始识别呢
+//        delay(100)//这里略微等待一下，否则点完上卡，立马点刷新可能还会识别到,而且这里如果不延迟，可能点刷新太快了，几乎是点了上卡马上点刷新，可能没点上刷新（因为日志体现了好几组点完刷新后1秒超时无法识别的，大概率就是 点刷新没有效果）
+//        //这里还有一组日志是 上了猫咪点刷新然后识别到了猫咪，其他两个都是null。推测：点了猫咪 去点刷新（没点出效果）所以没有立即触发刷新卡牌，点击猫咪 猫咪自己有个动画，其他两个就消失了，所以这个时候会再次识别到猫咪，导致310猫咪不满
+//        //如果这里还有问题，就延迟加大一点，但50后点刷新不出问题应该就不会有问题了，因为以前刷不出需要的卡，然后去点刷新，也没有被残影破坏过识别，点了刷新还会延迟100毫秒才开始识别呢
         afterHeroClick(heroBean)
 
 
@@ -350,26 +381,26 @@ abstract class HeroDoing(var chePosition: Int = -1, val flags: Int = 0) : IDoing
 
     }
 
-//    private suspend fun doGetPreHeros() = suspendCancellableCoroutine<List<HeroBean?>?> {
-//        GlobalScope.launch {
-//            val hero1 =
-//                async { getHeroAtRect(Config.zhandou_hero1CheckRect) }
-//
-//            val hero2 =
-//                async { getHeroAtRect(Config.zhandou_hero2CheckRect) }
-//            val hero3 =
-//                async { getHeroAtRect(Config.zhandou_hero3CheckRect) }
-//
-//            val h1 = hero1.await()
-//            val h2 = hero2.await()
-//            val h3 = hero3.await()
-//            if (h1 == null && h2 == null && h3 == null) {
-//                it.resume(null)
-//            } else {
-//                it.resume(arrayListOf(h1, h2, h3))
-//            }
-//        }
-//    }
+    private suspend fun doGetPreHeros() = suspendCancellableCoroutine<List<HeroBean?>?> {
+        GlobalScope.launch {
+            val hero1 =
+                async { getHeroAtRect(Config.zhandou_hero1CheckRect) }
+
+            val hero2 =
+                async { getHeroAtRect(Config.zhandou_hero2CheckRect) }
+            val hero3 =
+                async { getHeroAtRect(Config.zhandou_hero3CheckRect) }
+
+            val h1 = hero1.await()
+            val h2 = hero2.await()
+            val h3 = hero3.await()
+            if (h1 == null && h2 == null && h3 == null) {
+                it.resume(null)
+            } else {
+                it.resume(arrayListOf(h1, h2, h3))
+            }
+        }
+    }
 
     open suspend fun getPreHeros(timeout: Long = 2300) = suspendCancellableCoroutine<List<HeroBean?>?> {
         val startTime = System.currentTimeMillis()

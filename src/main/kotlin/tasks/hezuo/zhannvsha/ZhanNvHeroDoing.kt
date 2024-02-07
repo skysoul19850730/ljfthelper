@@ -1,15 +1,20 @@
 package tasks.hezuo.zhannvsha
 
+import data.Config
 import data.Config.delayLong
 import data.Config.delayNor
 import data.HeroBean
 import data.Recognize
+import getImage
+import getImageFromRes
 import kotlinx.coroutines.*
 import log
 import logOnly
 import model.CarDoing
 import tasks.*
 import tasks.guankatask.GuankaTask
+import utils.ImgUtil
+import java.awt.image.BufferedImage
 
 class ZhanNvHeroDoing : HeroDoing(0, FLAG_GUANKA) {//默认赋值0，左边，借用左边第一个position得点击，去识别车位置后再更改
 
@@ -49,6 +54,31 @@ class ZhanNvHeroDoing : HeroDoing(0, FLAG_GUANKA) {//默认赋值0，左边，�
     override fun onStart() {
         super.onStart()
         startTime = System.currentTimeMillis()
+        GlobalScope.launch {
+            log("开始识别哭脸")
+            var cryImgs = arrayListOf<BufferedImage>().apply {
+                add(getImageFromRes("cryface1.png"))
+                add(getImageFromRes("cryface3.png"))
+            }
+            var ok = true
+            while(ok){
+
+                var img = getImage(Config.rectOfCryFace)
+                var hasCryFace =cryImgs.find {
+                    ImgUtil.isImageSim(it,img)
+                }!=null
+                if(hasCryFace){
+                    log("识别到哭脸，退出程序，稍后重启")
+                    ok = false
+                    App.stop()
+                    App.restartGame()
+                    break
+                }
+                delay(100)
+                ok = (guankaTask?.currentGuanIndex ?: 0) < 10 && running
+            }
+            log("关卡超过10，停止识别哭脸")
+        }
     }
 
     override fun onStop() {
