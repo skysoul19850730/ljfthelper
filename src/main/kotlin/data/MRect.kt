@@ -59,7 +59,7 @@ class MRect {
         var img = getImage(this)
         forEach { i, i2 ->
             val color = img.getRGB(i - left, i2 - top)
-            if (color == tColor.rgb) {
+            if (colorCompare(Color(color),tColor)) {
                 return true
             }
         }

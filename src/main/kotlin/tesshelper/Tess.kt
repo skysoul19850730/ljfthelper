@@ -10,9 +10,7 @@ object Tess {
 
     //    val resPath = "C:/Users/Administrator/IdeaProjects/intellij-sdk-code-samples/untitled1/build/resources/main"
     val resPath
-        get() =if(Config.isHome) "${Config.appRootPath}build${File.separator}processedResources${File.separator}jvm${File.separator}main"
-            else "${Config.appRootPath}build${File.separator}resources${File.separator}main${File.separator}"
-//    else  "C:/Users/Administrator/IdeaProjects/intellij-sdk-code-samples/untitled1/build/resources/main"
+        get() = "${Config.appRootPath}build${File.separator}resources${File.separator}main${File.separator}"
 
     val api = Tesseract().apply {
         setDatapath(resPath)

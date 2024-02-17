@@ -214,7 +214,7 @@ object App {
     var autoSaving = false
     var autoSaveJob: Job? = null
     fun startAutoSave(time: Long = 300) {
-        if (autoSaving) return
+        if (true) return
         autoSaving = true
         autoSaveJob = GlobalScope.launch {
             while (autoSaving) {

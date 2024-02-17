@@ -18,7 +18,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
     val shahuang = HeroBean("shahuang", 60, compareRate = 0.9)
     val sishen = HeroBean("sishen", 50)
     val muqiu = HeroBean("muqiu", 40, needCar = false, compareRate = 0.95)
-    val baoku = HeroBean("longwang", 30, needCar = true, isGongCheng = true, compareRate = 0.9)
+    val baoku = HeroBean("bawang", 30, needCar = true, isGongCheng = true, compareRate = 0.9)
     val huanqiu = HeroBean("huanqiu", 20, needCar = false, compareRate = 0.95)
     val guangqiu = HeroBean("guangqiu", 0, needCar = false)
 
@@ -81,7 +81,6 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
     var guanka = Guan.g1
 
 
-
     var needZhuangbei = Zhuangbei.YANDOU//目前熊猫用，打完雷神时是烟斗，默认值用烟斗
 
     override fun onLeiShenSixBallOver() {
@@ -100,7 +99,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
             needZhuangbei = Zhuangbei.YANDOU
         } else if (qiu == "gj") {
             needZhuangbei = Zhuangbei.QIANGXI
-        }else if (qiu == "zs" || qiu =="ss") {//展示术士都用龙心
+        } else if (qiu == "zs" || qiu == "ss") {//展示术士都用龙心
             needZhuangbei = Zhuangbei.LONGXIN
         }
         waiting = false
@@ -223,6 +222,10 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
         }
     }
 
+    private fun isBaoku(): Boolean {
+        return baoku.heroName == "baoku" || baoku.heroName == "shexian"
+    }
+
     fun isGkOver(g: Guan): Boolean {
         if (g == Guan.g159) return Zhuangbei.getZhuangBei() == needZhuangbei
         if (g == Guan.g139) return false
@@ -230,7 +233,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
         if (g == Guan.g1) return zhanjiang.isFull() && jiaonv.isFull() && sishen.isFull() && saman.isFull() && Zhuangbei.isLongxin()
 
         var heroOk = zhanjiang.isFull() && jiaonv.isFull() && sishen.isFull()
-        if (baoku.heroName == "baoku") {
+        if (isBaoku()) {
             heroOk = heroOk && baoku.isFull()
         }
         if (!heroOk) return false
@@ -312,7 +315,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
 
 
     override suspend fun doAfterHeroBeforeWaiting(heroBean: HeroBean) {
-        if(heroBean.heroName == "muqiu"){
+        if (heroBean.heroName == "muqiu") {
             return
         }
         if (!waiting && isGkOver(guanka)) {
@@ -375,7 +378,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
             return -1
         } else if (guanka == Guan.g26) {
             var fullList = arrayListOf(nvwang, jiaonv, saman, sishen, zhanjiang)//防止没满
-            if (baoku.heroName == "baoku") {
+            if (isBaoku()) {
                 fullList.add(baoku)
             }
             var index = defaultDealHero(
@@ -396,7 +399,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
 
         } else if (guanka == Guan.g41) {
             var fullList = arrayListOf(shahuang, nvwang, jiaonv, saman, sishen, zhanjiang)//防止没满
-            if (baoku.heroName == "baoku") {
+            if (isBaoku()) {
                 fullList.add(baoku)
             }
             var index = defaultDealHero(
@@ -416,7 +419,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
             }
         } else if (guanka == Guan.g101) {//101 yandou
             var fullList = arrayListOf(nvwang, shahuang, saman, zhanjiang, sishen, jiaonv)
-            if (baoku.heroName == "baoku") {
+            if (isBaoku()) {
                 fullList.add(baoku)
             }
             var index = defaultDealHero(
@@ -438,7 +441,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
 
         } else if (guanka == Guan.g108) {//乱补
             var fullList = arrayListOf(nvwang, shahuang, saman, zhanjiang, sishen, jiaonv, muqiu, guangqiu)
-            if (baoku.heroName == "baoku") {
+            if (isBaoku()) {
                 fullList.add(baoku)
             }
             var index = defaultDealHero(
@@ -461,7 +464,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
             }
 
             var fullList = arrayListOf(zhanjiang, shahuang, jiaonv, sishen, nvwang, saman)
-            if (baoku.heroName == "baoku") {
+            if (isBaoku()) {
                 fullList.add(baoku)
             }
             var index = defaultDealHero(
@@ -493,7 +496,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
 
             index = heros.indexOf(huanqiu)
             if (index > -1 && !Zhuangbei.isQiangxi() && Zhuangbei.hasZhuangbei()) {//小翼 烟斗
-                if(guankaTask?.currentGuanIndex !=129) {//129 有次识别错了，然后幻了装备,所以129就不用幻
+                if (guankaTask?.currentGuanIndex != 129) {//129 有次识别错了，然后幻了装备,所以129就不用幻
                     return index
                 }
             }
@@ -507,7 +510,7 @@ class HBZhanNvHeroDoing2 : BaseHBHeroDoing() {//默认赋值0，左边，借用�
 
             //防止船长点完卡没补满
             var fullList = arrayListOf(zhanjiang, shahuang, jiaonv, sishen, saman)
-            if (baoku.heroName == "baoku") {
+            if (isBaoku()) {
                 fullList.add(baoku)
             }
             var index = defaultDealHero(
